@@ -1,0 +1,60 @@
+@import url('./em-preset.css');
+@import url('./manageSet.css');
+@import url('./setItem.css');
+@import url('./setsControl.css');
+@import url('./learnView.css');
+@import url('https://fonts.googleapis.com/css2?family=Funnel+Sans:ital,wght@0,300..800;1,300..800&display=swap');
+
+:root {
+  --font-inter: 'Inter', sans-serif;
+  --font-funnel-sans: 'Funnel Sans', sans-serif;
+}
+
+/* * {
+  outline: 1px dashed red;
+} */
+
+/*.2 GENERAL FONTS */
+
+body {
+  font-family: 'Funnel Sans', sans-serif;
+}
+
+h1, h2, h3 {
+  font-family: 'Funnel Sans', sans-serif;
+}
+
+/* .1 Colors */
+
+:root {
+  --color-primary: #4a90e2;
+  --color-secondary: #50e3c2;
+  --color-background: #f5f7fa;
+  --color-text: #333;
+  --color-border: #e0e0e0;
+  --color-error: #d0021b;
+  --color-success: #7ed321;
+}
+
+/* .1 Buttons */
+
+button{
+  padding: 10px 20px;
+  margin: 0 10px;
+  min-width: 90px;
+  font-size: 1rem;
+  border-radius: 1px;
+  white-space: nowrap;}            
+
+/* .1 Icons */
+
+.trash-icon {
+  width: 16px;
+  height: 16px;
+  flex-shrink: 0;   
+  align-self: center;        
+}
+
+.plus-icon{
+      flex-shrink: 0; 
+}

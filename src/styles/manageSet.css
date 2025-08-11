@@ -1,0 +1,194 @@
+.manage-set-content {
+display: flex;
+justify-content: center;
+flex-direction: column;
+  padding: 20px;
+  background-color: #f9f9f9;
+  border-radius: 8px;
+}
+
+.manage-set-content-header {
+    display: flex;
+flex-direction: column;
+justify-content: center;
+align-items: center;
+}
+
+.manage-set-title{
+padding: 30px;
+}
+
+.wordlist-container{
+    height: 100%;
+    width: 100%;
+}
+
+.wordlist-container ul {
+   display: flex;
+justify-content: center;
+align-items: center;
+    list-style-type: none;
+    padding: 0px;
+    margin: 20px;
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+}
+
+.wordlist-item {
+ display: flex;
+  justify-content: space-between; /* spread evenly */
+background-color: #ffffff;
+  border-radius: 4px;
+  box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+  gap: 20px; /* space between columns */
+  overflow: hidden; 
+  min-height: 50px;  
+  width: 50%;
+  margin-bottom: 6px;
+  align-items: center;
+  min-height: 40px;  
+}
+
+.wordlist-item-front :hover,
+.wordlist-item-back :hover {
+  background-color: #f0f0f0;
+  cursor: pointer;
+}
+
+.wordlist-item-delete{
+    grid-column: 1 / 2;
+    display: flex;
+    justify-content: center;
+    height: 40px;
+    width: 50px;
+    background-color: rgb(255, 32, 80);
+}
+
+.wordlist-item-delete:hover {
+  cursor: pointer;
+}
+
+/* .1  EDIT WORD INPUT */
+
+.editword-input-wrapper {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: center;
+  gap: 12px;
+  flex-wrap: nowrap;
+}
+
+.editword-input-field {
+  flex: 1;                  /* fill available space evenly */
+  text-align: center;    
+  height: 30px;
+  font-size: 14px;
+  box-sizing: border-box;   /* prevents padding from breaking layout */
+}
+
+
+
+/* .1 ACTIVATE SLIDER */
+
+.switch {
+    grid-column: 4 / 5;
+  position: relative;
+  display: inline-block;
+  width: 50px;
+  height: 28px;
+}
+
+.switch input {
+  opacity: 0;
+  width: 0;
+  height: 0;
+}
+
+.slider {
+  position: absolute;
+  cursor: pointer;
+  top: 0; left: 0; right: 0; bottom: 0;
+  background-color: #e8e8e8;
+  transition: 0.3s;
+  border-radius: 34px;
+  height: 22px;
+  width: 40px;;
+}
+
+.slider::before {
+  position: absolute;
+  content: "";
+  height: 16px;
+  width: 16px;
+  left: 3px;
+  bottom: 3px;
+  background-color: white;
+  transition: 0.3s;
+  border-radius: 50%;
+}
+
+input:checked + .slider {
+  background-color: #14ff53;
+}
+
+input:checked + .slider::before {
+  transform: translateX(18px);
+}
+
+/* .1 ADD WORD FORM */
+
+
+.add-word-form-manage-page .add-word-field {
+  display: flex;
+  flex-direction: column;
+  align-content: center;
+  align-items: center;
+    margin-bottom: 20px;
+}
+
+.add-word-form-manage-page .add-word-field legend {
+  margin: 0px;
+  text-align: center;
+  width: 100%;
+  font-weight: bold;
+}
+
+.add-word-form-manage-page .add-word-field label {
+    margin: 0px;
+    padding: 0px;
+  display: flex;
+  flex-direction: column;
+  width: 200px;
+  height: 30px;
+  align-items: center;
+}
+
+.add-word-form-manage-page .add-word-field p {
+  margin-top: 20px;
+  margin-bottom: 20px;
+  font-size: 12px;
+}
+
+.add-word-form-manage-page .word-input-field {
+  padding: 0px;
+  width: 100%;
+  height: 100%;
+}
+
+.add-word-form-manage-page .separator-line{
+  border-bottom: 1px solid rgb(48, 48, 48);
+  height: 0px;
+  width: 100%;
+  margin-top: 20px;
+  margin-bottom: 20px;
+}
+
+.add-word-form-manage-page .set-option-button-container {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  gap: 10px;
+  width: 100%;
+}

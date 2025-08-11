@@ -1,0 +1,92 @@
+/* .set-item * {
+  border: 3px solid red;
+} */
+
+div.set-item {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+    background-color: rgb(253, 237, 237);
+    padding: 40px;
+    margin: 16px;
+    border: 1px solid rgb(186, 107, 107);
+    border-radius: 4px;
+    width: 400px;}
+
+.set-title {
+  font-size: 30px;
+  font-weight: 600;
+  color: rgb(50, 50, 50);
+  text-align: center;  
+  width: 100%;
+  margin-top: 40px;
+}
+
+.button-delete-set {     
+  background-color: rgb(255, 107, 107);
+  color: white;
+  height: 25px;
+  width: 25px;    
+}
+
+.btn-add-word{
+  background-color: transparent;
+  color: rgb(96, 96, 96)
+}
+
+.set-top-row {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  width: 100%;
+}
+
+/*.1  WORD INPUT  */
+
+.add-word-field {
+  display: flex;
+  flex-direction: column;
+  align-content: center;
+  align-items: center;
+}
+
+.add-word-field legend {
+  margin: 0px;
+  text-align: center;
+  width: 100%;
+  font-weight: bold;
+}
+
+.add-word-field label {
+    margin: 0px;
+    padding: 0px;
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+}
+
+.add-word-field p {
+  font-size: 16px;
+  text-align: left;        
+}
+
+.word-input-field {
+  font-size: 16px;  
+  padding: 8px;      
+  width: 100%;
+  height: 30px;
+}
+
+.separator-line{
+  border-bottom: 1px solid rgb(48, 48, 48);
+  height: 0px;
+  width: 100%;
+  margin-top: 20px;
+  margin-bottom: 20px;
+}
+
+.set-option-button-container {
+  display: flex;
+  justify-content: center;   /* ✅ center horizontally */
+  gap: 20px;                 /* space between buttons */
+}
