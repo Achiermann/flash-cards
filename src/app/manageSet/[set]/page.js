@@ -22,6 +22,7 @@ export default function ManageSetView() {
     state.sets.find((s) => s.slug === slug)
   );
 
+
   {/*//.1      HTML            */}
 
 
@@ -36,7 +37,7 @@ export default function ManageSetView() {
   <div className='manage-set-title'><h2>Manage Set: <br></br>{matchedSet.name}</h2></div>
   <Link href={`/learnView/${set.slug}`}> <button className="button-learn"> Learn</button> </Link>
   <AddWordForm setId={set.id} className = "add-word-form-manage-page"/> </div>
-<Wordlist matchedSet={matchedSet} set={set}/>
+<Wordlist matchedSet={matchedSet}/>
    </div>
   );
 }

@@ -1,7 +1,7 @@
 .login-page{
     position: fixed;
     inset: 0;
-    z-index: 10000;
+    z-index: 9998;
     display: flex;
     flex-direction: column;
     align-items: center;
@@ -60,7 +60,7 @@ all: unset;
     color: rgb(77, 77, 255);
 }
 
-.btn-login{
+.btn-login, .btn-signup{
     margin-bottom: 40px;
 }
 
@@ -84,3 +84,7 @@ all: unset;
     align-items: center;
     justify-content: center;
 }
+
+/* .1.        MOBILE                                                                             */
+
+@media (max-width: 768px){}

@@ -7,6 +7,8 @@ import { usePathname } from 'next/navigation';
 import ClientWrapper from './clientWrapper';
 import { useEffect, useState } from 'react';
 import LoginPage from './login/page';
+import toast, { Toaster } from 'react-hot-toast';
+import { red } from "@mui/material/colors";
 
 
 export default function RootLayout({ children }) {
@@ -28,21 +30,34 @@ const randomNr = Math.floor(Math.random() * colorPairs.length);
 const pickedPrimary = colorPairs[randomNr].primary;
 const pickedSecondary = colorPairs[randomNr].secondary;
 
-console.log("Picked colors:", pickedPrimary, pickedSecondary);
-
 document.documentElement.style.setProperty("--color-primary", pickedPrimary);
 document.documentElement.style.setProperty("--color-secondary", pickedSecondary);
 }, [pathname]);
 
-const [isLoggedIn, setIsLoggedIn] = useState(false);
+const [isLoggedIn, setIsLoggedIn] = useState(true);
+
+useEffect(() => {
+  fetch('/api/users/me')
+    .then(res => res.json())
+    .then(data => {
+      if (data.user) {
+        setIsLoggedIn(true);
+      }
+      else if(!data.user) {
+        setIsLoggedIn(false);
+  }})
+    .catch(() => setIsLoggedIn(false));
+}, []);
+
 
  return (
    <html lang="en">
       <body>
-        <ClientWrapper>
-          {children}
-        </ClientWrapper>
-      {!isLoggedIn && <LoginPage />}
+<Toaster toastOptions={{className: 'toaster'}}/>
+<ClientWrapper isLoggedIn={isLoggedIn} setIsLoggedIn={setIsLoggedIn}>
+  {children}
+</ClientWrapper>
+      {!isLoggedIn && <LoginPage/>}
       </body>
     </html>
   );

@@ -88,3 +88,7 @@
 .MuiLinearProgress-bar2{
   border: 2px solid #ff5151;
 }
+
+/* .1.        MOBILE                                                                             */
+
+@media (max-width: 768px){}

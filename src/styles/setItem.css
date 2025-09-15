@@ -115,3 +115,7 @@ margin-bottom: 40px
   justify-content: center;   /* ✅ center horizontally */
   gap: 20px;                 /* space between buttons */
 }
+
+/* .1.        MOBILE                                                                             */
+
+@media (max-width: 768px){}

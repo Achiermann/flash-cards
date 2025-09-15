@@ -30,6 +30,15 @@ font-size: 30px;
 font-weight: 600;
 }
 
+.manage-set-title.all-sets{
+text-align: left;
+padding: 8px 0px 0px 0px;}
+
+.manage-set-title.all-sets h2{
+font-size: 20px !important;
+font-weight: 600 !important;
+}
+
 .wordlist-container{
     height: 100%;
     width: 100%;
@@ -68,14 +77,21 @@ background-color: #ffffff;
   cursor: pointer;
 }
 
-.wordlist-item-delete{
+.wordlist-item-delete, .wordlist-item-archive {
     grid-column: 1 / 2;
     display: flex;
     justify-content: center;
     height: 40px;
     width: 50px;
     border-radius: 4px;
+}
+
+.wordlist-item-delete{
     background-color: rgb(255, 75, 108)
+}
+
+.wordlist-item-archive{
+    background-color: rgb(255, 233, 229)
 }
 
 .wordlist-item-delete:hover {
@@ -210,3 +226,34 @@ input:checked + .slider::before {
   gap: 10px;
   width: 100%;
 }
+
+.add-word-form-manage-page.all-sets{
+  width: 50%;
+  text-align: left !important;
+}
+
+.add-word-form-manage-page.all-sets p{
+  align-self: flex-start;
+}
+
+.add-word-form-manage-page.all-sets label{
+height: 30px;
+}
+
+
+.manage-all-sets-set-container{
+  width: 50%;
+}
+
+.add-to-title{
+  margin-bottom: 15px;
+}
+
+.sets-separator-line{
+  border-bottom: 1px solid rgb(48, 48, 48);
+  width: 100%;
+}
+
+/* .1.        MOBILE                                                                             */
+
+@media (max-width: 768px){}

@@ -7,6 +7,7 @@ import { Trash2 } from 'lucide-react';
 import { Plus } from 'lucide-react';
 import AddWordForm from '../buttons&forms/addWord/page';
 import {useEditOptionsStore} from '../stores/useEditOptionsStore';
+import toast from 'react-hot-toast';
 
 export default function SetItem({ data, editOptions, id }) {
 
@@ -46,9 +47,10 @@ editSet(id, editSetName)
 
 <AddWordForm setId={data.id} className="add-word-form-homepage"/>
 
-{/*//.2                 LEARN                  */}
+{/*//.2                 LEARN & MANAGE                 */}
 {!showEditOptions && <div className="set-option-button-container">
- <Link href={`/learnView/${set.slug}`}> <button className="button-learn"> Learn</button> </Link>
+{set.words.length > 0 && <Link href={`/learnView/${set.slug}`}> <button className="button-learn"> Learn</button> </Link>} 
+{set.words.length === 0 && <button className="button-learn" onClick={() => toast.error(`This set contains no words yet!`)}> Learn</button>}
  <Link href={`/manageSet/${set.slug}`}> <button className="button-manage"> Manage Set </button> </Link>
  </div>}</div>
     </>
