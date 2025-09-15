@@ -5,7 +5,7 @@ import { useSetsStore } from '../stores/useSetsStore';
 import Link from 'next/link';
 import { Trash2 } from 'lucide-react';
 import { Plus } from 'lucide-react';
-import AddWordForm from '../buttons&forms/addWord/page';
+import AddWordForm from '../../components/buttons-and-forms/addWordForm';
 import {useEditOptionsStore} from '../stores/useEditOptionsStore';
 import toast from 'react-hot-toast';
 
