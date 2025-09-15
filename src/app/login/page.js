@@ -20,7 +20,10 @@ async function handleSignup() {
     toast.error('Password must be at least 6 characters');
     return;
   }
-  email.includes('@', '.') ? null : toast.error('Please enter a valid email');
+  if (!email.includes('@') || !email.includes('.')) {
+    toast.error('Please enter a valid email');
+    return;
+  }
   try {
     const res = await fetch('/api/users', {
       method: 'POST',
@@ -70,8 +73,11 @@ setTimeout(() => window.location.reload(), 1500);
     <div className="remember-me-wrapper"><input type="checkbox" className="btn-stay-signed-in"/><p>Remember Me</p></div>
     <button className="btn-login" onClick={handleLogin}>Log In</button>
     <div className="login-options-wrapper">
-         <p>{<button className="btn-forgot-pw" onClick={() => setDisplay("forgetpw")}><p><em>Forgot password?</em></p></button>}<br/>
-   don`t have an account yet? {<button className="btn-sign-up-here" onClick={() => setDisplay("signup")}><p><u>Sign up</u></p></button>}</p>
+   <p>
+     <button className="btn-forgot-pw" onClick={() => setDisplay("forgetpw")}><em>Forgot password?</em></button>
+     <br/>
+     don`t have an account yet? <button className="btn-sign-up-here" onClick={() => setDisplay("signup")}><u>Sign up</u></button>
+   </p>
     </div></>}
 
 {/*//.2      SIGN UP            */}
@@ -84,7 +90,7 @@ setTimeout(() => window.location.reload(), 1500);
 </div>
     <button className="btn-signup" onClick={handleSignup}>Create Account</button>
     <div className="login-options-wrapper">
-         <p> Already have an account? {<button className="btn-sign-up-here" onClick={() => setDisplay("signin")}><p><u>Sign in</u></p></button>}</p>
+         <p> Already have an account? <button className="btn-sign-up-here" onClick={() => setDisplay("signin")}><u>Sign in</u></button></p>
     </div>
     </>}
 {/*//.2      RESET PW            */}
