@@ -1,3 +1,5 @@
+'use client'
+
 import { useSetsStore } from "@/app/stores/useSetsStore";
 import { Trash2 } from 'lucide-react';
 import { useState, useEffect } from 'react';
