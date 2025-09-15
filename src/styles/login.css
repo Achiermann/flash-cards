@@ -1,0 +1,86 @@
+.login-page{
+    position: fixed;
+    inset: 0;
+    z-index: 10000;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    background-color: rgb(255, 255, 255, 0.75);
+}
+
+.login-page h2{
+   margin-bottom: 40px;
+}
+
+.login-field{
+    padding: 30px;
+    width: 40%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    background-color: rgb(255, 255, 255);
+    border: rgba(0, 0, 0, 0.471) 1px solid;
+    border-radius: 10px;
+}
+
+.login-field *{
+    margin-bottom: 20px;
+}
+
+.login-field-input-wrapper{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    width: 100%;
+}
+
+.login-field-input-wrapper input{
+    all: unset;
+    height: 20px;
+    width: 80%;
+    padding: 5px;
+    font-size: 16px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    margin-bottom: 15px;
+}
+
+.login-field-input-wrapper input::placeholder{
+font-family: var(--font-primary);
+font-size: 14px;
+}
+
+.btn-sign-up-here, .btn-forgot-pw {
+all: unset;
+}
+
+.btn-sign-up-here p{
+    color: rgb(77, 77, 255);
+}
+
+.btn-login{
+    margin-bottom: 40px;
+}
+
+ .btn-forgot-pw p {
+    color: rgb(143, 143, 143);
+}
+
+.login-options-wrapper{
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
+    width: 100%;
+    text-align: center;
+    line-height: 2px;
+}
+
+.remember-me-wrapper{
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: center;
+}

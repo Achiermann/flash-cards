@@ -1,9 +1,18 @@
+/* * {
+  border: 2px solid red
+} */
+
+.sets-control {
+  display: flex;
+  justify-content: center;
+  align-content: center;
+}
+
 .manage-set-content {
 display: flex;
 justify-content: center;
 flex-direction: column;
   padding: 20px;
-  background-color: #f9f9f9;
   border-radius: 8px;
 }
 
@@ -12,10 +21,13 @@ flex-direction: column;
 flex-direction: column;
 justify-content: center;
 align-items: center;
+text-align: center;
 }
 
 .manage-set-title{
 padding: 30px;
+font-size: 30px;
+font-weight: 600;
 }
 
 .wordlist-container{
@@ -29,7 +41,7 @@ justify-content: center;
 align-items: center;
     list-style-type: none;
     padding: 0px;
-    margin: 20px;
+    margin: 20px 0px 20px 0px;
     display: flex;
     flex-direction: column;
     gap: 12px;
@@ -44,7 +56,7 @@ background-color: #ffffff;
   gap: 20px; /* space between columns */
   overflow: hidden; 
   min-height: 50px;  
-  width: 50%;
+  width: 100%;
   margin-bottom: 6px;
   align-items: center;
   min-height: 40px;  
@@ -62,7 +74,8 @@ background-color: #ffffff;
     justify-content: center;
     height: 40px;
     width: 50px;
-    background-color: rgb(255, 32, 80);
+    border-radius: 4px;
+    background-color: rgb(255, 75, 108)
 }
 
 .wordlist-item-delete:hover {
@@ -109,9 +122,10 @@ background-color: #ffffff;
 .slider {
   position: absolute;
   cursor: pointer;
+  margin-top: 3px;
   top: 0; left: 0; right: 0; bottom: 0;
   background-color: #e8e8e8;
-  transition: 0.3s;
+  transition: 0.1s;
   border-radius: 34px;
   height: 22px;
   width: 40px;;
@@ -130,7 +144,7 @@ background-color: #ffffff;
 }
 
 input:checked + .slider {
-  background-color: #14ff53;
+  background-color: var(--color-secondary)
 }
 
 input:checked + .slider::before {
@@ -139,6 +153,9 @@ input:checked + .slider::before {
 
 /* .1 ADD WORD FORM */
 
+.add-word-form-manage-page{
+  width: 100%;
+}
 
 .add-word-form-manage-page .add-word-field {
   display: flex;
@@ -146,6 +163,7 @@ input:checked + .slider::before {
   align-content: center;
   align-items: center;
     margin-bottom: 20px;
+    width: 100%;
 }
 
 .add-word-form-manage-page .add-word-field legend {
@@ -160,8 +178,8 @@ input:checked + .slider::before {
     padding: 0px;
   display: flex;
   flex-direction: column;
-  width: 200px;
-  height: 30px;
+  width: 100%;
+  height: 50px;
   align-items: center;
 }
 

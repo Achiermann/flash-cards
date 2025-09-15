@@ -7,11 +7,12 @@ div.set-item {
   flex-direction: column;
   justify-content: center;
     background-color: rgb(253, 237, 237);
-    padding: 40px;
-    margin: 16px;
     border: 1px solid rgb(186, 107, 107);
     border-radius: 4px;
-    width: 400px;}
+    max-width: 100%;
+    height: 400px;
+  margin-bottom: 40px;
+  padding: 20px;}
 
 .set-title {
   font-size: 30px;
@@ -20,13 +21,22 @@ div.set-item {
   text-align: center;  
   width: 100%;
   margin-top: 40px;
+  margin-bottom: 40px
 }
 
-.button-delete-set {     
-  background-color: rgb(255, 107, 107);
+.button-delete-set {  
+  all: unset;   
+  justify-content: center;
+  background-color: rgb(255, 75, 108);
   color: white;
-  height: 25px;
-  width: 25px;    
+  min-height: 40px;
+  max-width: 40px;
+  border-radius: 10px;
+  margin-bottom: auto;
+}
+
+.button-delete-set svg {
+  margin: 12px
 }
 
 .btn-add-word{
@@ -38,7 +48,14 @@ div.set-item {
   display: flex;
   justify-content: space-between;
   align-items: center;
-  width: 100%;
+}
+
+.edit-set-name-input {
+  font-size: 20px;
+  color: rgb(50, 50, 50);
+  text-align: center;  
+  margin: 30px 30px 40px 30px;
+  height: 40px;
 }
 
 /*.1  WORD INPUT  */
@@ -48,41 +65,49 @@ div.set-item {
   flex-direction: column;
   align-content: center;
   align-items: center;
+justify-content: center;
+margin-bottom: 40px
 }
 
+/* Contains text "Add A New Word" */
 .add-word-field legend {
   margin: 0px;
   text-align: center;
-  width: 100%;
   font-weight: bold;
+    margin-bottom: 20px
+
 }
 
 .add-word-field label {
-    margin: 0px;
-    padding: 0px;
+  margin: 0px;
+  padding: 0px;
   display: flex;
   flex-direction: column;
   width: 100%;
+  border-radius: 3%;
+}
+
+/* Input fields */
+.add-word-field input {
+  margin: 0px 20px 0px 20px;
 }
 
 .add-word-field p {
   font-size: 16px;
-  text-align: left;        
+  text-align: center;  
 }
 
 .word-input-field {
   font-size: 16px;  
   padding: 8px;      
-  width: 100%;
   height: 30px;
 }
 
 .separator-line{
   border-bottom: 1px solid rgb(48, 48, 48);
   height: 0px;
-  width: 100%;
-  margin-top: 20px;
-  margin-bottom: 20px;
+  width: 90%;
+  margin: 20px 20px 20px 20px;
 }
 
 .set-option-button-container {

@@ -3,8 +3,9 @@
 import { useParams } from "next/navigation";
 import { useSetsStore } from "@/app/stores/useSetsStore";
 import {useLearnSetStore} from "@/app/stores/useLearnSetStore";
-import { useEffect, useState } from "react";
+import { use, useEffect, useState, useRef } from "react";
 import Link from "next/link";
+import { LinearProgress } from "@mui/material";
 
 export default function LearnView() {
 
@@ -12,6 +13,24 @@ const [showAnswer, setShowAnswer] = useState(false);
 
 const { set: slug } = useParams();
 const { matchedSet, count, increment, decrement, resetLearnSession, learned, setFinished} = useLearnSetStore();
+let currentSetLength = matchedSet?.words?.length || 0;
+const initSetLength = useRef(currentSetLength)
+const evaluateProgress = function(){
+  if(setFinished) return 100;
+  else if (!setFinished) return initSetLength.current === 0 ? 0 : ((100 / initSetLength.current) * (initSetLength.current - currentSetLength)).toFixed(2)
+}
+const progress = evaluateProgress();
+
+useEffect(() => {
+  initSetLength.current = 0
+  currentSetLength = 0;
+},[])
+
+useEffect(() => {
+  if(initSetLength.current === 0 && currentSetLength){
+    initSetLength.current = currentSetLength || 0;
+  }
+}, [currentSetLength]);
 
 const initLearnSession = !matchedSet && slug;
 if (initLearnSession) {
@@ -33,6 +52,9 @@ if(!matchedSet) {return <div className="loading">Loading...</div>;}
   const setLength = matchedSet.words.filter((w) => {return !w.learned && w.active}).length;matchedSet.words.length > 0
 
   return (<div className = "learn-view-container">
+<div className="progress-and-flashcard">
+  <div className="progress-bar-wrapper">
+  <LinearProgress variant="determinate" value={progress} /></div>
   <div className = "flashcard" onClick={() => setShowAnswer(!showAnswer)}>
       {!setFinished &&<><ul className="flashcard-word-wrapper">
       <li className="flashcard-front"><p>{front}</p></li>
@@ -49,5 +71,6 @@ if(!matchedSet) {return <div className="loading">Loading...</div>;}
   <button className="button-reset" onClick={() => resetLearnSession(slug)}>Again</button>   
  <Link href={`/`}> <button className="button-goback"> Go Back</button> </Link>
   </div>} 
-  </div>
+  </div></div>
       </div>);}
+

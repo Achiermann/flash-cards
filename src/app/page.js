@@ -1,24 +1,29 @@
 'use client';
 
-import { useState } from 'react';
-import { useSetsStore } from '@/app/stores/useSetsStore';
-import SetItem from '@/app/SetItem';
+import { useState, useEffect } from 'react';
+import { useSetsStore } from './stores/useSetsStore';
+import SetItem from './setItem/SetItem';
 import { Plus } from 'lucide-react';
-import { useEditOptionsStore } from '@/app/stores/useEditOptionsStore';
+import { useEditOptionsStore } from './stores/useEditOptionsStore';
 
 
 export default function SetsControl() {
+  
   const [setName, setSetName] = useState('');
   const [showCreateField, setShowCreateField] = useState(false);
   const [isReady, setIsReady] = useState(false);
-
+  
   const sets = useSetsStore((state) => state.sets);
+  const fetchSets = useSetsStore(s => s.fetchSets);
   const addSet = useSetsStore((state) => state.addSet);
   const addWord = useSetsStore((state) => state.addWord);
   const setShowEditOptions = useEditOptionsStore((state) => state.setShowEditOptions);
   const showEditOptions = useEditOptionsStore((state) => state.showEditOptions);
-
-
+  
+  useEffect(() => {
+    fetchSets(); // load from server on mount
+  }, [fetchSets]);
+  
   useState(() => {
     setIsReady(true); // Zustand persist handles localStorage
   }, []);

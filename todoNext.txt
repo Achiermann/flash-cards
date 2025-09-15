@@ -1,3 +1,5 @@
 To Do Next:
 
-- check navigation. learnview is always leading to set 1.
+- i just put the wordlistcontainer in a separate component. next up is creating a component for the managewholeset-view
+which contains the wordlist-component. one option here would be to have the sets looped over and for each set
+create a wordlist-component with the title on top.
