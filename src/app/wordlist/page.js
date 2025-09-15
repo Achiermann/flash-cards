@@ -5,7 +5,7 @@ import { useSetsStore } from "@/app/stores/useSetsStore";
 import Link from "next/link";
 import { Trash2, Archive, ArchiveRestore } from 'lucide-react';
 import { useState } from "react";
-import AddWordForm from "@/components/buttons-and-forms/addWordForm";
+import AddWordForm from "@/components/addWordForm";
 import toast from "react-hot-toast";
 import { usePathname } from 'next/navigation';
 

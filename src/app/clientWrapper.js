@@ -2,7 +2,7 @@
 
 import { usePathname } from 'next/navigation';
 import Link from 'next/link';
-import Sidebar from './sidebar/page';
+import Sidebar from '../components/sidebar';
 import {useState} from 'react';
 import {AlignJustify} from 'lucide-react';
 import LoginPage from './login/page';
