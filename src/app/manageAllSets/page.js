@@ -4,7 +4,7 @@ import { useSetsStore } from "@/app/stores/useSetsStore";
 import Link from "next/link";
 import { useState } from "react";
 import AddWordForm from "@/components/addWordForm";
-import Wordlist from "@/app/wordlist/page";
+import Wordlist from "@/components/wordlist";
 import { useEffect } from "react";
 
 export default function ManageAllSetsView() {

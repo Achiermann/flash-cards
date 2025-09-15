@@ -1,76 +1,89 @@
-"use client";
+'use client';
 
-import { useParams } from "next/navigation";
-import { useSetsStore } from "@/app/stores/useSetsStore";
-import {useLearnSetStore} from "@/app/stores/useLearnSetStore";
-import { use, useEffect, useState, useRef } from "react";
-import Link from "next/link";
-import { LinearProgress } from "@mui/material";
+import { useParams } from 'next/navigation';
+import { useLearnSetStore } from '@/app/stores/useLearnSetStore';
+import { useEffect, useRef, useState } from 'react';
+import Link from 'next/link';
+import { LinearProgress } from '@mui/material';
 
 export default function LearnView() {
+  const [showAnswer, setShowAnswer] = useState(false);
+  const { set: slug } = useParams();
 
-const [showAnswer, setShowAnswer] = useState(false);
+  const {
+    matchedSet,
+    count,
+    increment,
+    decrement,
+    resetLearnSession,
+    learned,
+    setFinished,          // assuming this is a boolean flag in your store
+  } = useLearnSetStore();
 
-const { set: slug } = useParams();
-const { matchedSet, count, increment, decrement, resetLearnSession, learned, setFinished} = useLearnSetStore();
-let currentSetLength = matchedSet?.words?.length || 0;
-const initSetLength = useRef(currentSetLength)
-const evaluateProgress = function(){
-  if(setFinished) return 100;
-  else if (!setFinished) return initSetLength.current === 0 ? 0 : ((100 / initSetLength.current) * (initSetLength.current - currentSetLength)).toFixed(2)
-}
-const progress = evaluateProgress();
+  // Track the initial count once per session
+  const initialCountRef = useRef(null);
 
-useEffect(() => {
-  initSetLength.current = 0
-  currentSetLength = 0;
-},[])
+  // Start / reset the session when slug changes
+  useEffect(() => {
+    resetLearnSession(slug);
+    initialCountRef.current = null;        // clear initial so it can be set again
+  }, [resetLearnSession, slug]);
 
-useEffect(() => {
-  if(initSetLength.current === 0 && currentSetLength){
-    initSetLength.current = currentSetLength || 0;
-  }
-}, [currentSetLength]);
+  // Set the initial count once when words are available
+  useEffect(() => {
+    if (matchedSet && initialCountRef.current === null) {
+      const initial = matchedSet.words.filter(w => !w.learned && w.active).length;
+      initialCountRef.current = initial;
+    }
+  }, [matchedSet]);
 
-const initLearnSession = !matchedSet && slug;
-if (initLearnSession) {
-  resetLearnSession(slug);
-}
+  // Hide answer when card index or set changes
+  useEffect(() => {
+    setShowAnswer(false);
+  }, [count, matchedSet]);
 
-useEffect(() => {
-resetLearnSession(slug);
-},[resetLearnSession, slug]);
+  if (!matchedSet) return <div className="loading">Loading...</div>;
 
-useEffect(() => {
-  setShowAnswer(false);
-}, [count, matchedSet]);
+  const remaining = matchedSet.words.filter(w => !w.learned && w.active).length;
+  const initial = initialCountRef.current ?? remaining; // fallback on first render
+  const progress = initial > 0 ? ((initial - remaining) / initial) * 100 : 0; // number, not string
 
-if(!matchedSet) {return <div className="loading">Loading...</div>;}
- 
   const front = matchedSet.words[count].front;
-  const back = matchedSet.words[count].back;
-  const setLength = matchedSet.words.filter((w) => {return !w.learned && w.active}).length;matchedSet.words.length > 0
+  const back  = matchedSet.words[count].back;
 
-  return (<div className = "learn-view-container">
-<div className="progress-and-flashcard">
-  <div className="progress-bar-wrapper">
-  <LinearProgress variant="determinate" value={progress} /></div>
-  <div className = "flashcard" onClick={() => setShowAnswer(!showAnswer)}>
-      {!setFinished &&<><ul className="flashcard-word-wrapper">
-      <li className="flashcard-front"><p>{front}</p></li>
-      <div className="flashcard-separator"/>
-      <li className="flashcard-back"><p>{showAnswer ? back : ``}</p></li>
-    </ul>
-  <div className="options-container">
-    <button className="button-prev" onClick={(e) => {e.stopPropagation(); decrement(setLength)}}>Prev</button>
-    <button className="button-learned" onClick={(e) => {e.stopPropagation(); learned()}}>Learned</button>
-    <button className="button-repeat" onClick={(e) => {e.stopPropagation(); increment(setLength)}}>Repeat</button>
-  </div></>}
-   {setFinished && <div className="set-finished-display">
-  <h2>Well done! <br/> You finished the Set.</h2>
-  <button className="button-reset" onClick={() => resetLearnSession(slug)}>Again</button>   
- <Link href={`/`}> <button className="button-goback"> Go Back</button> </Link>
-  </div>} 
-  </div></div>
-      </div>);}
+  return (
+    <div className="learn-view-container">
+      <div className="progress-and-flashcard">
+        <div className="progress-bar-wrapper">
+          <LinearProgress variant="determinate" value={setFinished ? 100 : progress} />
+        </div>
 
+        <div className="flashcard" onClick={() => setShowAnswer(!showAnswer)}>
+          {!setFinished && (
+            <>
+              <ul className="flashcard-word-wrapper">
+                <li className="flashcard-front"><p>{front}</p></li>
+                <div className="flashcard-separator" />
+                <li className="flashcard-back"><p>{showAnswer ? back : ''}</p></li>
+              </ul>
+
+              <div className="options-container">
+                <button className="button-prev"    onClick={(e) => { e.stopPropagation(); decrement(remaining); }}>Prev</button>
+                <button className="button-learned" onClick={(e) => { e.stopPropagation(); learned(); }}>Learned</button>
+                <button className="button-repeat"  onClick={(e) => { e.stopPropagation(); increment(remaining); }}>Repeat</button>
+              </div>
+            </>
+          )}
+
+          {setFinished && (
+            <div className="set-finished-display">
+              <h2>Well done! <br /> You finished the Set.</h2>
+              <button className="button-reset" onClick={() => resetLearnSession(slug)}>Again</button>
+              <Link href="/"><button className="button-goback">Go Back</button></Link>
+            </div>
+          )}
+        </div>
+      </div>
+    </div>
+  );
+}

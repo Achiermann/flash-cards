@@ -6,8 +6,7 @@ import Link from "next/link";
 import { Trash2 } from 'lucide-react';
 import { useState } from "react";
 import AddWordForm from "@/components/addWordForm";
-import Wordlist from "@/app/wordlist/page";
-
+import Wordlist from '@/components/wordlist';
 
 export default function ManageSetView() {
 
