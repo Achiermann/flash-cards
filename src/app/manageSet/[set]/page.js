@@ -5,7 +5,7 @@ import { useSetsStore } from "@/app/stores/useSetsStore";
 import Link from "next/link";
 import { Trash2 } from 'lucide-react';
 import { useState } from "react";
-import AddWordForm from "@/app/buttons&forms/addWord/page";
+import AddWordForm from "@/components/buttons-and-forms/addWordForm";
 import Wordlist from "@/app/wordlist/page";
 
 
