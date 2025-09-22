@@ -7,12 +7,21 @@
 @import url('./sidebar.css');
 @import url('./login.css');
 @import url('https://fonts.googleapis.com/css2?family=Funnel+Sans:ital,wght@0,300..800;1,300..800&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Racing+Sans+One&family=Tourney:ital,wght@0,100..900;1,100..900&family=Turret+Road:wght@200;300;400;500;700;800&display=swap');
 
+/* 
+fonts
+Racing Sans One
+Tourney
+Turret Road
+Funnel Sans
+Inter */
 
 :root {
   --font-inter: 'Inter', sans-serif;
   --font-funnel-sans: 'Funnel Sans', sans-serif;
-  --font-primary: 'Inter', sans-serif;
+  --font-primary: 'Racing Sans', sans-serif;
+  --font-secondary: 'Turred Road', sans-serif;
 }
 /* 
 * {
@@ -25,14 +34,24 @@ body {
   /* font-family: 'Funnel Sans', sans-serif; */
 background: #EECDA3; 
 background: linear-gradient(to right, var(--color-primary), var(--color-secondary)); /* W3C, IE 10+/ Edge, Firefox 16+, Chrome 26+, Opera 12+, Safari 7+ */
-
+/* background: #12FBFF;
+background: linear-gradient(180deg,rgba(18, 251, 255, 1) 0%, rgba(255, 255, 255, 1) 50%, rgba(239, 160, 237, 1) 100%); */
 }
 
 /* template
 background: linear-gradient(to right, #ffa1ca, #ffdbab); */
 
-h1, h2, h3 {
-  font-family: 'Funnel Sans', sans-serif !important;
+h2{
+  font-family: var(--font-primary) !important;
+  font-size: 300px;
+}
+
+h3 {
+  font-family: var(--font-secondary) !important;
+}
+
+h1{
+  font-family: var(--font-primary) !important;
 }
 
 h2 {

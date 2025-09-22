@@ -5,7 +5,8 @@ import { useSetsStore } from './stores/useSetsStore';
 import SetItem from './setItem/SetItem';
 import { Plus } from 'lucide-react';
 import { useEditOptionsStore } from './stores/useEditOptionsStore';
-
+import { useIsMobile } from '@/components/isMobile';
+import { useSwipeable } from 'react-swipeable';
 
 export default function SetsControl() {
   
@@ -19,15 +20,17 @@ export default function SetsControl() {
   const addWord = useSetsStore((state) => state.addWord);
   const setShowEditOptions = useEditOptionsStore((state) => state.setShowEditOptions);
   const showEditOptions = useEditOptionsStore((state) => state.showEditOptions);
-  
+const isMobile = useIsMobile();
+const [count, setCount] = useState(0);
+
   useEffect(() => {
     fetchSets(); // load from server on mount
   }, [fetchSets]);
   
-  useState(() => {
-    setIsReady(true); // Zustand persist handles localStorage
-  }, []);
 
+   useEffect(() => {
+    setIsReady(true);
+  }, []);
 
 {//.1     Show create set field                    *}
 }  const toggleCreateSetField = () => {
@@ -51,12 +54,31 @@ export default function SetsControl() {
     toggleCreateSetField();
   };
 
+  const handleCountUp = () => {
+    if(count === sets.length -1) setCount(0);
+    else setCount(count + 1)
+};
+
+ const handleCountDown = () => {
+    if(count === 0) setCount(sets.length -1);
+    else setCount(count - 1)
+};
+
+  const swipeHandlers = useSwipeable({
+    onSwipedLeft: handleCountDown,
+    onSwipedRight: handleCountUp,
+    trackTouch: true,
+    trackMouse: true,
+    preventScrollOnSwipe: true,
+    delta: 10,  // min px to count as a swipe
+  });
+
   // Don't render until client-side load
   if (!isReady) return null;
 
   return (
     <div className="sets-control">
-      <h2>Your Sets</h2>
+  <h2>Your Sets</h2>
       <form onSubmit={handleSubmit}>
 {/*//.2                       OPTION BUTTONS                       */}
         <div className="options-grid">
@@ -78,8 +100,11 @@ export default function SetsControl() {
       </form>
 {/*//.2                       SETS-GRID                       */}
       <div className="sets-grid">
-  <ul> {sets.map((set) => ( <li key={set.id}> <SetItem data={set} editOptions={showEditOptions} id={set.id} /> </li> ))} </ul>
-      </div> 
+  {!isMobile && <ul> {sets.map((set) => ( <li key={set.id}> <SetItem data={set} editOptions={showEditOptions} id={set.id} /> </li> ))} </ul>}
+  {isMobile && sets[count] && <ul {...swipeHandlers}><li key={sets[count].id}> <SetItem data={sets[count]} editOptions={showEditOptions} id={sets[count].id} /> </li></ul>}    
+  </div> 
+  <button onClick= {() => handleCountUp()}>Next</button>
+  <button onClick= {() => handleCountDown()}>Prev</button>
     </div>
   );
 }

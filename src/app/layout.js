@@ -10,7 +10,6 @@ import LoginPage from './login/page';
 import toast, { Toaster } from 'react-hot-toast';
 import { red } from "@mui/material/colors";
 
-
 export default function RootLayout({ children }) {
 
 const pathname = usePathname();

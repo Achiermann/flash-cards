@@ -33,6 +33,7 @@ flex-direction: row;
  justify-content: center;
 gap: 26px;
 max-width: 100%;
+touch-action: pan-y;
 }
 
 .options-grid{

@@ -14,6 +14,13 @@ div.set-item {
   margin-bottom: 40px;
   padding: 20px;}
 
+.set-top-row {
+  display: flex;
+  flex-direction: column;
+  /* justify-content: space-between; */
+  align-items: center;
+}
+
 .set-title {
   font-size: 30px;
   font-weight: 600;
@@ -21,7 +28,17 @@ div.set-item {
   text-align: center;  
   width: 100%;
   margin-top: 40px;
-  margin-bottom: 40px
+  margin-bottom: 10px
+}
+
+.set-item-words-count {
+margin-bottom: 30px;
+}
+
+.set-item-words-count p {
+  font-size: 16px;
+  color: rgba(0, 0, 0, 0.37);
+  margin: 0px;
 }
 
 .button-delete-set {  
@@ -44,11 +61,6 @@ div.set-item {
   color: rgb(96, 96, 96)
 }
 
-.set-top-row {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-}
 
 .edit-set-name-input {
   font-size: 20px;

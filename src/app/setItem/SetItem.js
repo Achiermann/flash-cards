@@ -39,12 +39,11 @@ editSet(id, editSetName)
        {showEditOptions && 
   <button className="button-delete-set" onClick={(e) => {e.preventDefault(); e.stopPropagation(); deleteSet(data.id)} }> 
   <Trash2 className="trash-icon"/> </button>}
-     {!showEditOptions && (<div className='set-top-row'> <h3 className="set-title">{data.name}</h3></div>)}
+     {!showEditOptions && (<div className='set-top-row'> <h3 className="set-title">{data.name}</h3><div className="set-item-words-count"><p>{data.words.length} word{data.words.length > 1 || data.words.length === 0 ? "s" : ""}</p></div> </div>)}
       {showEditOptions && (<form onSubmit={handleSubmitName(id, editSetName)}><input className="edit-set-name-input" type="text" value={editSetName} onChange={(e) => setEditSetName(e.target.value)}></input>
       <button type="submit" style={{display: "none"}}/></form>)} 
 
 {/*//.2                 ADD A WORD                    */}
-
 <AddWordForm setId={data.id} className="add-word-form-homepage"/>
 
 {/*//.2                 LEARN & MANAGE                 */}

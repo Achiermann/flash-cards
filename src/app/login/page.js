@@ -74,7 +74,7 @@ setTimeout(() => window.location.reload(), 1500);
     <button className="btn-login" onClick={handleLogin}>Log In</button>
     <div className="login-options-wrapper">
    <p>
-     <button className="btn-forgot-pw" onClick={() => setDisplay("forgetpw")}><em>Forgot password?</em></button>
+     <button className="btn-forgot-pw" onClick={() => setDisplay("forgetpw")}><p>Forgot password?</p></button>
      <br/>
      don`t have an account yet? <button className="btn-sign-up-here" onClick={() => setDisplay("signup")}><u>Sign up</u></button>
    </p>
