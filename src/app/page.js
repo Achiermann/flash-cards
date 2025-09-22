@@ -1,12 +1,13 @@
 'use client';
 
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useMemo} from 'react';
 import { useSetsStore } from './stores/useSetsStore';
 import SetItem from './setItem/SetItem';
 import { Plus } from 'lucide-react';
 import { useEditOptionsStore } from './stores/useEditOptionsStore';
 import { useIsMobile } from '@/components/isMobile';
 import { useSwipeable } from 'react-swipeable';
+import { motion, useMotionValue, useTransform, animate } from 'framer-motion';
 
 export default function SetsControl() {
   
@@ -22,6 +23,7 @@ export default function SetsControl() {
   const showEditOptions = useEditOptionsStore((state) => state.showEditOptions);
 const isMobile = useIsMobile();
 const [count, setCount] = useState(0);
+const current = sets[count];
 
   useEffect(() => {
     fetchSets(); // load from server on mount
@@ -73,6 +75,43 @@ const [count, setCount] = useState(0);
     delta: 10,  // min px to count as a swipe
   });
 
+// --- Framer bits for the mobile card ---
+  const x = useMotionValue(0);
+  const rotate = useTransform(x, [-200, 0, 200], [-12, 0, 12]);
+  const opacity = useTransform(x, [-220, -80, 0, 80, 220], [0, 1, 1, 1, 0.0]);
+
+  // Thresholds based on viewport width
+  const { swipeDistance, flingVelocity } = useMemo(() => {
+    const w = typeof window !== 'undefined' ? window.innerWidth : 375;
+    return {
+      swipeDistance: Math.min(180, Math.max(80, w * 0.25)), // 25% width (80..180px)
+      flingVelocity: 600,                                   // px/s
+    };
+  }, []);
+
+  function onDragEnd(_, info) {
+    const { offset, velocity } = info; // offset.x, velocity.x
+    const goLeft  = offset.x < -swipeDistance || velocity.x < -flingVelocity;
+    const goRight = offset.x >  swipeDistance || velocity.x >  flingVelocity;
+
+    if (goLeft) {
+      // animate off-left, then go next, then reset position
+      animate(x, -window.innerWidth, { duration: 0.25 }).then(() => {
+        handleCountUp();
+        x.set(0); // reset for next card
+      });
+    } else if (goRight) {
+      animate(x,  window.innerWidth, { duration: 0.25 }).then(() => {
+        handleCountDown();
+        x.set(0);
+      });
+    } else {
+      // snap back
+      animate(x, 0, { type: 'spring', stiffness: 300, damping: 30 });
+    }
+  }
+
+
   // Don't render until client-side load
   if (!isReady) return null;
 
@@ -101,8 +140,11 @@ const [count, setCount] = useState(0);
 {/*//.2                       SETS-GRID                       */}
       <div className="sets-grid">
   {!isMobile && <ul> {sets.map((set) => ( <li key={set.id}> <SetItem data={set} editOptions={showEditOptions} id={set.id} /> </li> ))} </ul>}
-  {isMobile && sets[count] && <ul {...swipeHandlers}><li key={sets[count].id}> <SetItem data={sets[count]} editOptions={showEditOptions} id={sets[count].id} /> </li></ul>}    
-  </div> 
+ {isMobile && (
+<div className="swipe-stage"> <ul> {current && ( <li key={current.id}>
+<motion.div className="swipe-card" style={{ x, rotate, opacity, touchAction: 'pan-y' }} drag="x" dragConstraints={{ left: 0, right: 0 }} onDragEnd={onDragEnd} whileTap={{ cursor: 'grabbing' }} >
+ <SetItem data={current} editOptions={showEditOptions} id={current.id} /> </motion.div> </li> )} </ul> </div> )}
+          </div> 
   <button onClick= {() => handleCountUp()}>Next</button>
   <button onClick= {() => handleCountDown()}>Prev</button>
     </div>
