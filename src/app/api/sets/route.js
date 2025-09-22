@@ -1,19 +1,8 @@
 export const runtime = 'nodejs';
 
 import { NextResponse } from 'next/server';
-import { pool } from '@/lib/db';
+import { supabaseServer } from '@/lib/supabaseServerClient';
 import { getUserFromRequest } from '@/lib/authServer';
-
-/**
- * /api/sets
- *
- * Handles list + creation of sets for the authenticated user.
- * - GET: Returns all sets belonging to the logged-in user (scoped by user.id).
- * - POST: Creates a new set (set_name, slug, words) owned by the logged-in user.
- *
- * Requires a valid JWT (auth_token cookie). Each set row is linked via `sets.user` FK.
- */
-
 
 function toSlug(str = '') {
   return String(str).trim().toLowerCase()
@@ -21,60 +10,84 @@ function toSlug(str = '') {
     .replace(/--+/g, '-').replace(/^-+|-+$/g, '');
 }
 
-// GET /api/sets — list sets for current user
 export async function GET(req) {
   try {
     const me = getUserFromRequest(req);
     if (!me) return NextResponse.json({ error: 'Not authenticated' }, { status: 401 });
 
-    const [rows] = await pool.query(
-      'SELECT id, set_name, words, slug, `createdAt` FROM sets WHERE `user` = ? ORDER BY `createdAt` DESC',
-      [me.id]
-    );
+    const { data, error } = await supabaseServer
+      .from('sets')
+      .select('id, set_name, slug, words, "createdAt", "user"')
+      .eq('user', me.id)
+      .order('createdAt', { ascending: false });
 
-    for (const r of rows) {
-      try { r.words = JSON.parse(r.words ?? '[]'); } catch { r.words = []; }
-    }
-    return NextResponse.json(rows);
+    if (error) throw error;
+
+    // words is stored as VARCHAR in DB → parse here for the stores
+    const parsed = (data ?? []).map((row) => {
+      let words = [];
+      try { words = JSON.parse(row.words ?? '[]'); } catch {}
+      return {
+        id: row.id,
+        set_name: row.set_name,
+        slug: row.slug,
+        words,
+        createdAt: row.createdAt,
+        user: row.user,
+      };
+    });
+
+    return NextResponse.json(parsed, { status: 200 });
   } catch (err) {
-    console.error('[GET /api/sets] DB error:', err);
-    return NextResponse.json({ error: 'DB error', code: err?.code, message: err?.message }, { status: 500 });
+    return NextResponse.json({ error: 'DB error', message: err?.message }, { status: 500 });
   }
 }
 
-// POST /api/sets — create a set for current user
 export async function POST(req) {
   try {
     const me = getUserFromRequest(req);
     if (!me) return NextResponse.json({ error: 'Not authenticated' }, { status: 401 });
 
-    const body = await req.json();
-    const name = (body?.name ?? '').trim();
-    if (!name) return NextResponse.json({ error: 'name is required' }, { status: 400 });
+    const { name, slug: incomingSlug, words = [] } = await req.json();
+    const slug = incomingSlug || toSlug(name);
 
-    const slug = body?.slug ? toSlug(body.slug) : toSlug(name);
-    const words = JSON.stringify(body?.words ?? []);
+    // store as string in the VARCHAR column to match your schema/data flow
+    const wordsString = JSON.stringify(Array.isArray(words) ? words : []);
 
-    const [result] = await pool.execute(
-      'INSERT INTO sets (set_name, words, `user`, slug) VALUES (?, ?, ?, ?)',
-      [name, words, me.id, slug]
-    );
+    const insert = {
+      set_name: name,
+      slug,
+      words: wordsString,
+      user: me.id,
+      createdAt: new Date().toISOString().replace('Z', ''), // timestamp without tz (matches your column type)
+    };
 
-    const insertId = result.insertId;
-    const [rows] = await pool.execute(
-      'SELECT id, set_name, words, slug, `createdAt` FROM sets WHERE id = ? AND `user` = ?',
-      [insertId, me.id]
-    );
+    const { data, error } = await supabaseServer
+      .from('sets')
+      .insert(insert)
+      .select('id, set_name, slug, words, "createdAt", "user"')
+      .single();
 
-    const row = rows[0];
-    try { row.words = JSON.parse(row.words ?? '[]'); } catch { row.words = []; }
-
-    return NextResponse.json(row, { status: 201 });
-  } catch (err) {
-    if (err?.code === 'ER_DUP_ENTRY') {
-      return NextResponse.json({ error: 'Slug already exists for this user', code: err.code }, { status: 409 });
+    if (error) {
+      if (error.code === '23505') {
+        // if you have a unique on (user, slug), this will fire on duplicates
+        return NextResponse.json({ error: 'Slug already exists for this user' }, { status: 409 });
+      }
+      throw error;
     }
-    console.error('[POST /api/sets] DB error:', err);
-    return NextResponse.json({ error: 'DB error', code: err?.code, message: err?.message }, { status: 500 });
+
+    let wordsParsed = [];
+    try { wordsParsed = JSON.parse(data.words ?? '[]'); } catch {}
+
+    return NextResponse.json({
+      id: data.id,
+      set_name: data.set_name,
+      slug: data.slug,
+      words: wordsParsed,
+      createdAt: data.createdAt,
+      user: data.user,
+    }, { status: 201 });
+  } catch (err) {
+    return NextResponse.json({ error: 'DB error', message: err?.message }, { status: 500 });
   }
 }

@@ -1,24 +1,26 @@
 export const runtime = 'nodejs';
 
 import { NextResponse } from 'next/server';
-import { verifyToken } from '@/lib/auth';
-
-/**
- * /api/users/me
- *
- * Returns the currently authenticated user (decoded from JWT).
- * - GET: Reads the `auth_token` cookie, verifies it, and returns the user payload.
- * - If no token or invalid token, returns 401.
- *
- * Useful for checking session state on the frontend.
- */
+import { getUserFromRequest } from '@/lib/authServer';
+import { supabaseServer } from '@/lib/supabaseServerClient';
 
 export async function GET(req) {
-  const token = req.cookies.get('auth_token')?.value;
-  if (!token) return NextResponse.json({ error: 'Not authenticated' }, { status: 401 });
+  const me = getUserFromRequest(req);
+  if (!me) {
+    return NextResponse.json({ user: null }, { status: 200 }); // or 401 if you prefer
+  }
 
-  const decoded = verifyToken(token);
-  if (!decoded) return NextResponse.json({ error: 'Invalid token' }, { status: 401 });
+  // Fetch latest row from DB (safe with service role; read-only)
+  const { data: user, error } = await supabaseServer
+    .from('userdata')
+    .select('id, username, email, last_login, created_at')
+    .eq('id', me.id)
+    .single();
 
-  return NextResponse.json({ user: decoded });
+  if (error || !user) {
+    // Fall back to token if row missing; keeps old behavior tolerant
+    return NextResponse.json({ user: { id: me.id, username: me.username } }, { status: 200 });
+  }
+
+  return NextResponse.json({ user }, { status: 200 });
 }

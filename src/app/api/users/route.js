@@ -1,15 +1,8 @@
 export const runtime = 'nodejs';
 
 import { NextResponse } from 'next/server';
-import { pool } from '@/lib/db';
 import bcrypt from 'bcrypt';
-
-/**
- * (signup)
- * Handles new user registration.
- * - POST: Creates a new user in `userdata` with a hashed password.
- * - Returns basic user info (id, email, username).
- * * Note: Does not log the user in; login is handled by /api/users/login. */
+import { supabaseServer } from '@/lib/supabaseServerClient';
 
 export async function POST(req) {
   try {
@@ -19,17 +12,23 @@ export async function POST(req) {
     }
 
     const password_hash = await bcrypt.hash(password, 10);
-    const [result] = await pool.execute(
-      'INSERT INTO userdata (email, username, password_hash) VALUES (?, ?, ?)',
-      [email, username, password_hash]
-    );
 
-    return NextResponse.json({ id: result.insertId, email, username }, { status: 201 });
-  } catch (err) {
-    if (err?.code === 'ER_DUP_ENTRY') {
-      return NextResponse.json({ error: 'Email or username already exists' }, { status: 409 });
+    const { data, error } = await supabaseServer
+      .from('userdata')
+      .insert({ email, username, password_hash })
+      .select('id, email, username')
+      .single();
+
+    if (error) {
+      // Postgres unique violation
+      if (error.code === '23505') {
+        return NextResponse.json({ error: 'Email or username already exists' }, { status: 409 });
+      }
+      throw error;
     }
-    console.error('[POST /api/users] DB error:', err);
+
+    return NextResponse.json(data, { status: 201 });
+  } catch (err) {
     return NextResponse.json({ error: 'DB error', message: err?.message }, { status: 500 });
   }
 }

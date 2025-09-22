@@ -1,6 +1,6 @@
 import jwt from 'jsonwebtoken';
 
-const SECRET = process.env.JWT_SECRET || 'dev-secret-key'; // put a real secret in .env
+const SECRET = process.env.JWT_SECRET;
 
 export function signToken(payload) {
   return jwt.sign(payload, SECRET, { expiresIn: '7d' });

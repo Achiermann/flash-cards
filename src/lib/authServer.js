@@ -1,9 +1,11 @@
-import { verifyToken } from '@/lib/auth';
+import { verifyToken } from './auth';
 
 export function getUserFromRequest(req) {
-  const token = req.cookies.get('auth_token')?.value;
-  if (!token) return null;
-  const decoded = verifyToken(token);
-  if (!decoded?.id) return null;
-  return { id: decoded.id, username: decoded.username };
+  const cookie = req.headers.get('cookie') || '';
+  const m = cookie.match(/(?:^|;\s*)auth_token=([^;]+)/);
+  if (!m) return null;
+  const token = decodeURIComponent(m[1]);
+  const claims = verifyToken(token);
+  if (!claims) return null;
+  return { id: claims.id, username: claims.username };
 }

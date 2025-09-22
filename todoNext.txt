@@ -1,1 +1,4 @@
 To Do Next:
+
+- app deployed, but i get a "db error" when i try to connect via the vercel-domain. 
+db-connection works via localHost.
