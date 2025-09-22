@@ -96,12 +96,12 @@ const current = sets[count];
 
     if (goLeft) {
       // animate off-left, then go next, then reset position
-      animate(x, -window.innerWidth, { duration: 0 }).then(() => {
+      animate(x, -window.innerWidth, { duration: 0.25 }).then(() => {
         handleCountUp();
         x.set(0); // reset for next card
       });
     } else if (goRight) {
-      animate(x,  window.innerWidth, { duration: 0 }).then(() => {
+      animate(x,  window.innerWidth, { duration: 0.25 }).then(() => {
         handleCountDown();
         x.set(0);
       });
