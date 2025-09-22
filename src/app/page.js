@@ -96,12 +96,12 @@ const current = sets[count];
 
     if (goLeft) {
       // animate off-left, then go next, then reset position
-      animate(x, -window.innerWidth, { duration: 0.25 }).then(() => {
+      animate(x, -window.innerWidth, { duration: 0 }).then(() => {
         handleCountUp();
         x.set(0); // reset for next card
       });
     } else if (goRight) {
-      animate(x,  window.innerWidth, { duration: 0.25 }).then(() => {
+      animate(x,  window.innerWidth, { duration: 0 }).then(() => {
         handleCountDown();
         x.set(0);
       });
@@ -142,11 +142,9 @@ const current = sets[count];
   {!isMobile && <ul> {sets.map((set) => ( <li key={set.id}> <SetItem data={set} editOptions={showEditOptions} id={set.id} /> </li> ))} </ul>}
  {isMobile && (
 <div className="swipe-stage"> <ul> {current && ( <li key={current.id}>
-<motion.div className="swipe-card" style={{ x, rotate, opacity, touchAction: 'pan-y' }} drag="x" dragConstraints={{ left: 0, right: 0 }} onDragEnd={onDragEnd} whileTap={{ cursor: 'grabbing' }} >
+<motion.div className="swipe-card" style={{ x, touchAction: 'pan-y' }} whileDrag={{ scale: 0.98 }} drag="x" dragConstraints={{ left: 0, right: 0 }} onDragEnd={onDragEnd} whileTap={{ cursor: 'grabbing' }} >
  <SetItem data={current} editOptions={showEditOptions} id={current.id} /> </motion.div> </li> )} </ul> </div> )}
           </div> 
-  <button onClick= {() => handleCountUp()}>Next</button>
-  <button onClick= {() => handleCountDown()}>Prev</button>
     </div>
   );
 }

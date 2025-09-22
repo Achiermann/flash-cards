@@ -78,6 +78,13 @@ all: unset;
     width: 100%;
     text-align: center;
     line-height: 2px;
+    ;
+}
+
+.login-options-wrapper p {
+  white-space: normal;    /* allow wrapping (default for <p>) */
+  overflow-wrap: break-word; /* break long words if needed */
+  word-break: break-word;    /* extra safety for very long words/URLs */
 }
 
 .remember-me-wrapper{
@@ -89,4 +96,10 @@ all: unset;
 
 /* .1.        MOBILE                                                                             */
 
-@media (max-width: 768px){}
+@media (max-width: 768px){
+
+    .login-field{
+        width: 80%;
+        padding: 20px;
+    }
+}
