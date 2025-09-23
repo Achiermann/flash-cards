@@ -8,13 +8,15 @@ import { useEditOptionsStore } from './stores/useEditOptionsStore';
 import { useIsMobile } from '@/components/isMobile';
 import { useSwipeable } from 'react-swipeable';
 import { motion, useMotionValue, useTransform, animate } from 'framer-motion';
+import { useCenteredIndex } from "@/components/useCenteredIndex";
+import { grid } from '@mui/system';
+
 
 export default function SetsControl() {
   
   const [setName, setSetName] = useState('');
   const [showCreateField, setShowCreateField] = useState(false);
-  const [isReady, setIsReady] = useState(false);
-  
+  const [isReady, setIsReady] = useState(false);  
   const sets = useSetsStore((state) => state.sets);
   const fetchSets = useSetsStore(s => s.fetchSets);
   const addSet = useSetsStore((state) => state.addSet);
@@ -24,8 +26,11 @@ export default function SetsControl() {
 const isMobile = useIsMobile();
 const [count, setCount] = useState(0);
 const current = sets[count];
+const depsKey = `${isMobile}-${sets.length}`;
+const { ref: gridRef, centerIndex } = useCenteredIndex({ depsKey });
+const sortedSets = sets.sort((a, b) => a.id - b.id);
 
-  useEffect(() => {
+useEffect(() => {
     fetchSets(); // load from server on mount
   }, [fetchSets]);
   
@@ -66,52 +71,6 @@ const current = sets[count];
     else setCount(count - 1)
 };
 
-  const swipeHandlers = useSwipeable({
-    onSwipedLeft: handleCountDown,
-    onSwipedRight: handleCountUp,
-    trackTouch: true,
-    trackMouse: true,
-    preventScrollOnSwipe: true,
-    delta: 10,  // min px to count as a swipe
-  });
-
-// --- Framer bits for the mobile card ---
-  const x = useMotionValue(0);
-  const rotate = useTransform(x, [-200, 0, 200], [-12, 0, 12]);
-  const opacity = useTransform(x, [-220, -80, 0, 80, 220], [0, 1, 1, 1, 0.0]);
-
-  // Thresholds based on viewport width
-  const { swipeDistance, flingVelocity } = useMemo(() => {
-    const w = typeof window !== 'undefined' ? window.innerWidth : 375;
-    return {
-      swipeDistance: Math.min(180, Math.max(80, w * 0.25)), // 25% width (80..180px)
-      flingVelocity: 600,                                   // px/s
-    };
-  }, []);
-
-  function onDragEnd(_, info) {
-    const { offset, velocity } = info; // offset.x, velocity.x
-    const goLeft  = offset.x < -swipeDistance || velocity.x < -flingVelocity;
-    const goRight = offset.x >  swipeDistance || velocity.x >  flingVelocity;
-
-    if (goLeft) {
-      // animate off-left, then go next, then reset position
-      animate(x, -window.innerWidth, { duration: 0.25 }).then(() => {
-        handleCountUp();
-        x.set(0); // reset for next card
-      });
-    } else if (goRight) {
-      animate(x,  window.innerWidth, { duration: 0.25 }).then(() => {
-        handleCountDown();
-        x.set(0);
-      });
-    } else {
-      // snap back
-      animate(x, 0, { type: 'spring', stiffness: 300, damping: 30 });
-    }
-  }
-
-
   // Don't render until client-side load
   if (!isReady) return null;
 
@@ -122,7 +81,7 @@ const current = sets[count];
 {/*//.2                       OPTION BUTTONS                       */}
         <div className="options-grid">
 {/*//.1                       BUTTON CREATE                           */}
-    <button type="button" className="btn-create-sets" onClick={toggleCreateSetField}>{showCreateField ? 'Cancel' : <Plus className="plus-icon"/>} </button>
+    <button type="button" className={showCreateField ? "btn-cancle-create" : "btn-add-set"} onClick={toggleCreateSetField}>{showCreateField ? 'Cancel' : <Plus className="plus-icon"/>} </button>
 {/*//.1                       BUTTON EDIT                       */}
     <button type="button" className="btn-edit-sets" onClick={toggleEditOptions}>{showEditOptions ? 'Done' : 'Edit'}</button>
 </div>
@@ -132,19 +91,17 @@ const current = sets[count];
     <label>
       Setname:
       <input type="text" value={setName} onChange={(e) => setSetName(e.target.value)} />
-      <button type="submit">Create</button>
+      <button className = "btn-create-sets" type="submit">Create</button>
     </label>
   </div>
 )}
       </form>
 {/*//.2                       SETS-GRID                       */}
-      <div className="sets-grid">
-  {!isMobile && <ul> {sets.map((set) => ( <li key={set.id}> <SetItem data={set} editOptions={showEditOptions} id={set.id} /> </li> ))} </ul>}
- {isMobile && (
-<div className="swipe-stage"> <ul> {current && ( <li key={current.id}>
-<motion.div className="swipe-card" style={{ x, touchAction: 'pan-y' }} whileDrag={{ scale: 0.98 }} drag="x" dragConstraints={{ left: 0, right: 0 }} onDragEnd={onDragEnd} whileTap={{ cursor: 'grabbing' }} >
- <SetItem data={current} editOptions={showEditOptions} id={current.id} /> </motion.div> </li> )} </ul> </div> )}
+      <div className="sets-grid" ref={gridRef}>
+  {!isMobile && <ul> {sortedSets.map((set) => ( <li key={set.id}> <SetItem data={set} editOptions={showEditOptions} id={set.id} /> </li> ))} </ul>}
+  {isMobile && <ul className="snap-list"> {sortedSets.map(s => ( <li className="snap-item" key={s.id}> <SetItem data={s} id={s.id} editOptions={showEditOptions} /> </li> ))} </ul>}
           </div> 
+  <div className="dots-container">{sortedSets.map((el) => (<div className="dot" style={(el.id - 1) === centerIndex ? { backgroundColor: '#fcfcfcff' } : undefined}key={el.id}/>))}</div>
     </div>
   );
 }

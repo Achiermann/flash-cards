@@ -64,9 +64,9 @@ margin-bottom: 30px;
 
 .edit-set-name-input {
   font-size: 20px;
-  color: rgb(50, 50, 50);
+  color: rgb(79, 79, 79);
   text-align: center;  
-  margin: 30px 30px 40px 30px;
+  margin: 30px 30px 40px 30px !important;;
   height: 40px;
 }
 
@@ -126,6 +126,10 @@ margin-bottom: 40px
   display: flex;
   justify-content: center;   /* ✅ center horizontally */
   gap: 20px;                 /* space between buttons */
+}
+
+.button-learn{
+  background-color: rgb(238, 255, 128);
 }
 
 /* .1.        MOBILE                                                                             */

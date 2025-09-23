@@ -69,6 +69,7 @@ h2 {
   --color-border: #e0e0e0;
   --color-error: #d0021b;
   --color-success: #7ed321;
+  --main-green: rgb(132, 255, 128);
 }
 
 /* .1 Buttons & Inputs */
@@ -99,6 +100,8 @@ input[type="text"]::placeholder {
 input[type="text"] {
 border: 1px solid rgb(190, 190, 190);
 border-radius: 8px;
+min-height: 30px;
+margin: 0px 10px 0px 10px
 }
 
 button:hover, svg:hover {

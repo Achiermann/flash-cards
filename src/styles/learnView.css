@@ -36,8 +36,13 @@
   width: 400px;
   height: 400px;
   background-color: rgb(255, 251, 246);
-  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
 }   
+
+.flashcard p{
+  font-size: 38px;
+  color: rgb(0, 0, 0);
+}
 
 .flashcard-word-wrapper {
   display: flex;
@@ -45,8 +50,7 @@
   align-items: center;
   width: 100%;
   height: 100%;
-  margin-top: 30%;
-}
+margin: 30% 0px 0px 0px;}
 
 .flashcard-front,
 .flashcard-back {
@@ -58,7 +62,7 @@
 }
 
 .flashcard-separator {
-  height: 2px;
+  height: 1.4px;
   width: 300px;
   background-color: #494949;
 }
@@ -73,6 +77,27 @@
   background-color: rgb(255, 255, 255);
 }
 
+.set-finished-display{
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
+
+.finished-message{
+  margin-bottom: 40px;
+  text-align: center;
+}
+
+.finished-message p{
+font-size: 21px;;
+}
+
+.finished-options-container{
+  display: flex;
+  justify-content: center;
+  gap: 20px;
+}
+
 /*.2    Progress Bar      */
 
 .progress-bar-wrapper {
@@ -82,11 +107,14 @@
 }
 
 .MuiLinearProgress-bar1{
-  border: 2px solid #ffffff;
+ background-color:  var(--main-green) !important;
 }
 
-.MuiLinearProgress-bar2{
-  border: 2px solid #ff5151;
+.css-1txyin7-MuiLinearProgress-root{
+  height: 4px !important;
+  background-color: rgb(255, 255, 255) !important;
+  border: rgb(201, 201, 201) 1px solid !important;
+  border-radius: 10px !important;
 }
 
 /* .1.        MOBILE                                                                             */

@@ -77,9 +77,9 @@ export default function LearnView() {
 
           {setFinished && (
             <div className="set-finished-display">
-              <h2>Well done! <br /> You finished the Set.</h2>
-              <button className="button-reset" onClick={() => resetLearnSession(slug)}>Again</button>
-              <Link href="/"><button className="button-goback">Go Back</button></Link>
+            <div className="finished-message"><p>Well done! <br /> You finished the Set.</p></div>
+            <div className="finished-options-container">
+            <button className="button-reset" onClick={() => resetLearnSession(slug)}>Again</button> <Link href="/"><button className="button-goback">Go Back</button></Link> </div>
             </div>
           )}
         </div>
