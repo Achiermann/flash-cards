@@ -10,12 +10,11 @@ import {useEditOptionsStore} from '../stores/useEditOptionsStore';
 import toast from 'react-hot-toast';
 
 export default function SetItem({ data, editOptions, id }) {
-
+const { setConfirmDeleteMessage} = useSetsStore();
   const [editingSetNameId, setEditingSetNameId] = useState(null);
   const [editSetName, setEditSetName] = useState(`${data.name}`);
 
   const set = useSetsStore((state) => state.sets.find((s) => s.id === id));
-  const deleteSet = useSetsStore((state) => state.deleteSet);
   const editSet = useSetsStore((state) => state.editSet);
   const setShowEditOptions = useEditOptionsStore((state) => state.setShowEditOptions);
   const showEditOptions = useEditOptionsStore((state) => state.showEditOptions);
@@ -37,7 +36,7 @@ editSet(id, editSetName)
      <div className="set-item">
 {/*//.2                 EDIT                    */}
        {showEditOptions && 
-  <button className="button-delete-set" onClick={(e) => {e.preventDefault(); e.stopPropagation(); deleteSet(data.id)} }> 
+  <button className="button-delete-set" onClick={(e) => {e.preventDefault(); e.stopPropagation(); setConfirmDeleteMessage("confirm-delete", data.id)} }> 
   <Trash2 className="trash-icon"/> </button>}
      {!showEditOptions && (<div className='set-top-row'> <h3 className="set-title">{data.name}</h3><div className="set-item-words-count"><p>{data.words.length} word{data.words.length > 1 || data.words.length === 0 ? "s" : ""}</p></div> </div>)}
       {showEditOptions && (<form onSubmit={handleSubmitName(id, editSetName)}><input className="edit-set-name-input" type="text" value={editSetName} onChange={(e) => setEditSetName(e.target.value)}></input>

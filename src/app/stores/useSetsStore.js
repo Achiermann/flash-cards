@@ -33,13 +33,30 @@ export const useSetsStore = create(devtools(persist((set, get) => ({
       .then(async (res) => { if (!res.ok) { const err = await res.json().catch(() => ({})); console.error("[useSetsStore] editSet sync failed:", err); } });
   },
 
-  deleteSet: (id) => {
+// Confirm delete 
+
+showMessageField: false,
+messageKey: '',
+pendingDeleteId: null, 
+
+setConfirmDeleteMessage: (messageKey, id) => {
+  set({ showMessageField: true, pendingDeleteId: id, messageKey: messageKey }, false, "setConfirmDeleteMessage");
+},
+
+cancelDelete: () => {
+  set({ showMessageField: false, pendingDeleteId: null, messageKey: '' }, false, "cancelDelete");
+},
+
+  deleteSet: () => {
+    const id = get().pendingDeleteId;
+    if (!id) return;
     set((state) => ({ sets: state.sets.filter((setItem) => setItem.id !== id) }), false, "deleteSet");
     // sync to DB 
     fetch(`/api/sets/${id}`, { method: "DELETE" })
       .then(async (res) => { if (!res.ok && res.status !== 204) { const err = await res.json().catch(() => ({})); throw new Error(err.error || "Failed to delete set"); } })
       .catch((e) => { console.error("[useSetsStore] deleteSet sync failed:", e);
       });
+    set({ showMessageField: false, pendingDeleteId: null, messageKey: '' }, false, "deleteSet.cleanup");
   },
 
   //.2      STATE MANAGEMENT FOR WORDS       

@@ -1,4 +1,3 @@
 To Do Next:
 
-- app deployed, but i get a "db error" when i try to connect via the vercel-domain. 
-db-connection works via localHost.
+- work on the "are you sure to delete set" read chatgpt.
