@@ -1,64 +1,29 @@
-'use client';
+// app/layout.js  (SERVER — no 'use client')
+import '../styles/main.css'; // keep your existing stylesheet
 
-import { Geist, Geist_Mono } from "next/font/google";
-import "../styles/main.css";
-import Link from "next/link";
-import { usePathname } from 'next/navigation';
-import ClientWrapper from './clientWrapper';
-import { useEffect, useState } from 'react';
-import LoginPage from './login/page';
-import toast, { Toaster } from 'react-hot-toast';
-import { red } from "@mui/material/colors";
-import MessageField from '@/components/messageField';
+export const metadata = {
+  title: 'Flash Cards',
+  description: 'Study flashcards offline with spaced repetition.',
+  manifest: '/manifest.json',
+  themeColor: '#0f172a',
+  appleWebApp: { capable: true, title: 'Flash Cards', statusBarStyle: 'black-translucent' },
+  viewport: { width: 'device-width', initialScale: 1, viewportFit: 'cover' },
+  icons: {
+    icon: [
+      { url: '/icons/icon-192.png', sizes: '192x192', type: 'image/png' },
+      { url: '/icons/icon-512.png', sizes: '512x512', type: 'image/png' },
+    ],
+    apple: [{ url: '/icons/icon-192.png' }],
+  },
+};
+
+import ClientApp from './ClientApp'; // <— new client wrapper we control
 
 export default function RootLayout({ children }) {
-
-const pathname = usePathname();
-const isHome = pathname === '/';
-
-
-
-// .1    COLOR THEME               
-
-useEffect(() => {
-  const colorPairs = [
-  { primary: '#ffa1ca', secondary: '#ffdbab' },
-]
-
-const randomNr = Math.floor(Math.random() * colorPairs.length);
-
-const pickedPrimary = colorPairs[randomNr].primary;
-const pickedSecondary = colorPairs[randomNr].secondary;
-
-document.documentElement.style.setProperty("--color-primary", pickedPrimary);
-document.documentElement.style.setProperty("--color-secondary", pickedSecondary);
-}, [pathname]);
-
-const [isLoggedIn, setIsLoggedIn] = useState(true);
-
-useEffect(() => {
-  fetch('/api/users/me')
-    .then(res => res.json())
-    .then(data => {
-      if (data.user) {
-        setIsLoggedIn(true);
-      }
-      else if(!data.user) {
-        setIsLoggedIn(false);
-  }})
-    .catch(() => setIsLoggedIn(false));
-}, []);
-
-
- return (
-   <html lang="en">
+  return (
+    <html lang="en">
       <body>
-<Toaster toastOptions={{className: 'toaster'}}/>
-<MessageField/>
-<ClientWrapper isLoggedIn={isLoggedIn} setIsLoggedIn={setIsLoggedIn}>
-  {children}
-</ClientWrapper>
-      {!isLoggedIn && <LoginPage/>}
+        <ClientApp>{children}</ClientApp>
       </body>
     </html>
   );
