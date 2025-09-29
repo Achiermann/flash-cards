@@ -21,14 +21,17 @@
       {
         "name": "next"
       }
-    ]
+    ],
+    "strictNullChecks": true
   },
   "include": [
     "next-env.d.ts",
     ".next/types/**/*.ts",
     "**/*.ts",
-    "**/*.tsx"
-, "src/app/(client)/layout.js", "src/app/(client)/layout.js"  ],
+    "**/*.tsx",
+    "src/app/(client)/layout.js",
+    "src/app/(client)/layout.js"
+  ],
   "exclude": [
     "node_modules"
   ]

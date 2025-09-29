@@ -1,14 +1,17 @@
-{
-  "name": "Flash Cards",
-  "short_name": "FlashCards",
-  "start_url": "/",
-  "scope": "/",
-  "display": "standalone",
-  "background_color": "#ffffff",
-  "theme_color": "#0f172a",
-  "description": "Study flashcards offline with spaced repetition.",
-  "icons": [
-    { "src": "/icons/icon-192.png", "sizes": "192x192", "type": "image/png", "purpose": "any maskable" },
-    { "src": "/icons/icon-512.png", "sizes": "512x512", "type": "image/png", "purpose": "any maskable" }
-  ]
-}
+{"theme_color":"#8936FF",
+"background_color":"#2EC6FE",
+"icons":[{"purpose":"maskable","sizes":"512x512","src":"icon512_maskable.png","type":"image/png"},
+{"purpose":"any",
+"sizes":"512x512",
+"src":"icon512_rounded.png",
+"type":"image/png"}],
+"orientation":"any",
+"display":"standalone",
+"dir":"auto",
+"lang":"en-GB",
+"name":"Flash Cards",
+"short_name":"flash_cards",
+"start_url":"flash-cards-rosy.vercel.app",
+"scope":"flash-cards-rosy.vercel.app",
+"description":"FlashCard App",
+"id":"flash-cards.app"}
