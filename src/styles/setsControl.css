@@ -79,7 +79,6 @@ justify-content: center;
     scroll-snap-type: x mandatory;     /* turn on snapping */
     scroll-behavior: smooth;
     scroll-padding-inline: 50%;        /* center first/last items */
-    margin-left: 40px;
   }
 
   .sets-grid > ul,

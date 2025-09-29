@@ -16,7 +16,9 @@ flex-direction: column;
   border-radius: 8px;
   width: 80%;
   margin: auto auto auto auto;
-background-color: #ffffff;;
+background-color: #ffffff;
+ margin-top: 30px;
+
 }
 
 .manage-set-content-header {
@@ -31,6 +33,7 @@ text-align: center;
 padding: 30px;
 font-size: 30px;
 font-weight: 600;
+margin-top: 20px;
 }
 
 .manage-set-title.all-sets{
@@ -62,8 +65,8 @@ align-items: center;
 .wordlist-item {
  display: flex;
   justify-content: space-between; /* spread evenly */
-background-color: #ffffff;
-  border-radius: 4px;
+background-color: #e7e7e7;
+  border-radius: 2px;
   box-shadow: 0 2px 4px rgba(0,0,0,0.1);
   gap: 20px; /* space between columns */
   overflow: hidden; 
@@ -259,4 +262,15 @@ height: 30px;
 
 /* .1.        MOBILE                                                                             */
 
-@media (max-width: 768px){}
+@media (max-width: 768px){
+
+  .manage-all-sets-set-container{
+    width: 100%;
+    margin-bottom: 20px;
+  }
+
+  .manage-set-title{
+  margin-bottom: 30px;
+  }
+
+}
