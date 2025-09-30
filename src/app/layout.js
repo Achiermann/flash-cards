@@ -1,5 +1,11 @@
-// app/layout.js  (SERVER — no 'use client')
-import '../styles/main.css'; // keep your existing stylesheet
+import { Geist, Geist_Mono } from "next/font/google";
+import "../styles/main.css";
+import Link from "next/link";
+import ClientWrapper from './clientWrapper';
+import LoginPage from './login/page';
+import toast, { Toaster } from 'react-hot-toast';
+import { red } from "@mui/material/colors";
+import MessageField from '@/components/messageField';
 
 export const metadata = {
   title: { default: "Flash Cards", template: "%s | Flash Cards" },
@@ -8,13 +14,16 @@ export const metadata = {
   manifest: "/manifest.json",
 };
 
-import ClientApp from './ClientApp'; // <— new client wrapper we control
-
 export default function RootLayout({ children }) {
-  return (
-    <html lang="en">
+
+ return (
+   <html lang="en">
       <body>
-        <ClientApp>{children}</ClientApp>
+<Toaster toastOptions={{className: 'toaster'}}/>
+<MessageField/>
+<ClientWrapper>
+  {children}
+</ClientWrapper>
       </body>
     </html>
   );
