@@ -7,8 +7,8 @@ import Sidebar from '../components/sidebar';
 import {useState, useEffect} from 'react';
 import {AlignJustify} from 'lucide-react';
 import LoginPage from './login/page';
-import toast, { Toaster } from 'react-hot-toast';
-import MessageField from '@/components/messageField'; // if this alias doesn't exist, swap to a relative path
+import MessageField from '@/components/messageField'; 
+import { StyledEngineProvider } from '@mui/material/styles';
 
 export default function ClientWrapper({ children }) {
 
@@ -23,13 +23,6 @@ const [isLoggedIn, setIsLoggedIn] = useState(true);
     document.documentElement.style.setProperty('--color-primary', picked.primary);
     document.documentElement.style.setProperty('--color-secondary', picked.secondary);
   }, [pathname]);
-
-  useEffect(() => {
-    fetch('/api/users/me')
-      .then(res => res.json())
-      .then(data => setIsLoggedIn(!!data.user))
-      .catch(() => setIsLoggedIn(false));
-  }, [setIsLoggedIn]);
 
 const [showSidebar, setShowSidebar] = useState(false);
 
@@ -49,7 +42,8 @@ useEffect(() => {
 
   return (
     <div className="client-wrapper">
-        <Toaster />
+          <StyledEngineProvider injectFirst>
+            <MessageField/>
     {!isLoggedIn && <LoginPage/>}
      {showSidebar && <Sidebar showSidebar={showSidebar} setShowSidebar={setShowSidebar} isLoggedIn={isLoggedIn} setIsLoggedIn={setIsLoggedIn}/>}
       {!showSidebar && pathname === '/' && <div className="burger-grid"><AlignJustify className="burger" onClick={() => setShowSidebar(true)} /></div>}
@@ -58,6 +52,8 @@ useEffect(() => {
     <Link href="/"><button className="go-to-main-button">Go to main</button></Link>
       )}
       {children}
-    </div></div>
+    </div>
+    </StyledEngineProvider>
+    </div>
   );
 }
