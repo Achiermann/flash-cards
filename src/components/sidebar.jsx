@@ -8,6 +8,7 @@ export default function Sidebar({showSidebar, setShowSidebar, isLoggedIn, setIsL
 
   async function handleLogout() {
   await fetch('/api/users/logout', { method: 'POST' });
+setShowSidebar(false);
 setIsLoggedIn(false);
   }
 
