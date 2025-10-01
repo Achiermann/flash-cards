@@ -9,6 +9,7 @@ import {AlignJustify} from 'lucide-react';
 import LoginPage from './login/page';
 import MessageField from '@/components/messageField'; 
 import { StyledEngineProvider } from '@mui/material/styles';
+import { Toaster } from 'react-hot-toast';
 
 export default function ClientWrapper({ children }) {
 
@@ -18,7 +19,7 @@ const [isLoggedIn, setIsLoggedIn] = useState(true);
 
   // Color theme on route change (your original logic)
   useEffect(() => {
-    const colorPairs = [{ primary: '#ffa1ca', secondary: '#ffdbab' }];
+    const colorPairs = [{ primary: '#ffcde2ff', secondary: '#ccd2ffff' }];
     const picked = colorPairs[Math.floor(Math.random() * colorPairs.length)];
     document.documentElement.style.setProperty('--color-primary', picked.primary);
     document.documentElement.style.setProperty('--color-secondary', picked.secondary);
@@ -43,6 +44,7 @@ useEffect(() => {
   return (
     <div className="client-wrapper">
           <StyledEngineProvider injectFirst>
+            <Toaster toastOptions={{ className: 'toaster' }} />
             <MessageField/>
     {!isLoggedIn && <LoginPage/>}
      {showSidebar && <Sidebar showSidebar={showSidebar} setShowSidebar={setShowSidebar} isLoggedIn={isLoggedIn} setIsLoggedIn={setIsLoggedIn}/>}

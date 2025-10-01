@@ -1,7 +1,12 @@
 import "../styles/main.css";
 import ClientWrapper from './clientWrapper';
-import toast, { Toaster } from 'react-hot-toast';
 import { Racing_Sans_One, Turret_Road, Funnel_Sans, Inter } from 'next/font/google';
+
+export const viewport = {
+  width: "device-width",
+  initialScale: 1,
+  viewportFit: "cover", 
+};
 
 const racingSansOne = Racing_Sans_One({
   subsets: ['latin'],
@@ -37,7 +42,6 @@ export default function RootLayout({ children }) {
  return (
    <html lang="en">
 <body className={`${inter.variable} ${funnelSans.variable} ${racingSansOne.variable} ${turretRoad.variable}`}>
-<Toaster toastOptions={{className: 'toaster'}}/>
 <ClientWrapper>
   {children}
 </ClientWrapper>

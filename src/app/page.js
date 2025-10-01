@@ -1,14 +1,12 @@
 'use client';
 
-import { useState, useEffect, useMemo} from 'react';
+import { useState, useEffect } from 'react';
 import { useSetsStore } from './stores/useSetsStore';
 import SetItem from './setItem/SetItem';
 import { Plus } from 'lucide-react';
 import { useEditOptionsStore } from './stores/useEditOptionsStore';
 import { useIsMobile } from '@/components/isMobile';
-import { useSwipeable } from 'react-swipeable';
 import { useCenteredIndex } from "@/components/useCenteredIndex";
-import { grid } from '@mui/system';
 
 
 export default function SetsControl() {
@@ -22,33 +20,34 @@ export default function SetsControl() {
   const addWord = useSetsStore((state) => state.addWord);
   const setShowEditOptions = useEditOptionsStore((state) => state.setShowEditOptions);
   const showEditOptions = useEditOptionsStore((state) => state.showEditOptions);
-const isMobile = useIsMobile();
-const [count, setCount] = useState(0);
-const current = sets[count];
-const depsKey = `${isMobile}-${sets.length}`;
-const { ref: listRef, gridRef, centerIndex } = useCenteredIndex({ depsKey });
-const sortedSets = sets.sort((a, b) => a.id - b.id);
+  const isMobile = useIsMobile();
+  const [count, setCount] = useState(0);
+  const current = sets[count];
+  const depsKey = `${isMobile}-${sets.length}`;
+  // use a single ref returned from the hook and attach it to the scroller element
+  const { ref: listRef, centerIndex } = useCenteredIndex({ depsKey });
+  const sortedSets = [...sets].sort((a, b) => a.id - b.id);
 
 useEffect(() => {
     fetchSets(); // load from server on mount
   }, [fetchSets]);
   
 
-   useEffect(() => {
+  useEffect(() => {
     setIsReady(true);
   }, []);
 
-{//.1     Show create set field                    *}
-}  const toggleCreateSetField = () => {
+  // Show create set field
+  const toggleCreateSetField = () => {
     setShowEditOptions(false);
     setShowCreateField((prev) => !prev);
   };
 
-  {//.1     Show edit options                   *}
-
+  // Show edit options
   const toggleEditOptions = () => {
     setShowCreateField(false);
- showEditOptions ? setShowEditOptions(false) : setShowEditOptions(true);}
+    showEditOptions ? setShowEditOptions(false) : setShowEditOptions(true);
+  };
 
   // Submit handler with input validation
   const handleSubmit = (e) => {
@@ -75,7 +74,7 @@ useEffect(() => {
 
   return (
     <div className="sets-control">
-  <h2>Your Sets</h2>
+  <h2 className="your-sets-title">Your Sets</h2>
       <form onSubmit={handleSubmit}>
 {/*//.2                       OPTION BUTTONS                       */}
         <div className="options-grid">
@@ -96,14 +95,11 @@ useEffect(() => {
 )}
       </form>
 {/*//.2                       SETS-GRID                       */}
-      <div className="sets-grid" ref={gridRef}>
+      <div className="sets-grid" ref={listRef}>
   {!isMobile && <ul> {sortedSets.map((set) => ( <li key={set.id}> <SetItem data={set} editOptions={showEditOptions} id={set.id} /> </li> ))} </ul>}
-{isMobile && ( <ul className="snap-list" ref={listRef}> {sortedSets.map(s => (
-  <li className="snap-item" key={s.id}> <SetItem data={s} id={s.id} editOptions={showEditOptions} /> </li> ))} 
-  </ul> )}          
+{isMobile && ( <ul className="snap-list" ref={listRef}> {sortedSets.map(s => ( <li className="snap-item" key={s.id}> <SetItem data={s} id={s.id} editOptions={showEditOptions} /> </li> ))} </ul> )}          
   </div> 
   <div className="dots-container">{sortedSets.map((el) => (<div className="dot" style={(el.id - 1) === centerIndex ? { backgroundColor: '#fcfcfcff' } : undefined}key={el.id}/>))}</div>
     </div>
   );
-}
 }

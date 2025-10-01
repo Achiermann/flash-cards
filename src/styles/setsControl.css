@@ -69,10 +69,23 @@ justify-content: center;
 .main-content-container {
     padding: 10px !important;
 }
-
-.sets-control {
-        margin-top: 25%;    
-    }
+      
+      /* HIDE SCROLLBAR */
+      .sets-grid {
+        overflow-x: auto;
+        -webkit-overflow-scrolling: touch; /* iOS smooth scroll */
+      
+        /* Hide scrollbar (Firefox) */
+        scrollbar-width: none;
+      
+        /* Hide scrollbar (IE/old Edge) */
+        -ms-overflow-style: none;
+      }
+      
+      /* Hide scrollbar (Chrome/Safari/new Edge) */
+      .sets-grid::-webkit-scrollbar {
+        display: none;
+      }
 
   .sets-grid {
     overflow-x: auto;
@@ -92,7 +105,8 @@ justify-content: center;
   scroll-snap-type: x mandatory;   /* or 'proximity' if you prefer */
   -webkit-overflow-scrolling: touch; /* important for iOS momentum */
   touch-action: pan-x;              /* allow horizontal pan; blocks vertical gesture conflicts */
-  scroll-padding-inline: 16px;      /* optional if you have gaps */
+  scroll-padding-inline: var(--page-gutter-x);     /* optional if you have gaps */
+  padding-inline: var(--page-gutter-x);
   margin: 0;
   list-style: none;
   }
@@ -108,6 +122,11 @@ justify-content: center;
     scroll-snap-stop: always;  
   }
 
+  .snap-item{
+  flex: 0 0 calc(100vw - 2*var(--page-gutter-x));
+  scroll-snap-align:center;
+  }
+  
   .dots-container{
     height: 20px;
     width: 100%;
@@ -125,22 +144,4 @@ justify-content: center;
     background-color: rgb(201, 201, 201);
     margin: 0px 5px 0px 5px;
   }
-
-/* HIDE SCROLLBAR */
-.sets-grid {
-  overflow-x: auto;
-  -webkit-overflow-scrolling: touch; /* iOS smooth scroll */
-
-  /* Hide scrollbar (Firefox) */
-  scrollbar-width: none;
-
-  /* Hide scrollbar (IE/old Edge) */
-  -ms-overflow-style: none;
-}
-
-/* Hide scrollbar (Chrome/Safari/new Edge) */
-.sets-grid::-webkit-scrollbar {
-  display: none;
-}
-
 }

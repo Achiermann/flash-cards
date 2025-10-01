@@ -136,4 +136,12 @@ margin-bottom: 40px
 
 /* .1.        MOBILE                                                                             */
 
-@media (max-width: 768px){}
+@media (max-width: 768px){
+  .set-item{
+    height: 350px !important;
+  }
+
+  .set-title{
+    margin-top: 0px !important;
+  }
+}
