@@ -83,9 +83,9 @@ justify-content: center;
 
   .sets-grid > ul,
   .sets-grid .snap-list {
+    display: flex;
     justify-content: flex-start !important;  /* override desktop centering */
     flex-wrap: nowrap !important;
-  display: flex;
   gap: 16px;                   /* optional */
   overflow-x: auto;
   overflow-y: hidden;
@@ -97,9 +97,12 @@ justify-content: center;
   list-style: none;
   }
 
+.snap-list::-webkit-scrollbar { display: none; }
+.snap-list { scrollbar-width: none; }
+
   /* ITEMS: fixed width + snap to center */
   .sets-grid .snap-item {
-    flex: 0 0 85%;                     
+    flex: 0 0 auto;                     
     width: min(85vw, 420px);     
     scroll-snap-align: center;    
     scroll-snap-stop: always;  
