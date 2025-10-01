@@ -7,7 +7,6 @@ import { Plus } from 'lucide-react';
 import { useEditOptionsStore } from './stores/useEditOptionsStore';
 import { useIsMobile } from '@/components/isMobile';
 import { useSwipeable } from 'react-swipeable';
-import { motion, useMotionValue, useTransform, animate } from 'framer-motion';
 import { useCenteredIndex } from "@/components/useCenteredIndex";
 import { grid } from '@mui/system';
 
@@ -27,7 +26,7 @@ const isMobile = useIsMobile();
 const [count, setCount] = useState(0);
 const current = sets[count];
 const depsKey = `${isMobile}-${sets.length}`;
-const { ref: gridRef, centerIndex } = useCenteredIndex({ depsKey });
+const { ref: listRef, gridRef, centerIndex } = useCenteredIndex({ depsKey });
 const sortedSets = sets.sort((a, b) => a.id - b.id);
 
 useEffect(() => {
@@ -99,8 +98,10 @@ useEffect(() => {
 {/*//.2                       SETS-GRID                       */}
       <div className="sets-grid" ref={gridRef}>
   {!isMobile && <ul> {sortedSets.map((set) => ( <li key={set.id}> <SetItem data={set} editOptions={showEditOptions} id={set.id} /> </li> ))} </ul>}
-  {isMobile && <ul className="snap-list"> {sortedSets.map(s => ( <li className="snap-item" key={s.id}> <SetItem data={s} id={s.id} editOptions={showEditOptions} /> </li> ))} </ul>}
-          </div> 
+{isMobile && ( <ul className="snap-list" ref={listRef}> {sortedSets.map(s => (
+  <li className="snap-item" key={s.id}> <SetItem data={s} id={s.id} editOptions={showEditOptions} /> </li> ))} 
+  </ul> )}          
+  </div> 
   <div className="dots-container">{sortedSets.map((el) => (<div className="dot" style={(el.id - 1) === centerIndex ? { backgroundColor: '#fcfcfcff' } : undefined}key={el.id}/>))}</div>
     </div>
   );

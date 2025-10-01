@@ -85,14 +85,24 @@ justify-content: center;
   .sets-grid .snap-list {
     justify-content: flex-start !important;  /* override desktop centering */
     flex-wrap: nowrap !important;
+  display: flex;
+  gap: 16px;                   /* optional */
+  overflow-x: auto;
+  overflow-y: hidden;
+  scroll-snap-type: x mandatory;   /* or 'proximity' if you prefer */
+  -webkit-overflow-scrolling: touch; /* important for iOS momentum */
+  touch-action: pan-x;              /* allow horizontal pan; blocks vertical gesture conflicts */
+  scroll-padding-inline: 16px;      /* optional if you have gaps */
+  margin: 0;
+  list-style: none;
   }
 
   /* ITEMS: fixed width + snap to center */
   .sets-grid .snap-item {
-    flex: 0 0 auto;                     /* no stretch */
-    width: min(85vw, 420px);            /* pick a size that looks good */
-    scroll-snap-align: center;          /* key: center item on stop */
-    scroll-snap-stop: always;           /* optional: don’t skip items */
+    flex: 0 0 85%;                     
+    width: min(85vw, 420px);     
+    scroll-snap-align: center;    
+    scroll-snap-stop: always;  
   }
 
   .dots-container{
