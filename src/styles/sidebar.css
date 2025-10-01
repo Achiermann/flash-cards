@@ -4,6 +4,7 @@
     width: 50%;
     max-width: 350px;
     height: 100vh;
+    z-index: 99999999;
 }
 
 .sidebar-container p {
@@ -81,4 +82,9 @@ height: 60px;
 
 /* .1.        MOBILE                                                                             */
 
-@media (max-width: 768px){}
+@media (max-width: 768px){
+    .sidebar-container {
+        width: 100vw;
+        max-width: 100vw;
+    }
+}

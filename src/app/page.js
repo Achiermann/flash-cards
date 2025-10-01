@@ -72,6 +72,7 @@ useEffect(() => {
   // Don't render until client-side load
   if (!isReady) return null;
 
+
   return (
     <div className="sets-control">
   <h2 className="your-sets-title">Your Sets</h2>
@@ -95,7 +96,7 @@ useEffect(() => {
 )}
       </form>
 {/*//.2                       SETS-GRID                       */}
-      <div className="sets-grid" ref={listRef}>
+      <div className="sets-grid">
   {!isMobile && <ul> {sortedSets.map((set) => ( <li key={set.id}> <SetItem data={set} editOptions={showEditOptions} id={set.id} /> </li> ))} </ul>}
 {isMobile && ( <ul className="snap-list" ref={listRef}> {sortedSets.map(s => ( <li className="snap-item" key={s.id}> <SetItem data={s} id={s.id} editOptions={showEditOptions} /> </li> ))} </ul> )}          
   </div> 
