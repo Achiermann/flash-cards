@@ -64,17 +64,33 @@ align-items: center;
 
 .wordlist-item {
  display: flex;
-  justify-content: space-between; /* spread evenly */
+   flex: 1 1 0; 
 background-color: #e7e7e7;
   border-radius: 2px;
   box-shadow: 0 2px 4px rgba(0,0,0,0.1);
   gap: 20px; /* space between columns */
   overflow: hidden; 
   min-height: 50px;  
+  min-width: 100%;
   width: 100%;
   margin-bottom: 6px;
   align-items: center;
   min-height: 40px;  
+  font-size: 15px;
+
+}
+
+  .wordlist-item-front, .wordlist-item-back {
+  flex: 1 1 0; 
+  text-align: center;    
+  height: 40px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  box-sizing: border-box;   /* prevents padding from breaking layout */
+  padding: 0px 10px 0px 10px;
+  overflow-wrap: break-word; 
+  overflow: hidden;
 }
 
 .wordlist-item-front :hover,
@@ -87,8 +103,8 @@ background-color: #e7e7e7;
     grid-column: 1 / 2;
     display: flex;
     justify-content: center;
-    height: 40px;
-    width: 50px;
+    min-height: 40px;
+    min-width: 50px;
     border-radius: 4px;
 }
 
@@ -128,11 +144,12 @@ background-color: #e7e7e7;
 /* .1 ACTIVATE SLIDER */
 
 .switch {
-    grid-column: 4 / 5;
+  grid-column: 4 / 5;
   position: relative;
   display: inline-block;
   width: 50px;
   height: 28px;
+  right: 3px;
 }
 
 .switch input {
@@ -248,7 +265,7 @@ height: 30px;
 
 
 .manage-all-sets-set-container{
-  width: 50%;
+  width: 80%;
 }
 
 .add-to-title{
@@ -272,5 +289,20 @@ height: 30px;
   .manage-set-title{
   margin-bottom: 30px;
   }
+
+  .wordlist-item-front, .wordlist-item-back {
+  flex: 1 1 0; 
+  text-align: center;    
+  height: 40px;
+  font-size: 2.2vmin;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  box-sizing: border-box;   /* prevents padding from breaking layout */
+  padding: 0px 10px 0px 10px;
+  overflow-wrap: break-word; 
+  overflow: hidden;
+  padding: 1px;
+}
 
 }
