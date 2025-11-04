@@ -59,6 +59,34 @@ setTimeout(() => window.location.reload(), 1500);
   }
 }
 
+async function handleResetPassword() {
+  if (!email) {
+    toast.error('Please enter your email address');
+    return;
+  }
+  if (!email.includes('@') || !email.includes('.')) {
+    toast.error('Please enter a valid email');
+    return;
+  }
+  try {
+    const res = await fetch('/api/users/reset-password', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ email })
+    });
+    const data = await res.json();
+    if (res.ok) {
+      toast.success('Password reset link sent! Check your email.');
+      setTimeout(() => setDisplay('signin'), 2000);
+    } else {
+      toast.error(data.error || 'Failed to send reset link');
+    }
+  } catch (err) {
+    console.error('Reset password error:', err);
+    toast.error('Something went wrong');
+  }
+}
+
   return (<div className="login-page">
 <div className="login-field">
 {/*//.2      SIGN IN            */}
@@ -99,7 +127,7 @@ setTimeout(() => window.location.reload(), 1500);
 <div className="login-field-input-wrapper">
     <input type="text" placeholder="Email" value={email} onChange={(e) => setEmail(e.target.value)}/>
     <div className="btn-login-wrapper">
-    <button className="btn-resetpw">Reset Password</button>
+    <button className="btn-resetpw" onClick={handleResetPassword}>Reset Password</button>
     <button onClick={() => setDisplay("signin")}>Go Back</button>
     </div>
     </div>

@@ -12,17 +12,28 @@ export async function POST(req) {
       return NextResponse.json({ error: 'Missing fields' }, { status: 400 });
     }
 
+    // Support login with username OR email
+    const isEmail = username.includes('@');
     const { data: user, error } = await supabaseServer
       .from('userdata')
       .select('id, email, username, password_hash')
-      .eq('username', username)
+      .eq(isEmail ? 'email' : 'username', username)
       .single();
 
     if (error || !user) {
+      console.log('Login failed - user not found:', { username, error: error?.message });
       return NextResponse.json({ error: 'Invalid credentials' }, { status: 401 });
     }
 
+    console.log('Login attempt:', {
+      username,
+      hasPasswordHash: !!user.password_hash,
+      hashLength: user.password_hash?.length,
+      hashPrefix: user.password_hash?.substring(0, 7)
+    });
+
     const ok = await bcrypt.compare(password, user.password_hash);
+    console.log('Password comparison result:', ok);
     if (!ok) return NextResponse.json({ error: 'Invalid credentials' }, { status: 401 });
 
     const token = signToken({ id: user.id, username: user.username });

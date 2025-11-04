@@ -26,10 +26,11 @@ Inter */
 
 body {
   /* font-family: 'Funnel Sans', sans-serif; */
-  
-  background: #ffffff;  
-  background: linear-gradient(to right, var(--color-primary), var(--color-secondary)); 
-/* background-image: url('/nnnoise.svg'); */
+
+  background-image: url('/background.svg');
+  background-size: cover;
+  background-position: center;
+  background-attachment: fixed;
 }
 
 /* template

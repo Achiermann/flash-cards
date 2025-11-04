@@ -7,13 +7,14 @@ import { Plus } from 'lucide-react';
 import { useEditOptionsStore } from './stores/useEditOptionsStore';
 import { useIsMobile } from '@/components/isMobile';
 import { useCenteredIndex } from "@/components/useCenteredIndex";
+import { useRouter } from 'next/navigation';
 
 
 export default function SetsControl() {
-  
+
   const [setName, setSetName] = useState('');
   const [showCreateField, setShowCreateField] = useState(false);
-  const [isReady, setIsReady] = useState(false);  
+  const [isReady, setIsReady] = useState(false);
   const sets = useSetsStore((state) => state.sets);
   const fetchSets = useSetsStore(s => s.fetchSets);
   const addSet = useSetsStore((state) => state.addSet);
@@ -27,6 +28,7 @@ export default function SetsControl() {
   // use a single ref returned from the hook and attach it to the scroller element
   const { ref: listRef, centerIndex } = useCenteredIndex({ depsKey });
   const sortedSets = [...sets].sort((a, b) => a.id - b.id);
+  const router = useRouter();
 
 useEffect(() => {
     fetchSets(); // load from server on mount
