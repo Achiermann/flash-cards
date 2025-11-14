@@ -15,7 +15,7 @@ export const useLearnSetStore = create(
                 const matched = sets.find((s) => s.slug === slug);
                 if (!matched) return;
                 const cloned = {...matched,
-                words: matched.words.map((w) => ({ ...w,learned: false}))};set({ matchedSet: cloned, count: 0, setFinished: false });},
+                words: matched.words.filter((w) => !w.archived).map((w) => ({ ...w,learned: false}))};set({ matchedSet: cloned, count: 0, setFinished: false });},
         increment: (setLength) => set((state) => ({count: state.count < setLength - 1 ? state.count + 1 : 0}), false, "increment"),
         decrement: (setLength) => set((state) => ({count: state.count > 0 ? state.count - 1 : setLength - 1}), false, "decrement"),
         learned: () => { set((state) => {;

@@ -2,9 +2,12 @@
 
 import { useParams } from 'next/navigation';
 import { useLearnSetStore } from '@/app/stores/useLearnSetStore';
+import { useSetsStore } from '@/app/stores/useSetsStore';
 import { useEffect, useRef, useState } from 'react';
 import Link from 'next/link';
 import { LinearProgress } from '@mui/material';
+import { Archive } from 'lucide-react';
+import toast from 'react-hot-toast';
 
 export default function LearnView() {
   const [showAnswer, setShowAnswer] = useState(false);
@@ -19,6 +22,19 @@ export default function LearnView() {
     learned,
     setFinished,          // assuming this is a boolean flag in your store
   } = useLearnSetStore();
+
+  const toggleArchiveWord = useSetsStore((state) => state.toggleArchiveWord);
+
+  {/*//.1      HANDLERS            */}
+
+  const handleToggleArchive = (wordId) => (e) => {
+    e.preventDefault();
+    e.stopPropagation();
+    toggleArchiveWord(matchedSet.id, wordId);
+    toast.success('Word archived!');
+  };
+
+  {/*//.1      VARIABLES            */}
 
   // Track the initial count once per session
   const initialCountRef = useRef(null);
@@ -48,8 +64,10 @@ export default function LearnView() {
   const initial = initialCountRef.current ?? remaining; // fallback on first render
   const progress = initial > 0 ? ((initial - remaining) / initial) * 100 : 0; // number, not string
 
-  const front = matchedSet.words[count].front;
-  const back  = matchedSet.words[count].back;
+  const currentWord = matchedSet.words[count];
+  const front = currentWord.front;
+  const back  = currentWord.back;
+  const wordId = currentWord.wordId;
 
   return (
     <div className="learn-view-container">
@@ -61,6 +79,9 @@ export default function LearnView() {
         <div className="flashcard" onClick={() => setShowAnswer(!showAnswer)}>
           {!setFinished && (
             <>
+              <div className='wordlist-item-archive' onClick={handleToggleArchive(wordId)}>
+                <Archive className="archive-icon" />
+              </div>
               <ul className="flashcard-word-wrapper">
                 <li className="flashcard-front"><p>{front}</p></li>
                 <div className="flashcard-separator" />
