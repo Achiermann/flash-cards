@@ -5,7 +5,8 @@ import { useSetsStore } from "@/app/stores/useSetsStore";
 import Link from "next/link";
 import AddWordForm from "@/components/addWordForm";
 import Wordlist from '@/components/wordlist';
-import '@/styles/manageSet.css';
+
+
 
 export default function ManageSetView() {
 

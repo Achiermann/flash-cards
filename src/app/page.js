@@ -7,7 +7,6 @@ import { Plus } from 'lucide-react';
 import { useEditOptionsStore } from './stores/useEditOptionsStore';
 import { useIsMobile } from '@/components/isMobile';
 import { useCenteredIndex } from "@/components/useCenteredIndex";
-import '@/styles/setsControl.css';
 
 
 export default function SetsControl() {

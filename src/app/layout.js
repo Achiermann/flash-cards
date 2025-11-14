@@ -1,4 +1,8 @@
 import "../styles/main.css";
+import '@/styles/manageSet.css';
+import '@/styles/setsControl.css';
+import '@/styles/setItem.css';
+
 import ClientWrapper from './clientWrapper';
 import { Racing_Sans_One, Turret_Road, Funnel_Sans, Inter } from 'next/font/google';
 
