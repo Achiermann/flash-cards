@@ -85,7 +85,7 @@ margin: 30% 0px 0px 0px;}
 .options-container {
   display: flex;
   margin-top: auto;
-  margin-bottom: 30px;
+  margin-bottom: 170px;
 }
 
 .button-learned {
@@ -122,7 +122,7 @@ font-size: 21px;;
 }
 
 .MuiLinearProgress-bar1{
- background-color:  var(--main-green) !important;
+ background-color:  var(--color-main-green) !important;
 }
 
 .css-1txyin7-MuiLinearProgress-root{

@@ -44,7 +44,6 @@ touch-action: pan-y;
 .options-grid {
 margin-right: 100px;
 margin-left: 0px;
-background-color: var(--main-green);
 }
 
 .btn-add-set{
