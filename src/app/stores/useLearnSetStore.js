@@ -7,6 +7,9 @@ export const useLearnSetStore = create(
       (set, get) => ({
         count: 0,
         matchedSet: null,
+        learnedCount: 0,
+        archivedCount: 0,
+        initialTotal: 0,
         currentWord: (state) => state.matchedSet?.words[state.count],
         setLength: (state) => state.matchedSet?.words.filter(w => !w.learned).length,
         setFinished: false,
@@ -15,16 +18,18 @@ export const useLearnSetStore = create(
                 const matched = sets.find((s) => s.slug === slug);
                 if (!matched) return;
                 const cloned = {...matched,
-                words: matched.words.filter((w) => !w.archived).map((w) => ({ ...w,learned: false}))};set({ matchedSet: cloned, count: 0, setFinished: false });},
+                words: matched.words.filter((w) => !w.archived).map((w) => ({ ...w,learned: false}))};
+                const initialTotal = cloned.words.length;
+                set({ matchedSet: cloned, count: 0, setFinished: false, learnedCount: 0, archivedCount: 0, initialTotal });},
         increment: (setLength) => set((state) => ({count: state.count < setLength - 1 ? state.count + 1 : 0}), false, "increment"),
         decrement: (setLength) => set((state) => ({count: state.count > 0 ? state.count - 1 : setLength - 1}), false, "decrement"),
         learned: () => { set((state) => {;
-if (state.matchedSet.words.length === 1){return {...state, setFinished: true, count: 0}};
+if (state.matchedSet.words.length === 1){return {...state, setFinished: true, count: 0, learnedCount: state.learnedCount + 1}};
           if(state.count >= state.matchedSet.words.length-1){set((state) => ({count: state.count -1}))}
           const updatedWords = state.matchedSet.words.map((word, index) => {
             if (index === state.count) {
               return { ...word, learned: true };}return { ...word };});
               const newWordsArray = updatedWords.filter((w) => !w.learned);
-              return {matchedSet: {...state.matchedSet,words: newWordsArray, }}})},
+              return {matchedSet: {...state.matchedSet,words: newWordsArray, }, learnedCount: state.learnedCount + 1}})},
         }))
        

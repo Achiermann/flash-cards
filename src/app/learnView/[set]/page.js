@@ -3,7 +3,7 @@
 import { useParams } from 'next/navigation';
 import { useLearnSetStore } from '@/app/stores/useLearnSetStore';
 import { useSetsStore } from '@/app/stores/useSetsStore';
-import { useEffect, useRef, useState } from 'react';
+import { useEffect, useState } from 'react';
 import Link from 'next/link';
 import { LinearProgress } from '@mui/material';
 import { Archive } from 'lucide-react';
@@ -20,7 +20,10 @@ export default function LearnView() {
     decrement,
     resetLearnSession,
     learned,
-    setFinished,          // assuming this is a boolean flag in your store
+    setFinished,
+    learnedCount,
+    archivedCount,
+    initialTotal,
   } = useLearnSetStore();
 
   const toggleArchiveWord = useSetsStore((state) => state.toggleArchiveWord);
@@ -37,7 +40,7 @@ export default function LearnView() {
     // Remove the word from the current learn session immediately
     const updatedWords = matchedSet.words.filter(w => w.wordId !== wordId);
 
-    
+
     // Update the learn session
     useLearnSetStore.setState((state) => {
       let newCount = state.count;
@@ -47,36 +50,25 @@ export default function LearnView() {
       }
       // If no words left, finish the session
       if (updatedWords.length === 0) {
-        return { ...state, setFinished: true, count: 0 };
+        return { ...state, setFinished: true, count: 0, archivedCount: state.archivedCount + 1 };
       }
       return {
         ...state,
         matchedSet: { ...state.matchedSet, words: updatedWords },
-        count: newCount
+        count: newCount,
+        archivedCount: state.archivedCount + 1
       };
     });
-    
+
     toast.success('Word archived!');
   };
   
   {/*//.1      VARIABLES            */}
-  
-  // Track the initial count once per session
-  const initialCountRef = useRef(null);
-  
+
   // Start / reset the session when slug changes
   useEffect(() => {
     resetLearnSession(slug);
-    initialCountRef.current = null;        // clear initial so it can be set again
   }, [resetLearnSession, slug]);
-  
-  // Set the initial total count once when words are available
-  useEffect(() => {
-    if (matchedSet && initialCountRef.current === null) {
-      const initial = matchedSet.words.length;
-      initialCountRef.current = initial;
-    }
-  }, [matchedSet]);
 
   // Hide answer when card index or set changes
   useEffect(() => {
@@ -85,9 +77,8 @@ export default function LearnView() {
 
   if (!matchedSet) return <div className="loading">Loading...</div>;
 
-  const totalWords = initialCountRef.current ?? matchedSet.words.length;
-  const learnedCount = matchedSet.words.filter(w => w.learned).length;
-  const progress = totalWords > 0 ? (learnedCount / totalWords) * 100 : 0;
+  const completedWords = learnedCount + archivedCount;
+  const progress = initialTotal > 0 ? (completedWords / initialTotal) * 100 : 0;
   const remaining = matchedSet.words.filter(w => !w.learned).length;
 
   const currentWord = matchedSet.words[count];
