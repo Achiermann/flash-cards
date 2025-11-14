@@ -37,6 +37,7 @@ export default function LearnView() {
     // Remove the word from the current learn session immediately
     const updatedWords = matchedSet.words.filter(w => w.wordId !== wordId);
 
+    
     // Update the learn session
     useLearnSetStore.setState((state) => {
       let newCount = state.count;
@@ -54,25 +55,25 @@ export default function LearnView() {
         count: newCount
       };
     });
-
+    
     toast.success('Word archived!');
   };
-
+  
   {/*//.1      VARIABLES            */}
-
+  
   // Track the initial count once per session
   const initialCountRef = useRef(null);
-
+  
   // Start / reset the session when slug changes
   useEffect(() => {
     resetLearnSession(slug);
     initialCountRef.current = null;        // clear initial so it can be set again
   }, [resetLearnSession, slug]);
-
-  // Set the initial count once when words are available
+  
+  // Set the initial total count once when words are available
   useEffect(() => {
     if (matchedSet && initialCountRef.current === null) {
-      const initial = matchedSet.words.filter(w => !w.learned).length;
+      const initial = matchedSet.words.length;
       initialCountRef.current = initial;
     }
   }, [matchedSet]);
@@ -84,15 +85,17 @@ export default function LearnView() {
 
   if (!matchedSet) return <div className="loading">Loading...</div>;
 
+  const totalWords = initialCountRef.current ?? matchedSet.words.length;
+  const learnedCount = matchedSet.words.filter(w => w.learned).length;
+  const progress = totalWords > 0 ? (learnedCount / totalWords) * 100 : 0;
   const remaining = matchedSet.words.filter(w => !w.learned).length;
-  const initial = initialCountRef.current ?? remaining; // fallback on first render
-  const progress = initial > 0 ? ((initial - remaining) / initial) * 100 : 0; // number, not string
 
   const currentWord = matchedSet.words[count];
   const front = currentWord.front;
   const back  = currentWord.back;
   const wordId = currentWord.wordId;
-
+  
+  console.log('matchedSet', matchedSet);
   return (
     <div className="learn-view-container">
       <div className="progress-and-flashcard">
