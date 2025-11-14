@@ -36,6 +36,8 @@ margin-right: auto; /* pushes button to far left */
     z-index: 99000;
     padding: 30px;
     width: 20%;
+    min-width: 300px;
+    max-width: 90%;
     display: flex;
     flex-direction: column;
     align-items: center;
@@ -58,7 +60,7 @@ margin-right: auto; /* pushes button to far left */
 @media (max-width: 768px){
 .main-content-container {
         width: 100% !important;
-        padding: 0px !important;
+        padding: 10px !important;
     }
 
 .burger{
@@ -66,6 +68,11 @@ margin-right: auto; /* pushes button to far left */
     height: 25px !important;
     width: 25px  !important;
     top: 0 !important;
+}
+
+.burger-grid {
+    top: 10px;
+    left: 10px;
 }
 
 .your-sets-title{
@@ -76,7 +83,13 @@ margin-right: auto; /* pushes button to far left */
   }
 
   .go-to-main-button{
-    margin-top: 20px !important;
+    margin: 20px 10px 10px 10px !important;
+  }
+
+  .message-field{
+    width: 80%;
+    max-width: calc(100vw - 20px);
+    padding: 20px;
   }
 
 }

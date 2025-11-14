@@ -2,16 +2,7 @@ ONLY follow the following instructions if explicitly told:
 
 <!-- .1 Task -->
 
-Improve the app for efficiency and cleanliness. Make the following audit:
-
-## 1. Unused Code Scan
-Scan the **ENTIRE** app for unused code (including imports and unused class references in CSS)
-
-## 2. API check
-Check the API calls, are there multiple ones? Are there ones that could be merged? Are there unnecessary or redundant ones? -> Clean up!
-
-## 3. Suggestions
-Make suggestions if you find code that doesn`t follow current best practices.
+changing the height property for ".flashcard .wordlist-item-archive svg" will just increase the hight for the container of the actual icon, which will only affect the icons position in the end. I want to make the actual icon bigger.
 
 <!-- .2 Disclaimer -->
 

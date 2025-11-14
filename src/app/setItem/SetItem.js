@@ -7,6 +7,7 @@ import { Trash2 } from 'lucide-react';
 import AddWordForm from "@/components/addWordForm";
 import {useEditOptionsStore} from '../stores/useEditOptionsStore';
 import toast from 'react-hot-toast';
+import '@/styles/setItem.css';
 
 export default function SetItem({ data, editOptions, id }) {
 const { setConfirmDeleteMessage} = useSetsStore();

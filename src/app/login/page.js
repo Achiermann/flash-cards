@@ -2,6 +2,7 @@
 
 import { useState } from 'react';
 import toast from 'react-hot-toast';
+import '@/styles/login.css';
 
 
 export default function LoginPage() {

@@ -2,6 +2,7 @@
 
 import Link from 'next/link';
 import {X} from 'lucide-react';
+import '@/styles/sidebar.css';
 
 export default function Sidebar({showSidebar, setShowSidebar, isLoggedIn, setIsLoggedIn}) {
 

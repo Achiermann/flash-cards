@@ -38,17 +38,18 @@ touch-action: pan-y;
     justify-content: space-between;
     width: 100%;
     margin: 10px auto 30px auto;
+    padding: 0 10px;
 }
 
-.btn-add-set {
+.options-grid {
 margin-right: 100px;
 margin-left: 0px;
 background-color: var(--main-green);
 }
 
-.btn-create-sets{
+.btn-add-set{
 margin-left: 0px;
-background-color: var(--main-green);
+background-color: var(--color-main-green);
 }
 
 /* .1.        DESKTOP ONLY                                                                             */
@@ -68,6 +69,14 @@ justify-content: center;
 
 .main-content-container {
     padding: 10px !important;
+}
+
+.sets-control {
+    padding: 10px;
+}
+
+.sets-control h2 {
+    margin: 16px 10px;
 }
       
       /* HIDE SCROLLBAR */

@@ -8,6 +8,7 @@ import Link from 'next/link';
 import LinearProgress from '@mui/material/LinearProgress';
 import { Archive } from 'lucide-react';
 import toast from 'react-hot-toast';
+import '@/styles/learnView.css';
 
 export default function LearnView() {
   const [showAnswer, setShowAnswer] = useState(false);
@@ -106,11 +107,6 @@ export default function LearnView() {
                 <li className="flashcard-back"><p>{showAnswer ? back : ''}</p></li>
               </ul>
 
-              <div className="options-container">
-                <button className="button-prev"    onClick={(e) => { e.stopPropagation(); decrement(remaining); }}>Prev</button>
-                <button className="button-learned" onClick={(e) => { e.stopPropagation(); learned(); }}>Learned</button>
-                <button className="button-repeat"  onClick={(e) => { e.stopPropagation(); increment(remaining); }}>Repeat</button>
-              </div>
             </>
           )}
 
@@ -123,6 +119,11 @@ export default function LearnView() {
           )}
         </div>
       </div>
+              <div className="options-container">
+                <button className="button-prev"    onClick={(e) => { e.stopPropagation(); decrement(remaining); }}>Prev</button>
+                <button className="button-learned" onClick={(e) => { e.stopPropagation(); learned(); }}>Learned</button>
+                <button className="button-repeat"  onClick={(e) => { e.stopPropagation(); increment(remaining); }}>Repeat</button>
+              </div>
     </div>
   );
 }

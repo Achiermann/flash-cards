@@ -42,9 +42,16 @@
 
 .flashcard .wordlist-item-archive {
   position: absolute;
-  top: 10px;
-  right: 10px;
+  top: 15px;
+  right: 1px;
   cursor: pointer;
+  min-width: 40px;
+  min-height: 50px;
+}
+
+.flashcard .wordlist-item-archive svg {
+  width: 23px;
+  height: 23px;
 }   
 
 .flashcard p{
@@ -81,8 +88,8 @@ margin: 30% 0px 0px 0px;}
   margin-bottom: 30px;
 }
 
-.button-prev,.button-learned, .button-repeat {
-  background-color: rgb(255, 255, 255);
+.button-learned {
+  background-color: var(--color-main-green);
 }
 
 .set-finished-display{
@@ -127,4 +134,40 @@ font-size: 21px;;
 
 /* .1.        MOBILE                                                                             */
 
-@media (max-width: 768px){}
+@media (max-width: 768px){
+
+
+  .flashcard {
+    width: calc(100vw - 70px);
+    height: 350px;
+    max-width: 400px;
+    margin: 30px 10px 10px 10px;
+  }
+
+  .progress-bar-wrapper {
+    padding: 100px 10px 8px 10px;
+    width: calc(100% - 20px);
+  }
+
+  .options-container {
+    padding: 0 10px;
+    flex-wrap: nowrap;
+    gap: 0px;
+    margin: 50px 0 250px 0;
+  }
+
+  .options-container button {
+    height: 55px;
+    width: 120px;
+    margin: 0 7px 0 7px;
+  }
+
+  .finished-options-container {
+    flex-direction: column;
+    padding: 0 10px;
+  }
+
+  .finished-message {
+    padding: 0 10px;
+  }
+}

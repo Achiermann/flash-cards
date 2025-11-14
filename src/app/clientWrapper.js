@@ -7,9 +7,10 @@ import Sidebar from '../components/sidebar';
 import {useState, useEffect} from 'react';
 import {AlignJustify} from 'lucide-react';
 import LoginPage from './login/page';
-import MessageField from '@/components/messageField'; 
+import MessageField from '@/components/messageField';
 import { StyledEngineProvider } from '@mui/material/styles';
 import { Toaster } from 'react-hot-toast';
+import '@/styles/layout.css';
 
 export default function ClientWrapper({ children }) {
 

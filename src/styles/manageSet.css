@@ -141,7 +141,7 @@ background-color: #e7e7e7;
 
 
 
-/* .1 ACTIVATE SLIDER */
+/* ACTIVATE SLIDER */
 
 .switch {
   grid-column: 4 / 5;
@@ -190,7 +190,7 @@ input:checked + .slider::before {
   transform: translateX(18px);
 }
 
-/* .1 ADD WORD FORM */
+/* ADD WORD FORM */
 
 .add-word-form-manage-page{
   width: 100%;
@@ -281,29 +281,54 @@ height: 30px;
 
 @media (max-width: 768px){
 
+  .manage-set-content {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
+
   .manage-all-sets-set-container{
     width: 100%;
     margin-bottom: 20px;
+    padding: 0 10px;
   }
 
   .manage-set-title{
-  margin-bottom: 30px;
+    margin-bottom: 30px;
+    padding: 10px;
+  }
+
+  .manage-set-content-header {
+    width: 100%;
+  }
+
+  .wordlist-container {
+    padding: 0 10px;
+  }
+
+  .add-word-field {
+    padding: 0 !important;
   }
 
   .wordlist-item-front, .wordlist-item-back {
-  flex: 1 1 0; 
-  text-align: center;    
-  height: 40px;
-  font-size: 2.2vmin;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  box-sizing: border-box;   /* prevents padding from breaking layout */
-  padding: 0px 10px 0px 10px;
-  overflow-wrap: break-word; 
-  overflow: hidden;
-  padding: 1px;
-}
+    flex: 1 1 0;
+    text-align: center;
+    height: 40px;
+    font-size: 2.2vmin;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    box-sizing: border-box;   /* prevents padding from breaking layout */
+    padding: 0px 10px 0px 10px;
+    overflow-wrap: break-word;
+    overflow: hidden;
+    padding: 1px;
+  }
+
+  .set-option-button-container {
+    padding: 0 10px;
+    flex-wrap: wrap;
+  }
 
 }
 
