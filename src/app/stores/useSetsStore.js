@@ -63,14 +63,14 @@ cancelDelete: () => {
 
   addWord: (setId, front, back) => {
     const currentSet = get().sets.find((s) => s.id === setId); if (!currentSet) return;
-    const newWord = { wordId: crypto.randomUUID(), front, back, learned: false, active: true, archived: false };
+    const newWord = { wordId: crypto.randomUUID(), front, back, learned: false, archived: false };
     const nextWords = [...currentSet.words, newWord];
-    set((state) => ({ sets: state.sets.map((setItem) => setItem.id === setId ? 
+    set((state) => ({ sets: state.sets.map((setItem) => setItem.id === setId ?
     { ...setItem, words: nextWords } : setItem) }), false, "addWord");
-    // sync to DB 
+    // sync to DB
     const isTemp = typeof setId === "string" && setId.startsWith("temp-");
-    if (!isTemp) { fetch(`/api/sets/${setId}`, 
-    { method: "PATCH", headers: { "Content-Type": "application/json" }, 
+    if (!isTemp) { fetch(`/api/sets/${setId}`,
+    { method: "PATCH", headers: { "Content-Type": "application/json" },
     body: JSON.stringify({ words: nextWords }) })
     .then(async (res) => { if (!res.ok) { const err = await res.json().catch(() => ({})); console.error("[useSetsStore] addWord sync failed:", err); } });
     }},
@@ -100,17 +100,6 @@ cancelDelete: () => {
     }},
 
   getSetBySlug: (slug) => get().sets.find((s) => s.slug === slug),
-  
-  toggleActivateWord: (setId, wordId) => {
-    const currentSet = get().sets.find((s) => s.id === setId); if (!currentSet) return;
-    const nextWords = currentSet.words.map((w) => w.wordId === wordId ? { ...w, active: !w.active } : w);
-    set((state) => ({ sets: state.sets.map((setItem) => setItem.id === setId ? { ...setItem, words: nextWords } : setItem) }), false, "toggleActivateWord");
-   // sync to DB 
-    const isTemp = typeof setId === "string" && setId.startsWith("temp-");
-    if (!isTemp) {
-      fetch(`/api/sets/${setId}`, { method: "PATCH", headers: { "Content-Type": "application/json" }, body: JSON.stringify({ words: nextWords }) })
-      .then(async (res) => { if (!res.ok) { const err = await res.json().catch(() => ({})); console.error("[useSetsStore] toggleActivateWord sync failed:", err); } });
-    }},
 
     toggleArchiveWord: (setId, wordId) => {
     const currentSet = get().sets.find((s) => s.id === setId); if (!currentSet) return;

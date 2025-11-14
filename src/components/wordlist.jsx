@@ -20,7 +20,6 @@ const [back, setBack] = useState('');
 const deleteWord = useSetsStore((state) => state.deleteWord);
 const editWord = useSetsStore((state) => state.editWord);
 const archiveWord = useSetsStore((state) => state.archiveWord);
-const toggleActivateWord = useSetsStore((state) => state.toggleActivateWord);
 const toggleArchiveWord = useSetsStore((state) => state.toggleArchiveWord);
 const [editingWordId, setEditingWordId] = useState(null);
 const [readyToAddWord, setReadyToAddWord] = useState(false);
@@ -46,10 +45,6 @@ const filteredMatchedSet = {...matchedSet, words: filteredWordsArr};
     setFront('');
     setBack('');
   };
-
-  const handleToggleActive = (wordId) => (e) => {
-    toggleActivateWord(filteredMatchedSet.id, wordId);
-  }
 
 const handleToggleArchive = (wordId) => {
   toggleArchiveWord(filteredMatchedSet.id, wordId);
@@ -101,16 +96,13 @@ const handleToggleArchive = (wordId) => {
     {isEditing 
     && (<div className="editword-input-wrapper"><form onSubmit={handleEditSubmit(filteredMatchedSet.id, wordObj.wordId, editFront, editBack)}>    
     <input type="text" value={editFront} onChange={(e) => setEditFront(e.target.value)} className="editword-input-field front" />
-    <input type="text" value={editBack} onChange={(e) => setEditBack(e.target.value)} className="editword-input-field back" /> 
+    <input type="text" value={editBack} onChange={(e) => setEditBack(e.target.value)} className="editword-input-field back" />
     <button type='submit' style={{display: "none"}}></button></form></div>)}
-          
-{/*//.2        ACTIVE SLIDER-SWITCH                                */}
-        {!isArchive && <label className="switch"><input type="checkbox" defaultChecked={wordObj.active} onChange={handleToggleActive(wordObj.wordId)}/>
-        <span className="slider"></span></label>}
+
 {/*//.2        ARCHIVE BUTTON                                */}
-       <div className='wordlist-item-archive' onClick={(e) => 
-          {e.preventDefault(); e.stopPropagation(); 
-           handleToggleArchive(wordObj.wordId)}} > 
+       <div className='wordlist-item-archive' onClick={(e) =>
+          {e.preventDefault(); e.stopPropagation();
+           handleToggleArchive(wordObj.wordId)}} >
             {isArchive ? <ArchiveRestore className="archive-icon" /> : <Archive className="archive-icon" />} </div></li>
       )})}
     </ul></div>

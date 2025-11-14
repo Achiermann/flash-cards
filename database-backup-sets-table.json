@@ -1,0 +1,34 @@
+[
+  {
+    "id": 3,
+    "set_name": "Adjettivi",
+    "words": "[{\"wordId\":\"e6abca82-6cd3-410c-b7ae-a79f347929b8\",\"front\":\"etw. versichern\",\"back\":\"assicurare qc.\",\"learned\":false,\"active\":true,\"archived\":false}]",
+    "user": 1,
+    "slug": "adjettivi",
+    "createdAt": "2025-09-22 08:19:28.22"
+  },
+  {
+    "id": 4,
+    "set_name": "Diversi",
+    "words": "[{\"wordId\":\"d502d3f6-3a97-42a3-9adb-8a660961e2a0\",\"front\":\"ich habe mich willkommen gefühlt\",\"back\":\"mi sono sentito accolto/accolta (accogliere)\",\"learned\":false,\"active\":true,\"archived\":false}]",
+    "user": 1,
+    "slug": "diversi",
+    "createdAt": "2025-09-22 08:19:32.387"
+  },
+  {
+    "id": 1,
+    "set_name": "Verbi",
+    "words": "[{\"wordId\":\"1e66678a-5622-4978-a907-2d332b8f6288\",\"front\":\"brechen\",\"back\":\"rompere\",\"learned\":false,\"active\":true,\"archived\":false},{\"wordId\":\"0679ab76-0d02-4098-b504-7441a5317350\",\"front\":\"sparen\",\"back\":\"risparmiare\",\"learned\":false,\"active\":true,\"archived\":false},{\"wordId\":\"ea01dbc8-6e21-4d9e-8990-a979238602b1\",\"front\":\"messen\",\"back\":\"misurare\",\"learned\":false,\"active\":true,\"archived\":false},{\"wordId\":\"25629896-105b-4142-aa76-c959cf0fe91a\",\"front\":\"niesen\",\"back\":\"starnutire\",\"learned\":false,\"active\":true,\"archived\":false}]",
+    "user": 1,
+    "slug": "verbi",
+    "createdAt": "2025-09-22 08:19:14.447"
+  },
+  {
+    "id": 2,
+    "set_name": "Nomi",
+    "words": "[{\"wordId\":\"7a8e89b8-2aa4-43d1-b9bf-7ad23620861f\",\"front\":\"das Fernsehgerät\",\"back\":\"il telecomando\",\"learned\":false,\"active\":false,\"archived\":true},{\"wordId\":\"a311fa37-22fb-41b1-8995-5ebd4d5ea803\",\"front\":\"die Halle\",\"back\":\"il padiglione\",\"learned\":false,\"active\":true,\"archived\":true},{\"wordId\":\"235af62c-8f56-4779-b410-217b2096576e\",\"front\":\"runde Zahl\",\"back\":\"cifra tonda\",\"learned\":false,\"active\":false,\"archived\":true},{\"wordId\":\"8e557a2f-852c-4213-8aff-d12dd02d25e6\",\"front\":\"die Sache / das Zeug\",\"back\":\"la roba\",\"learned\":false,\"active\":false,\"archived\":true},{\"wordId\":\"4e9147fb-17fc-4b90-8959-e1b51c72802b\",\"front\":\"das Einkommen\",\"back\":\"il Reddito\",\"learned\":false,\"active\":true,\"archived\":true},{\"wordId\":\"4565e63b-1fd4-4fb3-9c7c-277e5ac382aa\",\"front\":\"die Taufe / taufen\",\"back\":\"il battesimo / battezzare\",\"learned\":false,\"active\":true,\"archived\":true},{\"wordId\":\"5264eb6c-6d48-4a49-b6f1-5d140f2fe5a3\",\"front\":\"der Rückgang\",\"back\":\"il calo\",\"learned\":false,\"active\":true,\"archived\":true},{\"wordId\":\"8d447d8d-6357-4736-b1a6-487f095f6d8e\",\"front\":\"der Vorteil\",\"back\":\"la convenienza\",\"learned\":false,\"active\":true,\"archived\":true},{\"wordId\":\"a59e68d2-a62d-48cc-b407-d19425ceb339\",\"front\":\"die Kugel\",\"back\":\"la palle\",\"learned\":false,\"active\":true,\"archived\":false},{\"wordId\":\"ddc3e338-a256-4c1f-8f01-32a02158b305\",\"front\":\"der Geldverschwender\",\"back\":\"il spendaccione\",\"learned\":false,\"active\":true,\"archived\":false},{\"wordId\":\"a9268d60-ae5e-4087-a991-fe921a1610a7\",\"front\":\"unterstützen\",\"back\":\"sostenere\",\"learned\":false,\"active\":true,\"archived\":false},{\"wordId\":\"3e2ede9b-ef95-49e3-b9e4-5c3a51d589cb\",\"front\":\"der Abfall\",\"back\":\"la spazzatura\",\"learned\":false,\"active\":true,\"archived\":false},{\"wordId\":\"962547fb-295f-4570-a7c1-3b7d862a3ee0\",\"front\":\"die Verschwendung\",\"back\":\"il Spreco\",\"learned\":false,\"active\":true,\"archived\":false},{\"wordId\":\"e034a78b-ce64-4892-bc8d-af63b25500a2\",\"front\":\"die Tasche\",\"back\":\"la tasca (avere le mani in tasca)\",\"learned\":false,\"active\":true,\"archived\":false},{\"wordId\":\"e237ae2e-f0c7-42de-a914-fa9f76a71391\",\"front\":\"der Einkaufswagen\",\"back\":\"carrello della spesa\",\"learned\":false,\"active\":true,\"archived\":false},{\"wordId\":\"99367ef7-1288-4143-96ad-194fdc953afc\",\"front\":\"das Altersheim\",\"back\":\"la casa di riposo\",\"learned\":false,\"active\":true,\"archived\":false},{\"wordId\":\"e4f294af-250d-4b44-9156-56b5b83ba592\",\"front\":\"der Hintergrund\",\"back\":\"il fondo\",\"learned\":false,\"active\":true,\"archived\":false},{\"wordId\":\"708b6505-0c00-4098-ace8-87a44e3af1c2\",\"front\":\"etw. gratis machen\",\"back\":\"fare qc.  a ufo\",\"learned\":false,\"active\":true,\"archived\":false},{\"wordId\":\"f457b7e8-4a25-4abe-a48b-d4d0966963a7\",\"front\":\"die Ziffer / Rate / Quote\",\"back\":\"il tasso\",\"learned\":false,\"active\":true,\"archived\":false},{\"wordId\":\"d82c21c1-9e69-4442-b769-b6de7fc954fe\",\"front\":\"der Bioabfall\",\"back\":\"l`umido\",\"learned\":false,\"active\":true,\"archived\":false},{\"wordId\":\"1941fcfc-0bde-444e-af73-2f5920135423\",\"front\":\"die Menschenmasse\",\"back\":\"la folla\",\"learned\":false,\"active\":true,\"archived\":false},{\"wordId\":\"c34fc000-ca62-4f91-9af4-17cef3106cce\",\"front\":\"die Fluch\",\"back\":\"la fuga\",\"learned\":false,\"active\":true,\"archived\":false},{\"wordId\":\"a00672d3-5188-4963-9d38-c7b51cafb418\",\"front\":\"die Abwanderung\",\"back\":\"l`esodo\",\"learned\":false,\"active\":true,\"archived\":false},{\"wordId\":\"d1d3049f-0a5b-467b-a8d4-3a4444ad4e3f\",\"front\":\"beschlagnahmt\",\"back\":\"confiscato\",\"learned\":false,\"active\":true,\"archived\":false},{\"wordId\":\"9592034c-e512-4fd9-8fd1-63ffc89c8d61\",\"front\":\"all inclusive\",\"back\":\"tutto compreso\",\"learned\":false,\"active\":true,\"archived\":false}]",
+    "user": 1,
+    "slug": "nomi",
+    "createdAt": "2025-09-22 08:19:18.827"
+  }
+]

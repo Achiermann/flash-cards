@@ -24,7 +24,7 @@ if (state.matchedSet.words.length === 1){return {...state, setFinished: true, co
           const updatedWords = state.matchedSet.words.map((word, index) => {
             if (index === state.count) {
               return { ...word, learned: true };}return { ...word };});
-              const newWordsArray = updatedWords.filter((w) => !w.learned && w.active);
+              const newWordsArray = updatedWords.filter((w) => !w.learned);
               return {matchedSet: {...state.matchedSet,words: newWordsArray, }}})},
         }))
        

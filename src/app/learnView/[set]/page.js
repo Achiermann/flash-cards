@@ -30,7 +30,31 @@ export default function LearnView() {
   const handleToggleArchive = (wordId) => (e) => {
     e.preventDefault();
     e.stopPropagation();
+
+    // Archive the word in the main store
     toggleArchiveWord(matchedSet.id, wordId);
+
+    // Remove the word from the current learn session immediately
+    const updatedWords = matchedSet.words.filter(w => w.wordId !== wordId);
+
+    // Update the learn session
+    useLearnSetStore.setState((state) => {
+      let newCount = state.count;
+      // If we're at the end and removed the last word, go back one
+      if (newCount >= updatedWords.length && updatedWords.length > 0) {
+        newCount = updatedWords.length - 1;
+      }
+      // If no words left, finish the session
+      if (updatedWords.length === 0) {
+        return { ...state, setFinished: true, count: 0 };
+      }
+      return {
+        ...state,
+        matchedSet: { ...state.matchedSet, words: updatedWords },
+        count: newCount
+      };
+    });
+
     toast.success('Word archived!');
   };
 
@@ -48,7 +72,7 @@ export default function LearnView() {
   // Set the initial count once when words are available
   useEffect(() => {
     if (matchedSet && initialCountRef.current === null) {
-      const initial = matchedSet.words.filter(w => !w.learned && w.active).length;
+      const initial = matchedSet.words.filter(w => !w.learned).length;
       initialCountRef.current = initial;
     }
   }, [matchedSet]);
@@ -60,7 +84,7 @@ export default function LearnView() {
 
   if (!matchedSet) return <div className="loading">Loading...</div>;
 
-  const remaining = matchedSet.words.filter(w => !w.learned && w.active).length;
+  const remaining = matchedSet.words.filter(w => !w.learned).length;
   const initial = initialCountRef.current ?? remaining; // fallback on first render
   const progress = initial > 0 ? ((initial - remaining) / initial) * 100 : 0; // number, not string
 
