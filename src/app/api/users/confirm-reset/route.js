@@ -8,10 +8,7 @@ export async function POST(req) {
   try {
     const { token, newPassword } = await req.json();
 
-    console.log('Confirm reset request:', { token: token?.substring(0, 10) + '...', passwordLength: newPassword?.length });
-
     if (!token || !newPassword) {
-      console.log('Missing token or password');
       return NextResponse.json({ error: 'Token and new password are required' }, { status: 400 });
     }
 
@@ -27,7 +24,6 @@ export async function POST(req) {
       .single();
 
     if (fetchError || !user) {
-      console.log('Token lookup failed:', fetchError?.message || 'User not found');
       return NextResponse.json({ error: 'Invalid or expired reset token' }, { status: 400 });
     }
 
@@ -36,7 +32,6 @@ export async function POST(req) {
     const expiresAt = new Date(user.reset_token_expires);
 
     if (now > expiresAt) {
-      console.log('Token expired:', { now, expiresAt });
       return NextResponse.json({ error: 'Reset token has expired' }, { status: 400 });
     }
 

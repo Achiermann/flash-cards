@@ -1,7 +1,6 @@
 'use client'
 
 import { useSetsStore } from "@/app/stores/useSetsStore";
-import { Trash2 } from 'lucide-react';
 import { useState, useEffect } from 'react';
 
 export default function AddWordForm({setId, className=""}) {
@@ -19,7 +18,6 @@ export default function AddWordForm({setId, className=""}) {
       
         const handleAddWord = (e) => {
           if (!readyToAddWord) {
-            console.log('Please Add Front And Back!');
             return;
           }
           e.preventDefault();

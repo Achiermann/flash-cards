@@ -1,28 +1,21 @@
 "use client";
 
-import { useParams } from "next/navigation";
 import { useSetsStore } from "@/app/stores/useSetsStore";
-import Link from "next/link";
 import { Trash2, Archive, ArchiveRestore } from 'lucide-react';
 import { useState } from "react";
-import AddWordForm from "@/components/addWordForm";
 import toast from "react-hot-toast";
 import { usePathname } from 'next/navigation';
 
 
 export default function Wordlist({matchedSet}) {
 
-  
+
   {/*//.1      VARIABLES            */}
 
-const [front, setFront] = useState('');
-const [back, setBack] = useState('');
 const deleteWord = useSetsStore((state) => state.deleteWord);
 const editWord = useSetsStore((state) => state.editWord);
-const archiveWord = useSetsStore((state) => state.archiveWord);
 const toggleArchiveWord = useSetsStore((state) => state.toggleArchiveWord);
 const [editingWordId, setEditingWordId] = useState(null);
-const [readyToAddWord, setReadyToAddWord] = useState(false);
 const [editFront, setEditFront] = useState('');
 const [editBack, setEditBack] = useState('');
 const pathname = usePathname();
@@ -33,18 +26,6 @@ const filteredMatchedSet = {...matchedSet, words: filteredWordsArr};
 
 
   {/*//.1      HANDLERS            */}
-
-
- const handleAddWord = (e) => {
-    if (!readyToAddWord) {
-      console.log('Please Add Front And Back!');
-      return;
-    }
-    e.preventDefault();
-    addWord(data.id, front.trim(), back.trim());
-    setFront('');
-    setBack('');
-  };
 
 const handleToggleArchive = (wordId) => {
   toggleArchiveWord(filteredMatchedSet.id, wordId);

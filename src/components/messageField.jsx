@@ -19,7 +19,7 @@ return (
       {messageKey === "confirm-delete" && <div className="message"><p>{message} </p>
       <div className="confirm-delete-btn-wrapper">
       <button className="button-confirm-delete" onClick={() => deleteSet(pendingDeleteId)}>Delete</button>   
-      <button className="button-cancle-delete" onClick={() => cancelDelete()}>Cancel</button>   
+      <button className="button-cancel-delete" onClick={() => cancelDelete()}>Cancel</button>   
       </div></div>}
     </div>
    )

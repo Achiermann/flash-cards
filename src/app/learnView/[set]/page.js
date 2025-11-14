@@ -5,7 +5,7 @@ import { useLearnSetStore } from '@/app/stores/useLearnSetStore';
 import { useSetsStore } from '@/app/stores/useSetsStore';
 import { useEffect, useState } from 'react';
 import Link from 'next/link';
-import { LinearProgress } from '@mui/material';
+import LinearProgress from '@mui/material/LinearProgress';
 import { Archive } from 'lucide-react';
 import toast from 'react-hot-toast';
 
@@ -68,7 +68,8 @@ export default function LearnView() {
   // Start / reset the session when slug changes
   useEffect(() => {
     resetLearnSession(slug);
-  }, [resetLearnSession, slug]);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [slug]);
 
   // Hide answer when card index or set changes
   useEffect(() => {
@@ -85,8 +86,7 @@ export default function LearnView() {
   const front = currentWord.front;
   const back  = currentWord.back;
   const wordId = currentWord.wordId;
-  
-  console.log('matchedSet', matchedSet);
+
   return (
     <div className="learn-view-container">
       <div className="progress-and-flashcard">

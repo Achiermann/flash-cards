@@ -1,26 +1,11 @@
 "use client";
 
 import { useSetsStore } from "@/app/stores/useSetsStore";
-import Link from "next/link";
-import { useState } from "react";
-import AddWordForm from "@/components/addWordForm";
 import Wordlist from "@/components/wordlist";
-import { useEffect } from "react";
 
 export default function ArchiveView() {
-    
+
 const sets = useSetsStore((state) => state.sets);
-const addWord = useSetsStore((state) => state.addWord);
-    
-const [selectedSet, setSelectedSet] = useState(null);
-
-useEffect(() => {
-if(sets?.length && !selectedSet) setSelectedSet(sets[0])
-}, [sets, selectedSet]);
-
-const handleSelectionChange = (e) => {
-    setSelectedSet(sets.find(set => set.name === e.target.value))
-}
 
   return (
     <div className="manage-set-content">

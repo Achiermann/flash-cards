@@ -1,10 +1,9 @@
 import { create } from "zustand";
-import { persist, devtools } from "zustand/middleware";
 import { useSetsStore } from '@/app/stores/useSetsStore';
 
 
 export const useLearnSetStore = create(
-      (set, get) => ({
+      (set) => ({
         count: 0,
         matchedSet: null,
         learnedCount: 0,

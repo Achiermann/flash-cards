@@ -1,17 +1,15 @@
 "use client";
 
-import { useState, useEffect, use } from 'react';
+import { useState } from 'react';
 import { useSetsStore } from '../stores/useSetsStore';
 import Link from 'next/link';
 import { Trash2 } from 'lucide-react';
-import { Plus } from 'lucide-react';
 import AddWordForm from "@/components/addWordForm";
 import {useEditOptionsStore} from '../stores/useEditOptionsStore';
 import toast from 'react-hot-toast';
 
 export default function SetItem({ data, editOptions, id }) {
 const { setConfirmDeleteMessage} = useSetsStore();
-  const [editingSetNameId, setEditingSetNameId] = useState(null);
   const [editSetName, setEditSetName] = useState(`${data.name}`);
 
   const set = useSetsStore((state) => state.sets.find((s) => s.id === id));

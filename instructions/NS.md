@@ -2,7 +2,16 @@ ONLY follow the following instructions if explicitly told:
 
 <!-- .1 Task -->
 
-The progress bar doesn`t actually display the progress. It just displays 0 and 100%
+Improve the app for efficiency and cleanliness. Make the following audit:
+
+## 1. Unused Code Scan
+Scan the **ENTIRE** app for unused code (including imports and unused class references in CSS)
+
+## 2. API check
+Check the API calls, are there multiple ones? Are there ones that could be merged? Are there unnecessary or redundant ones? -> Clean up!
+
+## 3. Suggestions
+Make suggestions if you find code that doesn`t follow current best practices.
 
 <!-- .2 Disclaimer -->
 

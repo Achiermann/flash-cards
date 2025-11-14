@@ -21,19 +21,10 @@ export async function POST(req) {
       .single();
 
     if (error || !user) {
-      console.log('Login failed - user not found:', { username, error: error?.message });
       return NextResponse.json({ error: 'Invalid credentials' }, { status: 401 });
     }
 
-    console.log('Login attempt:', {
-      username,
-      hasPasswordHash: !!user.password_hash,
-      hashLength: user.password_hash?.length,
-      hashPrefix: user.password_hash?.substring(0, 7)
-    });
-
     const ok = await bcrypt.compare(password, user.password_hash);
-    console.log('Password comparison result:', ok);
     if (!ok) return NextResponse.json({ error: 'Invalid credentials' }, { status: 401 });
 
     const token = signToken({ id: user.id, username: user.username });

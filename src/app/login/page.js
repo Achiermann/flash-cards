@@ -1,7 +1,7 @@
 'use client';
 
-import { useState, useEffect } from 'react';
-import toast, { Toaster } from 'react-hot-toast';
+import { useState } from 'react';
+import toast from 'react-hot-toast';
 
 
 export default function LoginPage() {

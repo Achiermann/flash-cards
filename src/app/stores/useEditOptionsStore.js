@@ -1,8 +1,7 @@
 import { create } from "zustand";
-import { persist, devtools } from "zustand/middleware";
 
 export const useEditOptionsStore = create(
-      (set, get) => ({
+      (set) => ({
         showEditOptions: false,
 
   setShowEditOptions: (boolean) => {

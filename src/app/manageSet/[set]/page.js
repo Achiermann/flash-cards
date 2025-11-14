@@ -3,20 +3,17 @@
 import { useParams } from "next/navigation";
 import { useSetsStore } from "@/app/stores/useSetsStore";
 import Link from "next/link";
-import { Trash2 } from 'lucide-react';
-import { useState } from "react";
 import AddWordForm from "@/components/addWordForm";
 import Wordlist from '@/components/wordlist';
 
 export default function ManageSetView() {
 
-  
+
   {/*//.1      VARIABLES            */}
 
   const { set: slug } = useParams();
   const set = useSetsStore((state) => state.sets.find((s) => s.slug === slug));
 
-  const addWord = useSetsStore((state) => state.addWord);
   const matchedSet = useSetsStore((state) =>
     state.sets.find((s) => s.slug === slug)
   );
