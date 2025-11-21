@@ -1,6 +1,7 @@
 "use client";
 
 import { useState } from 'react';
+import { useMediaQuery } from 'react-responsive';
 import { useSetsStore } from '../stores/useSetsStore';
 import Link from 'next/link';
 import { Trash2 } from 'lucide-react';
@@ -17,6 +18,8 @@ const { setConfirmDeleteMessage} = useSetsStore();
   const editSet = useSetsStore((state) => state.editSet);
   const setShowEditOptions = useEditOptionsStore((state) => state.setShowEditOptions);
   const showEditOptions = useEditOptionsStore((state) => state.showEditOptions);
+  const isMobile = useMediaQuery({ query: '(max-width: 600px)' });
+
 
   const handleSubmitName = (id, editSetName) => (e) => {
     e.preventDefault();
@@ -48,7 +51,7 @@ editSet(id, editSetName)
 {!showEditOptions && <div className="set-option-button-container">
 {set.words.length > 0 && <Link href={`/learnView/${set.slug}`}> <button className="button-learn"> Learn</button> </Link>} 
 {set.words.length === 0 && <button className="button-learn" onClick={() => toast.error(`This set contains no words yet!`)}> Learn</button>}
- <Link href={`/manageSet/${set.slug}`}> <button className="button-manage"> Manage Set </button> </Link>
+ <Link href={`/manageSet/${set.slug}`}> <button className="button-manage"> {isMobile ? "Manage" : "Manage Set"} </button> </Link>
  </div>}</div>
     </>
   );

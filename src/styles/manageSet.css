@@ -330,5 +330,9 @@ height: 30px;
     flex-wrap: wrap;
   }
 
+  .set-option-button-container button {
+  max-width: 90px;
+  }
+
 }
 
