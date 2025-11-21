@@ -1,0 +1,143 @@
+/* Conjugator Overlay */
+.conjugator-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  background-color: rgba(0, 0, 0, 0.5);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 1000;
+}
+
+/* Conjugator Container */
+.conjugator-container {
+  background-color: var(--color-white);
+  border-radius: var(--radius-lg);
+  padding: var(--space-2xl);
+  width: 80%;
+  height: 90vh;
+  max-width: 100%;
+  max-height: 90vh;
+  overflow-y: auto;
+  position: relative;
+  border: var(--border-medium) solid var(--color-border);
+}
+
+/* Close Button */
+.conjugator-close {
+  position: absolute;
+  top: var(--space-md);
+  right: var(--space-md);
+  font-size: var(--font-2xl);
+  background: none;
+  border: none;
+  cursor: pointer;
+  padding: 0;
+  width: 40px;
+  height: 40px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: var(--color-text);
+  min-width: auto;
+  margin: 0;
+}
+
+.conjugator-close:hover {
+  background-color: var(--color-white-hover);
+  border-radius: var(--radius-sm);
+}
+
+/* Grid Layout */
+.conjugator-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: var(--space-lg);
+  margin-top: var(--space-xl);
+}
+
+/* Individual Conjugation Box */
+.verb-term-conjugation-box {
+  background-color: var(--color-background);
+  border: var(--border-thin) solid var(--color-border-light);
+  border-radius: var(--radius-md);
+  padding: var(--space-lg);
+}
+
+.conjugation-title {
+  font-size: var(--font-lg);
+  font-weight: 600;
+  margin-bottom: var(--space-md);
+  color: var(--color-text);
+  text-align: center;
+  background-color: var(--color-primary);
+  padding: var(--space-sm);
+  border-radius: var(--radius-sm);
+}
+
+.conjugation-list {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+
+.conjugation-list li {
+  padding: var(--space-xs) 0;
+  color: var(--color-text);
+  font-size: var(--font-base);
+}
+
+/* Loading & Error States */
+.conjugator-loading,
+.conjugator-error,
+.conjugator-empty {
+  text-align: center;
+  padding: var(--space-2xl);
+  font-size: var(--font-lg);
+  color: var(--color-text);
+}
+
+.conjugator-error {
+ max-width: 100%;
+  max-height: 90vh;
+}
+
+.verb-insert-field {
+  display: flex;
+  flex-direction: row;
+  align-content: center;
+  width: 80%;
+  height: 50px;
+  border: 2px black solid;
+}
+
+/*.1.       Mobile Responsive */
+@media (max-width: 768px) {
+  .conjugator-container {
+    padding: var(--space-lg);
+    max-width: 95vw;
+    max-height: 95vh;
+  }
+
+  .conjugator-grid {
+    grid-template-columns: 1fr;
+    gap: var(--space-md);
+  }
+
+  .conjugation-title {
+    font-size: var(--font-base);
+  }
+
+  .conjugation-list li {
+    font-size: var(--font-sm);
+  }
+}
+
+@media (min-width: 769px) and (max-width: 1024px) {
+  .conjugator-grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}

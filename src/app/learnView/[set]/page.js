@@ -9,9 +9,12 @@ import LinearProgress from '@mui/material/LinearProgress';
 import { Archive } from 'lucide-react';
 import toast from 'react-hot-toast';
 import '@/styles/learnView.css';
+import Conjugator from '@/components/Conjugator';
+
 
 export default function LearnView() {
   const [showAnswer, setShowAnswer] = useState(false);
+  const [showConjugator, setShowConjugator] = useState(false);
   const { set: slug } = useParams();
 
   const {
@@ -90,6 +93,7 @@ export default function LearnView() {
 
   return (
     <div className="learn-view-container">
+  <Conjugator drilledVerb={currentWord.back} isOpen={showConjugator} onClose={() => setShowConjugator(false)} />
       <div className="progress-and-flashcard">
         <div className="progress-bar-wrapper">
           <LinearProgress variant="determinate" value={setFinished ? 100 : progress} />
@@ -105,7 +109,9 @@ export default function LearnView() {
                 <li className="flashcard-front"><p>{front}</p></li>
                 <div className="flashcard-separator" />
                 <li className="flashcard-back"><p>{showAnswer ? back : ''}</p></li>
+              {showAnswer && <button className="conjugator-button" onClick={() => setShowConjugator(true)}> Conjugate </button>}
               </ul>
+
 
             </>
           )}

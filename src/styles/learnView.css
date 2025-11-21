@@ -47,6 +47,8 @@
   cursor: pointer;
   min-width: 40px;
   min-height: 50px;
+  background-color: transparent;
+  margin-right: 10px;
 }
 
 .flashcard .wordlist-item-archive svg {

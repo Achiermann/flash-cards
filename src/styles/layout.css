@@ -27,7 +27,6 @@ align-items: flex-start;
 margin-right: auto; /* pushes button to far left */
 }
 
-
 .message-field{
     position: fixed;
     top: 50%;
