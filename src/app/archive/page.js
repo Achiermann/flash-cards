@@ -5,7 +5,8 @@ import Wordlist from "@/components/wordlist";
 
 export default function ArchiveView() {
 
-const sets = useSetsStore((state) => state.sets);
+const getFilteredSets = useSetsStore((state) => state.getFilteredSets);
+const sets = getFilteredSets();
 
   return (
     <div className="manage-set-content">

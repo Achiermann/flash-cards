@@ -10,6 +10,7 @@ import LoginPage from './login/page';
 import MessageField from '@/components/messageField';
 import { StyledEngineProvider } from '@mui/material/styles';
 import { Toaster } from 'react-hot-toast';
+import { useSetLanguage } from './stores/useSetLanguage';
 import '@/styles/layout.css';
 
 export default function ClientWrapper({ children }) {
@@ -17,6 +18,20 @@ export default function ClientWrapper({ children }) {
 const pathname = usePathname();
 const isHome = pathname === '/';
 const [isLoggedIn, setIsLoggedIn] = useState(true);
+const [isMobile, setIsMobile] = useState(false);
+const { language, setLanguage } = useSetLanguage();
+
+const languageOptions = [
+  { value: "französisch", label: "🇫🇷 Französisch" },
+  { value: "englisch", label: "🇬🇧 Englisch" },
+  { value: "spanisch", label: "🇪🇸 Spanisch" },
+  { value: "deutsch", label: "🇩🇪 Deutsch" },
+  { value: "italienisch", label: "🇮🇹 Italienisch" },
+  { value: "hebräisch", label: "🇮🇱 Hebräisch" },
+  { value: "portugiesisch", label: "🇵🇹 Portugiesisch" },
+  { value: "arabisch", label: "🇸🇦 Arabisch" },
+  { value: "japanisch", label: "🇯🇵 Japanisch" }
+];
 
   // Color theme on route change (your original logic)
   useEffect(() => {
@@ -26,7 +41,6 @@ const [isLoggedIn, setIsLoggedIn] = useState(true);
     document.documentElement.style.setProperty('--color-secondary', picked.secondary);
   }, [pathname]);
 
-const [showSidebar, setShowSidebar] = useState(false);
 
 
 useEffect(() => {
@@ -42,18 +56,37 @@ useEffect(() => {
     .catch(() => setIsLoggedIn(false));
 }, []);
 
+useEffect(() => {
+  const handleResize = () => {
+    setIsMobile(window.innerWidth <= 768);
+  };
+
+  handleResize();
+  window.addEventListener('resize', handleResize);
+
+  return () => window.removeEventListener('resize', handleResize);
+}, []);
+
   return (
     <div className="client-wrapper">
           <StyledEngineProvider injectFirst>
             <Toaster toastOptions={{ className: 'toaster' }} />
             <MessageField/>
     {!isLoggedIn && <LoginPage/>}
-     {showSidebar && <Sidebar showSidebar={showSidebar} setShowSidebar={setShowSidebar} isLoggedIn={isLoggedIn} setIsLoggedIn={setIsLoggedIn}/>}
-      {!showSidebar && pathname === '/' && <div className="burger-grid"><AlignJustify className="burger" onClick={() => setShowSidebar(true)} /></div>}
+    <Sidebar isLoggedIn={isLoggedIn} setIsLoggedIn={setIsLoggedIn}/>
+    <select
+      className="language-selector"
+      value={language}
+      onChange={(e) => setLanguage(e.target.value)}
+    >
+      {languageOptions.map((option) => (
+        <option key={option.value} value={option.value}>
+          {option.label}
+        </option>
+      ))}
+    </select>
       <div className="main-content-container">
-      {pathname !== '/' && (
-    <Link href="/"><button className="go-to-main-button">Go to main</button></Link>
-      )}
+    {pathname !== '/' && isMobile && (<Link href="/"><button className="go-to-main-button">Go to main</button></Link>)}
       {children}
     </div>
     </StyledEngineProvider>

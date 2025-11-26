@@ -1,26 +1,28 @@
 import { create } from "zustand"; import { persist, devtools } from "zustand/middleware";
+import { useSetLanguage } from "./useSetLanguage";
 
 export const useSetsStore = create(devtools(persist((set, get) => ({
   sets: [],
-  // .2.          STATE MANAGEMENT FOR SETS         
+  // .2.          STATE MANAGEMENT FOR SETS
 
   addSet: (name, id) => {
     const slug = String(name).toLowerCase().replace(/ /g, "-").replace(/[^\w-]+/g, "");
     const tempId = id ?? `temp-${Date.now()}`;
-    const newSet = { name, id: tempId, words: [], user: "", slug, createdAt: new Date().toISOString() };
+    const language = useSetLanguage.getState().language;
+    const newSet = { name, id: tempId, words: [], user: "", slug, createdAt: new Date().toISOString(), language };
     set((state) => ({ sets: [...state.sets, newSet] }), false, "addSet");
-    // sync to DB 
+    // sync to DB
     fetch("/api/sets", {
       method: "POST", headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({ name, slug, words: [] }),
+      body: JSON.stringify({ name, slug, words: [], set_language: language }),
     })
       .then(async (res) => { if (!res.ok) { const err = await res.json().catch(() => ({})); 
       throw new Error(err.error || "Failed to create set"); } return res.json(); })
       .then((created) => {
         set((state) => ({ sets: state.sets.map((s) => s.id === tempId ? {
           ...s, id: created.id, name: created.set_name ?? s.name, slug: created.slug ?? s.slug,
-          createdAt: created.createdAt ?? s.createdAt, words: Array.isArray(created.words) ? 
-          created.words : s.words, } : s) }), false, "addSet.synced");
+          createdAt: created.createdAt ?? s.createdAt, words: Array.isArray(created.words) ?
+          created.words : s.words, language: created.set_language ?? s.language } : s) }), false, "addSet.synced");
       }).catch((err) => { console.error("[useSetsStore] addSet sync failed:", err);
       });
   },
@@ -128,8 +130,14 @@ cancelDelete: () => {
       const normalized = (Array.isArray(data) ? data : []).map((r) => ({
         id: r.id, name: r.set_name ?? r.name ?? "", words: Array.isArray(r.words) ? r.words : [],
         user: r.user ?? "", slug: r.slug ?? "", createdAt: r.createdAt ?? r.created_at ?? new Date().toISOString(),
+        language: r.set_language ?? "italienisch",
       }));
       set({ sets: normalized }, false, "fetchSets");
     } catch (err) { console.error("[useSetsStore] fetchSets error:", err); }
+  },
+
+  getFilteredSets: () => {
+    const currentLanguage = useSetLanguage.getState().language;
+    return get().sets.filter((s) => s.language === currentLanguage);
   },
 }), { name: "Sets" })));

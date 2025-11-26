@@ -3,9 +3,10 @@ import { NextResponse } from 'next/server';
 export async function GET(request) {
   const { searchParams } = new URL(request.url);
   const verb = searchParams.get('verb') || 'aprire';
+  const language = searchParams.get('language') || 'italienisch';
 
   try {
-    const url = `https://konjugator.reverso.net/konjugation-italienisch-verb-${verb}.html`;
+    const url = `https://konjugator.reverso.net/konjugation-${language}-verb-${verb}.html`;
     const response = await fetch(url);
 
     if (!response.ok) {

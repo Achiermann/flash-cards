@@ -1,4 +1,1 @@
 To Do Next:
-
-- Insert the "Conjugator" in the Sidebar
-- Insert Language Selector

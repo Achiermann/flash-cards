@@ -7,6 +7,7 @@ import { Plus } from 'lucide-react';
 import { useEditOptionsStore } from './stores/useEditOptionsStore';
 import { useIsMobile } from '@/components/isMobile';
 import { useCenteredIndex } from "@/components/useCenteredIndex";
+import { useSetLanguage } from './stores/useSetLanguage';
 
 
 export default function SetsControl() {
@@ -14,7 +15,9 @@ export default function SetsControl() {
   const [setName, setSetName] = useState('');
   const [showCreateField, setShowCreateField] = useState(false);
   const [isReady, setIsReady] = useState(false);
-  const sets = useSetsStore((state) => state.sets);
+  const language = useSetLanguage((state) => state.language);
+  const getFilteredSets = useSetsStore((state) => state.getFilteredSets);
+  const sets = getFilteredSets();
   const fetchSets = useSetsStore(s => s.fetchSets);
   const addSet = useSetsStore((state) => state.addSet);
   const setShowEditOptions = useEditOptionsStore((state) => state.setShowEditOptions);

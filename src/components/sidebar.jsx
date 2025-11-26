@@ -8,17 +8,21 @@ export default function Sidebar({showSidebar, setShowSidebar, isLoggedIn, setIsL
 
   async function handleLogout() {
   await fetch('/api/users/logout', { method: 'POST' });
-setShowSidebar(false);
 setIsLoggedIn(false);
   }
 
   
   return (<div className="sidebar-container">
     <div className="sidebar-title"><h2>Options</h2>
-    <X className="btn-close-sidebar" onClick={() => setShowSidebar(false) }/></div>
+  </div>
   <div className="sb-option-div-container">
-<Link href={`/manageAllSets`} className="manage-all-link"><div className="sb-option-div"><button onClick={() => setShowSidebar(false) }>Manage All Sets</button></div></Link>
-<Link href={`/archive`} className="archive-link"><div className="sb-option-div"><button onClick={() => setShowSidebar(false) }>Words Archive</button></div></Link>    
+{/* Option: Manage All Sets  */}
+<Link href={`/`} className="go-to-main-link"><div className="sb-option-div"><button>Main</button></div></Link>
+{/* Option: Conjugator  */}
+<Link href={`/conjugatorPage`} className="conjugator-page-link"><div className="sb-option-div"><button>Conjugator</button></div></Link>    
+{/* Option: Manage All Sets  */}
+<Link href={`/manageAllSets`} className="manage-all-link"><div className="sb-option-div"><button>Manage All Sets</button></div></Link>
+{/* Option: Log Out  */}
 <div className="sb-option-div"><button onClick={handleLogout}>Log Out</button></div>
   </div>
   </div>

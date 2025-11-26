@@ -7,7 +7,8 @@ import Wordlist from "@/components/wordlist";
 
 export default function ManageAllSetsView() {
 
-const sets = useSetsStore((state) => state.sets);
+const getFilteredSets = useSetsStore((state) => state.getFilteredSets);
+const sets = getFilteredSets();
 
 const [selectedSet, setSelectedSet] = useState(null);
 

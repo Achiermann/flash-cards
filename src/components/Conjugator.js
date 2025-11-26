@@ -3,6 +3,7 @@
 import { useState, useEffect } from 'react';
 import '@/styles/conjugator.css';
 import { usePathname } from 'next/navigation';
+import { useSetLanguage } from '@/app/stores/useSetLanguage';
 
 export default function Conjugator({ isOpen, onClose, drilledVerb }) {
 
@@ -13,6 +14,7 @@ export default function Conjugator({ isOpen, onClose, drilledVerb }) {
   const [error, setError] = useState(null);
   const verb = insertedVerb || drilledVerb || "essere"
   const path = usePathname()
+  const { language } = useSetLanguage()
 
   // *** FUNCTIONS/HANDLERS ***
   useEffect(() => {
@@ -27,7 +29,7 @@ export default function Conjugator({ isOpen, onClose, drilledVerb }) {
     setError(null);
 
     try {
-      const response = await fetch(`/api/conjugator?verb=${verb}}`);
+      const response = await fetch(`/api/conjugator?verb=${verb}&language=${language}`);
       const data = await response.json();
       console.log('fetched data', data);
       if (data.error) {
@@ -48,10 +50,12 @@ export default function Conjugator({ isOpen, onClose, drilledVerb }) {
     }
   }
 
+  const isConjugatorPage = path.includes("conjugatorPage");
+
   return (
     <>
       {isOpen && (
-        <div className="conjugator-overlay" onClick={handleOverlayClick}>
+        <div className={isConjugatorPage ? "conjugator-page-wrapper" : "conjugator-overlay"} onClick={!isConjugatorPage ? handleOverlayClick : undefined}>
           <div className="conjugator-container">
 {!path.includes("learnView") &&
                <div className="verb-insert-field">
@@ -60,7 +64,7 @@ export default function Conjugator({ isOpen, onClose, drilledVerb }) {
   <label><input className='verb-insert' type="text" placeholder='Write Verb' value={insertedVerb}
   onChange={(e) => setInsertedVerb(e.target.value)}/></label>
 </form></div>}
-            <button className="conjugator-close" onClick={onClose}>×</button>
+            {!path.includes("conjugatorPage") && <button className="conjugator-close" onClick={onClose}>×</button>}
 
             {loading && <div className="conjugator-loading">Loading...</div>}
 
