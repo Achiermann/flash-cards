@@ -1,175 +1,187 @@
-/* * {
-    border: 2px solid #ff4646;
-} */
-
-.learn-view-container{
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
-    min-height: 100vh;
-}
+/* ==============================================================================
+   LEARN VIEW — flashcard, progress, options
+   ============================================================================== */
 
 .learn-view-container {
+  flex: 1;
   display: flex;
   flex-direction: column;
   align-items: center;
   justify-content: center;
-  min-height: 100vh;
+  min-height: 100%;
 }
 
 .progress-and-flashcard {
-    display: flex;
+  display: flex;
   flex-direction: column;
   align-items: center;
   justify-content: center;
   margin-bottom: auto;
-  margin-top: 30px;
+  margin-top: var(--space-6);
 }
 
-.flashcard{
+.flashcard {
   display: flex;
   flex-direction: column;
   align-items: center;
   justify-content: center;
-  margin-top: 30px;
+  margin-top: var(--space-6);
   width: 400px;
   height: 400px;
-  background-color: rgb(255, 251, 246);
-  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
+  background-color: var(--color-surface);
+  border: 1px solid var(--color-border-soft);
+  border-radius: var(--radius-lg);
+  box-shadow: var(--shadow-lg);
   position: relative;
+  cursor: pointer;
 }
 
+/* Archive — quiet icon in the corner (no circle inside the card) */
 .flashcard .wordlist-item-archive {
   position: absolute;
-  top: 15px;
-  right: 1px;
+  top: var(--space-3);
+  right: var(--space-3);
   cursor: pointer;
-  min-width: 40px;
-  min-height: 50px;
+  width: auto;
+  height: auto;
+  min-width: 0;
+  border: none;
   background-color: transparent;
-  margin-right: 10px;
+  color: var(--color-muted);
+}
+.flashcard .wordlist-item-archive:hover {
+  background-color: transparent;
+  color: var(--color-text);
+}
+.flashcard .wordlist-item-archive svg {
+  width: 22px;
+  height: 22px;
 }
 
-.flashcard .wordlist-item-archive svg {
-  width: 23px;
-  height: 23px;
-}   
-
-.flashcard p{
-  font-size: 38px;
-  color: rgb(0, 0, 0);
+.flashcard p {
+  font-size: 2rem;
+  color: var(--color-text);
 }
 
 .flashcard-word-wrapper {
   display: flex;
   flex-direction: column;
   align-items: center;
+  justify-content: center;
+  gap: var(--space-5);
   width: 100%;
   height: 100%;
-margin: 30% 0px 0px 0px;}
+}
 
 .flashcard-front,
 .flashcard-back {
   width: 100%;
-  padding: 20px;
+  padding: var(--space-5);
   text-align: center;
-  font-size: 1.5rem;
   transition: transform 0.3s ease;
 }
 
 .flashcard-separator {
-  height: 1.4px;
+  height: 1px;
   width: 300px;
-  background-color: #494949;
+  background-color: var(--color-border-soft);
+}
+
+.conjugator-button {
+  background-color: var(--color-surface);
+  border: 1.9px solid var(--btn-bg);
+  border-radius: 999px;
+  color: var(--color-text);
+}
+.conjugator-button:hover {
+  background-color: var(--btn-bg);
 }
 
 .options-container {
   display: flex;
+  gap: var(--space-3);
   margin-top: auto;
-  margin-bottom: 170px;
+  margin-bottom: var(--space-7);
 }
 
+/* Learned — pale-pink pill palette, matching the word-count pill */
 .button-learned {
-  background-color: var(--color-main-green);
+  background-color: var(--color-learn);
+  color: var(--color-learn-text);
+}
+.button-learned:hover {
+  background-color: var(--color-learn-hover);
 }
 
-.set-finished-display{
+.set-finished-display {
   display: flex;
   flex-direction: column;
   justify-content: center;
 }
 
-.finished-message{
-  margin-bottom: 40px;
+.finished-message {
+  margin-bottom: var(--space-6);
   text-align: center;
 }
 
-.finished-message p{
-font-size: 21px;;
+.finished-message p {
+  font-size: 1.3rem;
 }
 
-.finished-options-container{
+.finished-options-container {
   display: flex;
   justify-content: center;
-  gap: 20px;
+  gap: var(--space-4);
 }
 
-/*.2    Progress Bar      */
+/* ---- Progress bar (MUI) ------------------------------------------------ */
 
 .progress-bar-wrapper {
-  padding-top: 100px;
- width: 100%;
- padding: 8;
+  padding-top: var(--space-7);
+  width: 100%;
 }
 
-.MuiLinearProgress-bar1{
- background-color:  var(--color-main-green) !important;
+.MuiLinearProgress-root {
+  height: 10px !important;
+  background-color: var(--color-bg) !important;
+  border: 1px solid var(--color-border-soft) !important;
+  border-radius: 999px !important;
 }
 
-.css-1txyin7-MuiLinearProgress-root{
-  height: 12px !important;
-  background-color: rgb(255, 255, 255) !important;
-  border: rgb(201, 201, 201) 1px solid !important;
-  border-radius: 10px !important;
+.MuiLinearProgress-bar {
+  background-color: var(--color-line) !important;
 }
 
-/* .1.        MOBILE                                                                             */
+/* ==============================================================================
+   MOBILE
+   ============================================================================== */
 
-@media (max-width: 768px){
-
-
+@media (max-width: 768px) {
   .flashcard {
     width: calc(100vw - 70px);
     height: 350px;
     max-width: 400px;
-    margin: 30px 10px 10px 10px;
+    margin: var(--space-6) var(--space-2) var(--space-3) var(--space-2);
   }
 
   .progress-bar-wrapper {
-    padding: 100px 10px 8px 10px;
+    padding: var(--space-7) var(--space-2) var(--space-2) var(--space-2);
     width: calc(100% - 20px);
   }
 
   .options-container {
-    padding: 0 10px;
+    padding: 0 var(--space-2);
     flex-wrap: nowrap;
-    gap: 0px;
-    margin: 50px 0 250px 0;
-  }
-
-  .options-container button {
-    height: 55px;
-    width: 120px;
-    margin: 0 7px 0 7px;
+    gap: var(--space-2);
+    margin: var(--space-6) 0 var(--space-7) 0;
   }
 
   .finished-options-container {
     flex-direction: column;
-    padding: 0 10px;
+    padding: 0 var(--space-2);
   }
 
   .finished-message {
-    padding: 0 10px;
+    padding: 0 var(--space-2);
   }
 }

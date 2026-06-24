@@ -3,6 +3,7 @@
 import { useState, useEffect } from 'react';
 import { useSetsStore } from './stores/useSetsStore';
 import SetItem from './setItem/SetItem';
+import SetDetail from './setItem/SetDetail';
 import { Plus } from 'lucide-react';
 import { useEditOptionsStore } from './stores/useEditOptionsStore';
 import { useIsMobile } from '@/components/isMobile';
@@ -15,6 +16,7 @@ export default function SetsControl() {
   const [setName, setSetName] = useState('');
   const [showCreateField, setShowCreateField] = useState(false);
   const [isReady, setIsReady] = useState(false);
+  const [selectedSetId, setSelectedSetId] = useState(null);
   const language = useSetLanguage((state) => state.language);
   const getFilteredSets = useSetsStore((state) => state.getFilteredSets);
   const sets = getFilteredSets();
@@ -28,15 +30,23 @@ export default function SetsControl() {
   const { ref: listRef, centerIndex } = useCenteredIndex({ depsKey });
   const sortedSets = [...sets].sort((a, b) => a.id - b.id);
 
+  // On mobile, the card centered in the carousel viewport is the active set:
+  // selecting it applies the `selected` class and drives the detail panel.
+  const centeredSetId = sortedSets[centerIndex]?.id;
+
 useEffect(() => {
     fetchSets(); // load from server on mount
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
-  
+
 
   useEffect(() => {
     setIsReady(true);
   }, []);
+
+  useEffect(() => {
+    if (isMobile && centeredSetId != null) setSelectedSetId(centeredSetId);
+  }, [isMobile, centeredSetId]);
 
   // Show create set field
   const toggleCreateSetField = () => {
@@ -88,10 +98,12 @@ useEffect(() => {
       </form>
 {/*//.2                       SETS-GRID                       */}
       <div className="sets-grid">
-  {!isMobile && <ul> {sortedSets.map((set) => ( <li key={set.id}> <SetItem data={set} editOptions={showEditOptions} id={set.id} /> </li> ))} </ul>}
-{isMobile && ( <ul className="snap-list" ref={listRef}> {sortedSets.map(s => ( <li className="snap-item" key={s.id}> <SetItem data={s} id={s.id} editOptions={showEditOptions} /> </li> ))} </ul> )}          
-  </div> 
-  <div className="dots-container">{sortedSets.map((el) => (<div className="dot" style={(el.id - 1) === centerIndex ? { backgroundColor: '#fcfcfcff' } : undefined}key={el.id}/>))}</div>
+  {!isMobile && <ul> {sortedSets.map((set) => ( <li key={set.id}> <SetItem data={set} id={set.id} onSelect={setSelectedSetId} isSelected={selectedSetId === set.id} /> </li> ))} </ul>}
+{isMobile && ( <ul className="snap-list" ref={listRef}> {sortedSets.map(s => ( <li className="snap-item" key={s.id}> <SetItem data={s} id={s.id} onSelect={setSelectedSetId} isSelected={selectedSetId === s.id} /> </li> ))} </ul> )}
+  </div>
+  <div className="dots-container">{sortedSets.map((el) => (<div className="dot" style={(el.id - 1) === centerIndex ? { backgroundColor: 'var(--color-line)' } : undefined}key={el.id}/>))}</div>
+{/*//.2                       SET DETAIL                       */}
+  <SetDetail setId={selectedSetId} />
     </div>
   );
 }

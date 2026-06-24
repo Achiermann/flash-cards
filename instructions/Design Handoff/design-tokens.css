@@ -1,0 +1,101 @@
+/* ============================================================================
+   DESIGN TOKENS — copy/paste starting point
+   ----------------------------------------------------------------------------
+   These are the exact custom properties that drive the look. Drop them into a
+   global :root and build everything off them. Do not hard-code raw hex/px in
+   components — reference the tokens.
+   ============================================================================ */
+
+:root {
+  /* ---- Surfaces & text -------------------------------------------------- */
+  --color-app-bg: #fbfbfb;        /* the canvas the floating panels sit on   */
+  --color-bg: #ffffff;            /* inputs, tables                          */
+  --color-surface: #ffffff;       /* cards, sidebar, main panel              */
+  --color-text: #262626;          /* primary text                           */
+  --color-line: #272727;          /* near-black: strong borders, dark fills  */
+  --color-muted: #6b6b6b;         /* secondary / meta text                   */
+
+  /* ---- Brand / accent --------------------------------------------------- */
+  --color-brand: #ffffff;         /* the "on-dark" surface (text on dark fill = white) */
+  --color-brand-hover: #dffdff;   /* pale cyan hover wash                    */
+  --color-brand-contrast: #262626;
+  --color-title: #ff8a96;         /* defined accent token for the display wordmark
+                                     (the live wordmark currently renders near-black) */
+
+  /* ---- Borders ---------------------------------------------------------- */
+  --color-border: #6b6b6b;
+  --color-border-soft: #e5e5e5;   /* default input border + row dividers     */
+
+  /* ---- Feedback --------------------------------------------------------- */
+  --color-error: #d33;
+  --color-success: #2a8a3e;
+
+  /* ---- Highlight markers (rich-text) — pastel --------------------------- */
+  --marker-yellow: #fef3c7;
+  --marker-green: #d1fae5;
+  --marker-blue: #dbeafe;
+  --marker-pink: #fce7f3;
+
+  /* ---- Todo / done line washes ----------------------------------------- */
+  --marker-to-do: #ffe8d6;
+  --marker-done: #d6f5dd;
+
+  /* ---- Spacing scale ---------------------------------------------------- */
+  --space-1: 0.25rem;   /*  4px */
+  --space-2: 0.5rem;    /*  8px */
+  --space-3: 0.75rem;   /* 12px */
+  --space-4: 1rem;      /* 16px */
+  --space-5: 1.5rem;    /* 24px */
+  --space-6: 2rem;      /* 32px */
+  --space-7: 3rem;      /* 48px */
+
+  /* ---- Radii ------------------------------------------------------------ */
+  --radius-sm: 0.25rem;   /*  4px — inputs, small chips                      */
+  --radius-btn: 0.375rem; /*  6px — buttons                                 */
+  --radius: 15px;         /* 15px — generic                                 */
+  --radius-lg: 1rem;      /* 16px — cards, sidebar, main panel              */
+
+  /* ---- Button fills ----------------------------------------------------- */
+  --btn-bg: #ededed;
+  --btn-bg-hover: #dcdcdc;
+  --btn-primary-hover: #3d3d3d;
+
+  /* ---- Elevation — deliberately flat ------------------------------------ */
+  --shadow-sm: none;
+  --shadow: none;
+  --shadow-lg: 0 8px 24px rgb(0 0 0 / 0.06);  /* only for popovers/detail   */
+  /* Floating panels (sidebar + main) use a literal soft shadow:            */
+  /*   box-shadow: 2px 2px 5px rgba(0, 0, 0, 0.1);                          */
+
+  /* ---- Topic auto-color seed (HSL) -------------------------------------- */
+  --topic-base-h: 320;
+  --topic-base-s: 42%;
+  --topic-base-l: 46%;
+}
+
+/* ============================================================================
+   PER-APP ACCENT THEMING
+   Override the accent tokens on a scoped class to re-skin a section without
+   touching components. Example: the "Stiftungen" area swaps pink for blue.
+   ============================================================================ */
+.theme-stiftungen {
+  --color-brand: #e5f2ff;
+  --color-title: #8ac5ff;
+}
+
+/* ============================================================================
+   TOPIC PILL COLOR SCALE (10 steps)
+   Muted/"dusty" text on a flat pastel fill. Pills are SQUARE (no radius).
+   Assign by hashing the topic name -> index 0..9.
+   text-color  |  background
+   ============================================================================ */
+.topic-c0 { color: #a8478f; background: #fce7f3; } /* dusty pink      */
+.topic-c1 { color: #8a54a6; background: #f3e8ff; } /* muted purple    */
+.topic-c2 { color: #6a5cb0; background: #ede9fe; } /* muted violet    */
+.topic-c3 { color: #4b6cb0; background: #dbeafe; } /* dusty blue      */
+.topic-c4 { color: #3d8893; background: #cffafe; } /* muted teal      */
+.topic-c5 { color: #4a9162; background: #d1fae5; } /* muted green     */
+.topic-c6 { color: #7c9148; background: #ecfccb; } /* muted lime      */
+.topic-c7 { color: #9e8a45; background: #fef3c7; } /* muted gold      */
+.topic-c8 { color: #b56b45; background: #ffe8d6; } /* muted terracotta*/
+.topic-c9 { color: #b4515e; background: #fee2e2; } /* dusty red       */

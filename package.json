@@ -17,13 +17,12 @@
     "@supabase/supabase-js": "^2.57.4",
     "bcrypt": "^6.0.0",
     "cheerio": "^1.1.2",
-    "decorators": "^0.0.1",
     "framer-motion": "^12.23.18",
     "italian-verbs": "^5.4.0",
     "jsonwebtoken": "^9.0.2",
     "lucide-react": "^0.526.0",
     "mysql2": "^3.14.3",
-    "next": "15.4.4",
+    "next": "^15.5.19",
     "next-pwa": "^5.6.0",
     "react": "19.1.0",
     "react-dom": "19.1.0",
@@ -38,8 +37,9 @@
     "@eslint/eslintrc": "^3",
     "@types/node": "24.2.1",
     "@types/react": "19.1.9",
+    "baseline-browser-mapping": "^2.10.38",
     "eslint": "^9",
-    "eslint-config-next": "15.4.4",
+    "eslint-config-next": "^15.5.19",
     "sharp": "^0.34.4"
   }
 }

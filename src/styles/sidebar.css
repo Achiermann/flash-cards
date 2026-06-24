@@ -1,99 +1,120 @@
+/* ==============================================================================
+   SIDEBAR — floating white panel: wordmark, nav, pinned footer
+   ============================================================================== */
+
 .sidebar-container {
-    background-color: #F8B2D1;
-    width: 200px;
-    min-width: 200px;
-    height: 100vh;
+  flex-shrink: 0;
+  width: 260px;
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-4);
+  padding: var(--space-4);
+  background-color: var(--color-surface);
+  border-radius: var(--radius-lg);
+  box-shadow: var(--shadow-panel);
+  overflow-y: auto;
+  margin: var(--space-5) 0 var(--space-5) var(--space-5);
+
 }
 
-.sidebar-container p {
-    font-family: var(--font-funnel-sans);
-    font-size: 1.2rem;
-    color: #333;
-        padding-left: 20px;
-
-}
+/* ---- Wordmark (Nabla) --------------------------------------------------- */
 
 .sidebar-title {
-    display: flex;
-    align-items: center;
-  height: 80px;
+  font-family: var(--font-display);
+  font-size: 2.2rem;
+  letter-spacing: -0.02em;
+  line-height: 1;
+  text-align: center;
+  color: var(--color-text);
+  margin: var(--space-3) auto 0 auto;
 }
 
-.sidebar-title h2 {
-    padding-left: 20px;
-    font-size: 2rem;
-    font-weight: 600;
-}   
-
-.sb-option-div-container {
-   display: flex;
-   flex-direction: column;
-   justify-content: center;
-   align-items: center;
-    margin-top: 30px;
+.sidebar-workspace {
+  text-align: center;
+  font-size: 0.8rem;
+  color: var(--color-muted);
+  text-transform: capitalize;
+  margin-bottom: var(--space-2);
 }
 
-.sb-option-div {
-display: flex;
-justify-content: center;
-align-items: center;
-margin-bottom: 30px;
+/* ---- Nav --------------------------------------------------------------- */
+
+.sidebar-nav {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-1);
 }
 
-.sb-option-div button{
-all: unset;
-display: flex;
-justify-content: center;
-align-items: center;
-border: #333 solid 2px;
-width: 80px;
-height: 80px;
-border-radius: 20%;
-}
-
-.sb-option-div button:hover{
-    background-color: var(--color-section)
-}
-
-.burger {
-margin-top: 20px;
-margin-left: 20px;
-width: 60px;
-height: 60px;
-}
-
-.manage-all-link,
-.manage-all-link:visited,
-.manage-all-link:hover,
-.manage-all-link:active,
-.archive-link,
-.archive-link:visited,
-.archive-link:hover,
-.archive-link:active,
-.go-to-main-link,
-.go-to-main-link:visited,
-.go-to-main-link:hover,
-.go-to-main-link:active,
-.conjugator-page-link,
-.conjugator-page-link:visited,
-.conjugator-page-link:active,
-.conjugator-page-link:hover
- {
+.sidebar-nav-link {
+  text-decoration: none;
   color: inherit;
-  text-decoration: none;   
 }
 
-.btn-close-sidebar {
-    margin-left: auto;
-    margin-right: 20px;
-    width: 26px;
-    height: 26px;
+.sidebar-nav-btn {
+  display: flex;
+  align-items: center;
+  gap: var(--space-3);
+  width: 100%;
+  text-align: left;
+  background-color: transparent;
+  color: var(--color-text);
+  border-radius: var(--radius-btn);
+  padding: var(--space-2) var(--space-4);
+  font-weight: 500;
 }
 
-/* .1.        MOBILE                                                                             */
+/* Hover & active are identical — strong, unambiguous selection */
+.sidebar-nav-btn:hover,
+.sidebar-nav-btn.active {
+  background-color: var(--color-line);
+  color: var(--color-brand);
+}
 
-@media (max-width: 768px){
-    .sidebar-container {
-      display: none;
-    }
+/* ---- Footer (pinned to the bottom) ------------------------------------- */
+
+.sidebar-footer {
+  margin-top: auto;
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-1);
+}
+
+/* Close (X) — only present in the mobile full-screen drawer */
+.sidebar-close {
+  display: none;
+  align-self: flex-end;
+  background: transparent;
+  border: none;
+  color: var(--color-text);
+  padding: var(--space-2);
+  cursor: pointer;
+}
+
+/* ==============================================================================
+   MOBILE — sidebar opens as a full-width slide-in drawer (via the burger)
+   ============================================================================== */
+
+@media (max-width: 768px) {
+  /* Hidden until the burger sets the .open class */
+  .sidebar-container {
+    display: none;
+  }
+
+  .sidebar-container.open {
+    display: flex;
+    position: fixed;
+    inset: 0;
+    width: 100vw;
+    height: 100dvh;
+    margin: 0;
+    border-radius: 0;
+    z-index: 40000;
+    overflow-y: auto;
+  }
+
+  .sidebar-container.open .sidebar-close {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+  }
 }

@@ -31,6 +31,7 @@ export default function LearnView() {
   } = useLearnSetStore();
 
   const toggleArchiveWord = useSetsStore((state) => state.toggleArchiveWord);
+  const fetchSets = useSetsStore((state) => state.fetchSets);
 
   {/*//.1      HANDLERS            */}
 
@@ -69,9 +70,15 @@ export default function LearnView() {
   
   {/*//.1      VARIABLES            */}
 
-  // Start / reset the session when slug changes
+  // Start / reset the session when slug changes — refresh from the server first
+  // so the session snapshot (and matchedSet.id used for archiving) uses current DB ids
   useEffect(() => {
-    resetLearnSession(slug);
+    let active = true;
+    (async () => {
+      await fetchSets();
+      if (active) resetLearnSession(slug);
+    })();
+    return () => { active = false; };
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [slug]);
 

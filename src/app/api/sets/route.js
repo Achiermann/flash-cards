@@ -17,7 +17,7 @@ export async function GET(req) {
 
     const { data, error } = await supabaseServer
       .from('sets')
-      .select('id, set_name, slug, words, "createdAt", "user"')
+      .select('id, set_name, slug, words, set_language, "createdAt", "user"')
       .eq('user', me.id)
       .order('createdAt', { ascending: false });
 
@@ -32,6 +32,7 @@ export async function GET(req) {
         set_name: row.set_name,
         slug: row.slug,
         words,
+        set_language: row.set_language,
         createdAt: row.createdAt,
         user: row.user,
       };
@@ -48,7 +49,7 @@ export async function POST(req) {
     const me = getUserFromRequest(req);
     if (!me) return NextResponse.json({ error: 'Not authenticated' }, { status: 401 });
 
-    const { name, slug: incomingSlug, words = [] } = await req.json();
+    const { name, slug: incomingSlug, words = [], set_language } = await req.json();
     const slug = incomingSlug || toSlug(name);
 
     // store as string in the VARCHAR column to match your schema/data flow
@@ -59,13 +60,14 @@ export async function POST(req) {
       slug,
       words: wordsString,
       user: me.id,
+      set_language: set_language || 'italienisch',
       createdAt: new Date().toISOString().replace('Z', ''), // timestamp without tz (matches your column type)
     };
 
     const { data, error } = await supabaseServer
       .from('sets')
       .insert(insert)
-      .select('id, set_name, slug, words, "createdAt", "user"')
+      .select('id, set_name, slug, words, set_language, "createdAt", "user"')
       .single();
 
     if (error) {
@@ -84,6 +86,7 @@ export async function POST(req) {
       set_name: data.set_name,
       slug: data.slug,
       words: wordsParsed,
+      set_language: data.set_language,
       createdAt: data.createdAt,
       user: data.user,
     }, { status: 201 });

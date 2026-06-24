@@ -5,12 +5,11 @@ import { usePathname } from 'next/navigation';
 import Link from 'next/link';
 import Sidebar from '../components/sidebar';
 import {useState, useEffect} from 'react';
-import {AlignJustify} from 'lucide-react';
 import LoginPage from './login/page';
 import MessageField from '@/components/messageField';
 import { StyledEngineProvider } from '@mui/material/styles';
 import { Toaster } from 'react-hot-toast';
-import { useSetLanguage } from './stores/useSetLanguage';
+import { Menu } from 'lucide-react';
 import '@/styles/layout.css';
 
 export default function ClientWrapper({ children }) {
@@ -19,29 +18,10 @@ const pathname = usePathname();
 const isHome = pathname === '/';
 const [isLoggedIn, setIsLoggedIn] = useState(true);
 const [isMobile, setIsMobile] = useState(false);
-const { language, setLanguage } = useSetLanguage();
+const [sidebarOpen, setSidebarOpen] = useState(false);
 
-const languageOptions = [
-  { value: "französisch", label: "🇫🇷 Französisch" },
-  { value: "englisch", label: "🇬🇧 Englisch" },
-  { value: "spanisch", label: "🇪🇸 Spanisch" },
-  { value: "deutsch", label: "🇩🇪 Deutsch" },
-  { value: "italienisch", label: "🇮🇹 Italienisch" },
-  { value: "hebräisch", label: "🇮🇱 Hebräisch" },
-  { value: "portugiesisch", label: "🇵🇹 Portugiesisch" },
-  { value: "arabisch", label: "🇸🇦 Arabisch" },
-  { value: "japanisch", label: "🇯🇵 Japanisch" }
-];
-
-  // Color theme on route change (your original logic)
-  useEffect(() => {
-    const colorPairs = [{ primary: '#ffcde2ff', secondary: '#ccd2ffff' }];
-    const picked = colorPairs[Math.floor(Math.random() * colorPairs.length)];
-    document.documentElement.style.setProperty('--color-primary', picked.primary);
-    document.documentElement.style.setProperty('--color-secondary', picked.secondary);
-  }, [pathname]);
-
-
+// Close the mobile drawer whenever the route changes (nav link tapped)
+useEffect(() => { setSidebarOpen(false); }, [pathname]);
 
 useEffect(() => {
   fetch('/api/users/me')
@@ -73,18 +53,21 @@ useEffect(() => {
             <Toaster toastOptions={{ className: 'toaster' }} />
             <MessageField/>
     {!isLoggedIn && <LoginPage/>}
-    <Sidebar isLoggedIn={isLoggedIn} setIsLoggedIn={setIsLoggedIn}/>
-    <select
-      className="language-selector"
-      value={language}
-      onChange={(e) => setLanguage(e.target.value)}
-    >
-      {languageOptions.map((option) => (
-        <option key={option.value} value={option.value}>
-          {option.label}
-        </option>
-      ))}
-    </select>
+    {isLoggedIn && (
+      <button
+        className="burger-grid"
+        aria-label="Open menu"
+        onClick={() => setSidebarOpen(true)}
+      >
+        <Menu size={40} strokeWidth={2.5} />
+      </button>
+    )}
+    <Sidebar
+      isLoggedIn={isLoggedIn}
+      setIsLoggedIn={setIsLoggedIn}
+      open={sidebarOpen}
+      onClose={() => setSidebarOpen(false)}
+    />
       <div className="main-content-container">
     {pathname !== '/' && isMobile && (<Link href="/"><button className="go-to-main-button">Go to main</button></Link>)}
       {children}

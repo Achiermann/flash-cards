@@ -4,40 +4,41 @@ import '@/styles/setsControl.css';
 import '@/styles/setItem.css';
 
 import ClientWrapper from './clientWrapper';
-import { Racing_Sans_One, Turret_Road, Funnel_Sans, Inter } from 'next/font/google';
+import { Inter, JetBrains_Mono, Nabla } from 'next/font/google';
 
 export const viewport = {
   width: "device-width",
   initialScale: 1,
-  viewportFit: "cover", 
+  viewportFit: "cover",
+  themeColor: "#ffffff",
 };
 
-const racingSansOne = Racing_Sans_One({
-  subsets: ['latin'],
-  weight: '400',
-  variable: '--font-racing',
-});
-
-const turretRoad = Turret_Road({
-  subsets: ['latin'],
-  variable: '--font-turret',
-  weight: '400',
-});
-
-const funnelSans = Funnel_Sans({
-  subsets: ['latin'],
-  variable: '--font-funnel-sans',
-});
-
+// Body / chrome
 const inter = Inter({
   subsets: ['latin'],
-  variable: '--font-primary',
+  weight: ['400', '500', '600', '700'],
+  variable: '--font-inter',
+  display: 'swap',
+});
+
+// Table headers + pills
+const jetBrainsMono = JetBrains_Mono({
+  subsets: ['latin'],
+  weight: ['400', '500', '600', '700'],
+  variable: '--font-jetbrains',
+  display: 'swap',
+});
+
+// Wordmark (inflated/rounded display font)
+const nabla = Nabla({
+  subsets: ['latin'],
+  variable: '--font-nabla',
+  display: 'swap',
 });
 
 export const metadata = {
   title: { default: "Flash Cards", template: "%s | Flash Cards" },
   description: "Study with spaced repetition flash cards",
-  themeColor: "#ffffff",
   manifest: "/manifest.json",
 };
 
@@ -45,7 +46,7 @@ export default function RootLayout({ children }) {
 
  return (
    <html lang="en">
-<body className={`${inter.variable} ${funnelSans.variable} ${racingSansOne.variable} ${turretRoad.variable}`}>
+<body className={`${inter.variable} ${jetBrainsMono.variable} ${nabla.variable}`}>
 <ClientWrapper>
   {children}
 </ClientWrapper>

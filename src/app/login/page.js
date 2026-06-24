@@ -102,11 +102,9 @@ async function handleResetPassword() {
     <div className="remember-me-wrapper"><input type="checkbox" className="btn-stay-signed-in"/><p>Remember Me</p></div>
     <button className="btn-login" onClick={handleLogin}>Log In</button>
     <div className="login-options-wrapper">
-   <p>
-     <button className="btn-forgot-pw" onClick={() => setDisplay("forgetpw")}><p>Forgot password?</p></button>
-     <br/><p>don`t have an account yet?</p>
+     <button className="btn-forgot-pw" onClick={() => setDisplay("forgetpw")}>Forgot password?</button>
+     <p>don`t have an account yet?</p>
       <button className="btn-sign-up-here" onClick={() => setDisplay("signup")}><u>Sign up</u></button>
-   </p>
     </div></>}
 
 {/*//.2      SIGN UP            */}

@@ -1,6 +1,6 @@
-/* * {
-  border: 2px solid red
-} */
+/* ==============================================================================
+   MANAGE SET / ALL SETS / ARCHIVE — content within the white main panel
+   ============================================================================== */
 
 .sets-control {
   display: flex;
@@ -9,142 +9,144 @@
 }
 
 .manage-set-content {
-display: flex;
-justify-content: center;
-flex-direction: column;
-  padding: 20px;
-  border-radius: 8px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
   width: 80%;
-  margin: auto auto auto auto;
-background-color: #ffffff;
- margin-top: 30px;
-
+  margin: var(--space-5) auto 0 auto;
+  padding: var(--space-2);
 }
 
 .manage-set-content-header {
-    display: flex;
-flex-direction: column;
-justify-content: center;
-align-items: center;
-text-align: center;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  text-align: center;
+  gap: var(--space-4);
 }
 
-.manage-set-title{
-padding: 30px;
-font-size: 30px;
-font-weight: 600;
-margin-top: 20px;
+.manage-set-title {
+  font-size: 1.5rem;
+  font-weight: 700;
+  letter-spacing: -0.02em;
+  padding: var(--space-5);
 }
 
-.manage-set-title.all-sets{
-text-align: left;
-padding: 8px 0px 0px 0px;}
-
-.manage-set-title.all-sets h2{
-font-size: 20px !important;
-font-weight: 600 !important;
+.manage-set-title.all-sets {
+  text-align: left;
+  padding: var(--space-2) 0 0 0;
 }
 
-.wordlist-container{
-    height: 100%;
-    width: 100%;
+.manage-set-title.all-sets h2 {
+  font-size: 1.1rem;
+  font-weight: 600;
+}
+
+.no-words-in-set p {
+  color: var(--color-muted);
+  text-align: center;
+}
+
+/* ---- Wordlist (list table) --------------------------------------------- */
+
+.wordlist-container {
+  height: 100%;
+  width: 100%;
 }
 
 .wordlist-container ul {
-   display: flex;
-justify-content: center;
-align-items: center;
-    list-style-type: none;
-    padding: 0px;
-    margin: 20px 0px 20px 0px;
-    display: flex;
-    flex-direction: column;
-    gap: 12px;
+  list-style: none;
+  padding: 0;
+  margin: var(--space-5) 0;
+  display: flex;
+  flex-direction: column;
 }
 
 .wordlist-item {
- display: flex;
-   flex: 1 1 0; 
-background-color: #e7e7e7;
-  border-radius: 2px;
-  box-shadow: 0 2px 4px rgba(0,0,0,0.1);
-  gap: 20px; /* space between columns */
-  overflow: hidden; 
-  min-height: 50px;  
-  min-width: 100%;
-  width: 100%;
-  margin-bottom: 6px;
+  display: flex;
+  flex: 1 1 0;
   align-items: center;
-  min-height: 40px;  
-  font-size: 15px;
-
+  gap: var(--space-4);
+  width: 100%;
+  min-height: 52px;
+  font-size: 0.9375rem;
+  background-color: var(--color-surface);
+  border-bottom: 1px solid var(--color-border-soft);
+}
+.wordlist-item:last-child {
+  border-bottom: none;
+}
+.wordlist-item:hover {
+  background-color: #fafafa;
 }
 
-  .wordlist-item-front, .wordlist-item-back {
-  flex: 1 1 0; 
-  text-align: center;    
-  height: 40px;
+.wordlist-item-front,
+.wordlist-item-back {
+  flex: 1 1 0;
+  text-align: center;
   display: flex;
   justify-content: center;
   align-items: center;
-  box-sizing: border-box;   /* prevents padding from breaking layout */
-  padding: 0px 10px 0px 10px;
-  overflow-wrap: break-word; 
+  box-sizing: border-box;
+  padding: var(--space-3) var(--space-2);
+  overflow-wrap: break-word;
   overflow: hidden;
-}
-
-.wordlist-item-front :hover,
-.wordlist-item-back :hover {
-  background-color: #f0f0f0;
   cursor: pointer;
 }
 
-.wordlist-item-delete, .wordlist-item-archive {
-    grid-column: 1 / 2;
-    display: flex;
-    justify-content: center;
-    min-height: 40px;
-    min-width: 50px;
-    border-radius: 4px;
+/* Delete / archive — circular outlined icon buttons */
+.wordlist-item-delete,
+.wordlist-item-archive {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 2.25rem;
+  height: 2.25rem;
+  flex-shrink: 0;
+  border-radius: 999px;
+  border: 1.9px solid var(--btn-bg);
+  background-color: var(--color-surface);
+  color: var(--color-text);
+  cursor: pointer;
 }
-
-.wordlist-item-delete{
-    background-color: rgb(255, 75, 108)
+.wordlist-item-archive:hover {
+  background-color: var(--btn-bg);
 }
-
-.wordlist-item-archive{
-    background-color: rgb(255, 233, 229)
-}
-
 .wordlist-item-delete:hover {
-  cursor: pointer;
+  background-color: #fee2e2;
+  color: #b4515e;
+  border-color: #fee2e2;
 }
 
-/* .1  EDIT WORD INPUT */
+/* ---- Inline edit-word inputs ------------------------------------------- */
 
 .editword-input-wrapper {
   display: flex;
+  flex: 1 1 0;
   flex-direction: row;
   justify-content: space-between;
   align-items: center;
-  gap: 12px;
+  gap: var(--space-3);
   flex-wrap: nowrap;
 }
 
-.editword-input-field {
-  flex: 1;                  /* fill available space evenly */
-  text-align: center;    
-  height: 30px;
-  font-size: 14px;
-  box-sizing: border-box;   /* prevents padding from breaking layout */
+.editword-input-wrapper form {
+  display: flex;
+  gap: var(--space-3);
+  flex: 1 1 0;
 }
 
+.editword-input-field {
+  flex: 1;
+  text-align: center;
+  font-size: 0.875rem;
+  box-sizing: border-box;
+}
 
-
-/* ACTIVATE SLIDER */
+/* ---- Toggle switch ----------------------------------------------------- */
 
 .switch {
-  grid-column: 4 / 5;
   position: relative;
   display: inline-block;
   width: 50px;
@@ -162,12 +164,15 @@ background-color: #e7e7e7;
   position: absolute;
   cursor: pointer;
   margin-top: 3px;
-  top: 0; left: 0; right: 0; bottom: 0;
-  background-color: #e8e8e8;
-  transition: 0.1s;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-color: var(--color-border-soft);
+  transition: 0.15s ease;
   border-radius: 34px;
   height: 22px;
-  width: 40px;;
+  width: 40px;
 }
 
 .slider::before {
@@ -177,125 +182,114 @@ background-color: #e7e7e7;
   width: 16px;
   left: 3px;
   bottom: 3px;
-  background-color: white;
+  background-color: #fff;
   transition: 0.3s;
   border-radius: 50%;
 }
 
 input:checked + .slider {
-  background-color: var(--color-secondary)
+  background-color: var(--color-line);
 }
 
 input:checked + .slider::before {
   transform: translateX(18px);
 }
 
-/* ADD WORD FORM */
+/* ---- Add-word form (manage variant) ------------------------------------ */
 
-.add-word-form-manage-page{
+.add-word-form-manage-page {
   width: 100%;
 }
 
 .add-word-form-manage-page .add-word-field {
   display: flex;
   flex-direction: column;
-  align-content: center;
   align-items: center;
-    margin-bottom: 20px;
-    width: 100%;
+  margin-bottom: var(--space-5);
+  width: 100%;
 }
 
 .add-word-form-manage-page .add-word-field legend {
-  margin: 0px;
   text-align: center;
   width: 100%;
-  font-weight: bold;
+  font-weight: 600;
 }
 
 .add-word-form-manage-page .add-word-field label {
-    margin: 0px;
-    padding: 0px;
+  margin: 0;
+  padding: 0;
   display: flex;
   flex-direction: column;
   width: 100%;
-  height: 50px;
   align-items: center;
 }
 
 .add-word-form-manage-page .add-word-field p {
-  margin-top: 20px;
-  margin-bottom: 20px;
-  font-size: 12px;
+  margin: var(--space-3) 0;
+  font-size: 0.8125rem;
+  color: var(--color-muted);
 }
 
 .add-word-form-manage-page .word-input-field {
-  padding: 0px;
   width: 100%;
-  height: 100%;
 }
 
-.add-word-form-manage-page .separator-line{
-  border-bottom: 1px solid rgb(48, 48, 48);
-  height: 0px;
+.add-word-form-manage-page .separator-line {
+  border-bottom: 1px solid var(--color-border-soft);
+  height: 0;
   width: 100%;
-  margin-top: 20px;
-  margin-bottom: 20px;
+  margin: var(--space-4) 0;
 }
 
 .add-word-form-manage-page .set-option-button-container {
   display: flex;
   flex-direction: row;
   align-items: center;
-  gap: 10px;
+  gap: var(--space-3);
   width: 100%;
 }
 
-.add-word-form-manage-page.all-sets{
+.add-word-form-manage-page.all-sets {
   width: 50%;
-  text-align: left !important;
+  text-align: left;
 }
 
-.add-word-form-manage-page.all-sets p{
+.add-word-form-manage-page.all-sets p {
   align-self: flex-start;
 }
 
-.add-word-form-manage-page.all-sets label{
-height: 30px;
-}
-
-
-.manage-all-sets-set-container{
+.manage-all-sets-set-container {
   width: 80%;
 }
 
-.add-to-title{
-  margin-bottom: 15px;
+.add-to-title {
+  margin-bottom: var(--space-4);
 }
 
-.sets-separator-line{
-  border-bottom: 1px solid rgb(48, 48, 48);
+.sets-separator-line {
+  border-bottom: 1px solid var(--color-border-soft);
   width: 100%;
 }
 
-/* .1.        MOBILE                                                                             */
+/* ==============================================================================
+   MOBILE
+   ============================================================================== */
 
-@media (max-width: 768px){
-
+@media (max-width: 768px) {
   .manage-set-content {
-    display: flex;
-    justify-content: center;
+    width: 100%;
     align-items: center;
   }
 
-  .manage-all-sets-set-container{
+  .manage-all-sets-set-container {
     width: 100%;
-    margin-bottom: 20px;
-    padding: 0 10px;
+    margin-bottom: var(--space-5);
+    padding: 0 var(--space-2);
   }
 
-  .manage-set-title{
-    margin-bottom: 30px;
-    padding: 10px;
+  .manage-set-title {
+    margin-bottom: var(--space-5);
+    padding: var(--space-3);
   }
 
   .manage-set-content-header {
@@ -303,36 +297,17 @@ height: 30px;
   }
 
   .wordlist-container {
-    padding: 0 10px;
+    padding: 0 var(--space-2);
   }
 
-  .add-word-field {
-    padding: 0 !important;
-  }
-
-  .wordlist-item-front, .wordlist-item-back {
-    flex: 1 1 0;
-    text-align: center;
-    height: 40px;
-    font-size: 2.2vmin;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    box-sizing: border-box;   /* prevents padding from breaking layout */
-    padding: 0px 10px 0px 10px;
-    overflow-wrap: break-word;
-    overflow: hidden;
-    padding: 1px;
+  .wordlist-item-front,
+  .wordlist-item-back {
+    font-size: 0.875rem;
+    padding: var(--space-2);
   }
 
   .set-option-button-container {
-    padding: 0 10px;
+    padding: 0 var(--space-2);
     flex-wrap: wrap;
   }
-
-  .set-option-button-container button {
-  max-width: 90px;
-  }
-
 }
-

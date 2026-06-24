@@ -70,7 +70,7 @@ cancelDelete: () => {
     set((state) => ({ sets: state.sets.map((setItem) => setItem.id === setId ?
     { ...setItem, words: nextWords } : setItem) }), false, "addWord");
     // sync to DB
-    const isTemp = typeof setId === "string" && setId.startsWith("temp-");
+    const isTemp = !/^\d+$/.test(String(setId)); // synced sets have a numeric DB id; UUID/temp- ids are not yet persisted
     if (!isTemp) { fetch(`/api/sets/${setId}`,
     { method: "PATCH", headers: { "Content-Type": "application/json" },
     body: JSON.stringify({ words: nextWords }) })
@@ -82,7 +82,7 @@ cancelDelete: () => {
     const nextWords = currentSet.words.map((w) => w.wordId === wordId ? { ...w, front, back } : w);
     set((state) => ({ sets: state.sets.map((setItem) => setItem.id === setId ? { ...setItem, words: nextWords } : setItem) }), false, "editWord");
     // sync to DB 
-    const isTemp = typeof setId === "string" && setId.startsWith("temp-");
+    const isTemp = !/^\d+$/.test(String(setId)); // synced sets have a numeric DB id; UUID/temp- ids are not yet persisted
     if (!isTemp) {
       fetch(`/api/sets/${setId}`, { method: "PATCH", headers: { "Content-Type": "application/json" }, 
       body: JSON.stringify({ words: nextWords }) })
@@ -94,7 +94,7 @@ cancelDelete: () => {
     const nextWords = currentSet.words.filter((w) => w.wordId !== wordId);
     set((state) => ({ sets: state.sets.map((setItem) => setItem.id === setId ? { ...setItem, words: nextWords } : setItem) }), false, "deleteWord");
     // sync to DB 
-    const isTemp = typeof setId === "string" && setId.startsWith("temp-");
+    const isTemp = !/^\d+$/.test(String(setId)); // synced sets have a numeric DB id; UUID/temp- ids are not yet persisted
     if (!isTemp) {
       fetch(`/api/sets/${setId}`, { method: "PATCH", headers: { "Content-Type": "application/json" }, 
       body: JSON.stringify({ words: nextWords }) })
@@ -108,7 +108,7 @@ cancelDelete: () => {
     const nextWords = currentSet.words.map((w) => w.wordId === wordId ? { ...w, archived: !w.archived } : w);
     set((state) => ({ sets: state.sets.map((setItem) => setItem.id === setId ? { ...setItem, words: nextWords } : setItem) }), false, "toggleArchiveWord");
    // sync to DB 
-    const isTemp = typeof setId === "string" && setId.startsWith("temp-");
+    const isTemp = !/^\d+$/.test(String(setId)); // synced sets have a numeric DB id; UUID/temp- ids are not yet persisted
     if (!isTemp) {
       fetch(`/api/sets/${setId}`, { method: "PATCH", headers: { "Content-Type": "application/json" }, body: JSON.stringify({ words: nextWords }) })
       .then(async (res) => { if (!res.ok) { const err = await res.json().catch(() => ({})); console.error("[useSetsStore] toggleArchiveWord sync failed:", err); } });

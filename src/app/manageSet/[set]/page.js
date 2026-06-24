@@ -1,6 +1,7 @@
 "use client";
 
 import { useParams } from "next/navigation";
+import { useEffect } from "react";
 import { useSetsStore } from "@/app/stores/useSetsStore";
 import Link from "next/link";
 import AddWordForm from "@/components/addWordForm";
@@ -15,10 +16,14 @@ export default function ManageSetView() {
 
   const { set: slug } = useParams();
   const set = useSetsStore((state) => state.sets.find((s) => s.slug === slug));
+  const fetchSets = useSetsStore((state) => state.fetchSets);
 
   const matchedSet = useSetsStore((state) =>
     state.sets.find((s) => s.slug === slug)
   );
+
+  // refresh from the server so set ids match the DB before syncing word edits
+  useEffect(() => { fetchSets(); }, [fetchSets]);
 
 
   {/*//.1      HTML            */}

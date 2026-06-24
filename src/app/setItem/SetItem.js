@@ -1,58 +1,54 @@
 "use client";
 
 import { useState } from 'react';
-import { useMediaQuery } from 'react-responsive';
 import { useSetsStore } from '../stores/useSetsStore';
-import Link from 'next/link';
 import { Trash2 } from 'lucide-react';
-import AddWordForm from "@/components/addWordForm";
-import {useEditOptionsStore} from '../stores/useEditOptionsStore';
-import toast from 'react-hot-toast';
+import { useEditOptionsStore } from '../stores/useEditOptionsStore';
 import '@/styles/setItem.css';
 
-export default function SetItem({ data, editOptions, id }) {
-const { setConfirmDeleteMessage} = useSetsStore();
+export default function SetItem({ data, id, onSelect, isSelected }) {
+
+  const { setConfirmDeleteMessage } = useSetsStore();
   const [editSetName, setEditSetName] = useState(`${data.name}`);
 
-  const set = useSetsStore((state) => state.sets.find((s) => s.id === id));
   const editSet = useSetsStore((state) => state.editSet);
   const setShowEditOptions = useEditOptionsStore((state) => state.setShowEditOptions);
   const showEditOptions = useEditOptionsStore((state) => state.showEditOptions);
-  const isMobile = useMediaQuery({ query: '(max-width: 600px)' });
-
 
   const handleSubmitName = (id, editSetName) => (e) => {
     e.preventDefault();
-    if (editSetName === ``){
-    setEditSetName(`${data.name}`)
-    setShowEditOptions(false);
-     return; 
+    if (editSetName === ``) {
+      setEditSetName(`${data.name}`);
+      setShowEditOptions(false);
+      return;
     }
-editSet(id, editSetName)
+    editSet(id, editSetName);
     setShowEditOptions(false);
-  }
+  };
+
+  const wordCount = data.words.length;
 
   return (
-    <>
-{/*//.2                 CONTENT                    */}
-     <div className="set-item">
-{/*//.2                 EDIT                    */}
-       {showEditOptions && 
-  <button className="button-delete-set" onClick={(e) => {e.preventDefault(); e.stopPropagation(); setConfirmDeleteMessage("confirm-delete", data.id)} }> 
-  <Trash2 className="trash-icon"/> </button>}
-     {!showEditOptions && (<div className='set-top-row'> <h3 className="set-title">{data.name}</h3><div className="set-item-words-count"><p>{data.words.length} word{data.words.length > 1 || data.words.length === 0 ? "s" : ""}</p></div> </div>)}
-      {showEditOptions && (<form onSubmit={handleSubmitName(id, editSetName)}><input className="edit-set-name-input" type="text" value={editSetName} onChange={(e) => setEditSetName(e.target.value)}></input>
-      <button type="submit" style={{display: "none"}}/></form>)} 
+    <div className={`set-item${isSelected ? ' selected' : ''}`}>
+{/*//.2                 EDIT: DELETE                    */}
+      {showEditOptions &&
+        <button className="button-delete-set" onClick={(e) => { e.preventDefault(); e.stopPropagation(); setConfirmDeleteMessage("confirm-delete", data.id); }}>
+          <Trash2 className="trash-icon" /> </button>}
 
-{/*//.2                 ADD A WORD                    */}
-<AddWordForm setId={data.id} className="add-word-form-homepage"/>
+{/*//.2                 CONTENT (click to open detail)                    */}
+      {!showEditOptions && (
+        <div className="set-content" onClick={() => onSelect(data.id)}>
+          <h3 className="set-title">{data.name}</h3>
+          <div className="set-item-words-count"><p>{wordCount} word{wordCount === 1 ? "" : "s"}</p></div>
+        </div>
+      )}
 
-{/*//.2                 LEARN & MANAGE                 */}
-{!showEditOptions && <div className="set-option-button-container">
-{set.words.length > 0 && <Link href={`/learnView/${set.slug}`}> <button className="button-learn"> Learn</button> </Link>} 
-{set.words.length === 0 && <button className="button-learn" onClick={() => toast.error(`This set contains no words yet!`)}> Learn</button>}
- <Link href={`/manageSet/${set.slug}`}> <button className="button-manage"> {isMobile ? "Manage" : "Manage Set"} </button> </Link>
- </div>}</div>
-    </>
+{/*//.2                 EDIT: RENAME                    */}
+      {showEditOptions && (
+        <form onSubmit={handleSubmitName(id, editSetName)}>
+          <input className="edit-set-name-input" type="text" value={editSetName} onChange={(e) => setEditSetName(e.target.value)} />
+          <button type="submit" style={{ display: "none" }} />
+        </form>)}
+    </div>
   );
 }

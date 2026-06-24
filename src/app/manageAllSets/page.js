@@ -9,11 +9,17 @@ export default function ManageAllSetsView() {
 
 const getFilteredSets = useSetsStore((state) => state.getFilteredSets);
 const sets = getFilteredSets();
+const fetchSets = useSetsStore((state) => state.fetchSets);
 
 const [selectedSet, setSelectedSet] = useState(null);
 
+// refresh from the server so we operate on current DB ids, not stale persisted ones
+useEffect(() => { fetchSets(); }, [fetchSets]);
+
+// keep the selected set pointing at the live object (id may change after fetchSets)
 useEffect(() => {
-if(sets?.length && !selectedSet) setSelectedSet(sets[0])
+if (!sets?.length) return;
+setSelectedSet((prev) => prev ? (sets.find((s) => s.name === prev.name) ?? sets[0]) : sets[0]);
 }, [sets]);
 
 const handleSelectionChange = (e) => {

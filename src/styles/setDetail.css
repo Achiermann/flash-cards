@@ -1,0 +1,158 @@
+/* ==============================================================================
+   SET DETAIL — full-size panel below the carousel (always present)
+   ============================================================================== */
+
+.set-detail {
+  flex: 1;                 /* fills the remaining space of the main panel */
+  width: 100%;
+  min-height: 0;
+  display: flex;
+  flex-direction: column;
+  margin-top: var(--space-5);
+  padding: var(--space-6);
+  background-color: var(--color-surface);
+  border-radius: var(--radius-lg);
+  box-shadow: var(--shadow-lg);
+}
+
+/* Empty state — "Please select a set" */
+.set-detail-empty {
+  align-items: center;
+  justify-content: center;
+  color: var(--color-muted);
+}
+
+/* Vertical stack: header row / add-word row / option buttons row */
+.set-detail-body {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-6);
+  width: 100%;
+}
+
+/* ---- Header row: title left, word count right (full width) ------------- */
+
+.set-detail .set-top-row {
+  display: flex;
+  flex-direction: row;
+  align-items: flex-start;
+  justify-content: space-between;
+  width: 100%;
+  gap: var(--space-4);
+  padding-bottom: var(--space-4);
+  border-bottom: 1px solid var(--color-border-soft);
+}
+.set-detail .set-title {
+  text-align: left;
+  width: auto;
+  margin: 0;
+}
+.set-detail .set-item-words-count {
+  align-self: flex-start;
+  margin: 0;
+}
+
+/* ---- Add-word form: full width, front + back side by side -------------- */
+
+.set-detail .add-word-form-homepage {
+  width: 100%;
+}
+.set-detail .add-word-field {
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: var(--space-3);
+  width: 100%;
+  margin-bottom: 0;
+}
+.set-detail .add-word-field legend {
+  flex-basis: 100%;     /* legend on its own line, inputs on the next */
+  text-align: left;
+  margin-bottom: 0;
+}
+.set-detail .add-word-field label {
+  flex: 1 1 160px;      /* front and back share the row, wrap if too narrow */
+}
+.set-detail .add-word-field input {
+  width: 100%;
+}
+.set-detail .separator-line {
+  flex: 0 0 auto;
+  align-self: center;
+  width: 0;
+  height: 2.25rem;
+  margin: 0;
+  border-bottom: none;
+  border-left: 1px solid var(--color-border-soft);
+}
+
+/* ---- Option buttons: full width, bigger, horizontal ------------------- */
+
+.set-detail .set-option-button-container {
+  flex-direction: row;
+  gap: var(--space-4);
+  width: 100%;
+  margin-top: 0;
+}
+/* each control (Link or bare button) shares the full width equally */
+.set-detail .set-option-button-container > * {
+  flex: 1;
+}
+.set-detail .set-option-button-container a {
+  display: block;
+}
+.set-detail .set-option-button-container button {
+  width: 100%;
+  padding: var(--space-4) var(--space-6);
+  font-size: 1.1rem;
+}
+
+/* ==============================================================================
+   MOBILE
+   ============================================================================== */
+
+@media (max-width: 768px) {
+  .set-detail {
+    margin-top: var(--space-4);
+    padding: var(--space-4);
+  }
+
+  .set-detail-body {
+    gap: var(--space-5);
+  }
+
+  /* stack the two inputs and drop the vertical divider */
+  .set-detail .add-word-field {
+    flex-direction: column;
+    align-items: stretch;
+  }
+  .set-detail .separator-line {
+    width: 100%;
+    height: 0;
+    align-self: stretch;
+    border-left: none;
+    border-bottom: 1px solid var(--color-border-soft);
+  }
+
+ .set-detail .add-word-field label {
+    flex: 1 1 0px;
+}
+  /* Learn / Manage: equal width, side by side, centered */
+  .set-detail .set-option-button-container {
+    flex-direction: row;
+    flex-wrap: nowrap;
+    justify-content: space-between;
+    align-items: stretch;     /* both buttons take the taller one's height */
+    gap: var(--space-3);
+  }
+  .set-detail .set-option-button-container > * {
+    flex: 0 0 44%;
+    min-width: 0;             /* without this the longer "Manage Set" label
+                                 keeps its content width and the two differ */
+  }
+  .set-detail .set-option-button-container button {
+    padding: var(--space-3) var(--space-4);
+    font-size: 1rem;
+  }
+}

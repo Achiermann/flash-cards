@@ -1,5 +1,6 @@
 "use client";
 
+import { useEffect } from "react";
 import { useSetsStore } from "@/app/stores/useSetsStore";
 import Wordlist from "@/components/wordlist";
 
@@ -7,6 +8,10 @@ export default function ArchiveView() {
 
 const getFilteredSets = useSetsStore((state) => state.getFilteredSets);
 const sets = getFilteredSets();
+const fetchSets = useSetsStore((state) => state.fetchSets);
+
+// refresh from the server so archive toggles sync against current DB ids
+useEffect(() => { fetchSets(); }, [fetchSets]);
 
   return (
     <div className="manage-set-content">
