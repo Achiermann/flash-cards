@@ -23,7 +23,7 @@
   overflow-y: auto;
  background-color: rgb(from var(--color-surface) r g b / 0);
   border-radius: var(--radius-lg);
-  box-shadow: var(--shadow-panel);
+  /* box-shadow: var(--shadow-panel); */
   font-family: var(--font-content);
   padding: var(--space-6);
   margin: var(--space-5);
