@@ -50,6 +50,15 @@
   padding: 0 var(--space-3);
 }
 
+/* All action-row buttons share the height of .btn-add-set
+   (24px Plus icon + the button's vertical padding) */
+.options-grid button {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-height: calc(24px + 2 * var(--space-2));
+}
+
 /* "+" create — primary dark action */
 .btn-add-set {
   display: flex;
@@ -137,8 +146,13 @@
    ============================================================================== */
 
 @media (max-width: 768px) {
+  /* Fixed viewport: the page never scrolls — the carousel row flexes and
+     the card inside it shrinks until title, buttons, dots and detail fit */
   .sets-control {
     padding: var(--space-3);
+    height: 100%;
+    min-height: 0;
+    overflow: hidden;
   }
 
   .sets-control h2 {
@@ -149,6 +163,8 @@
   .sets-grid {
     overflow-x: visible;
     scroll-snap-type: none;
+    flex: 1 1 auto;
+    min-height: 0;
   }
 
   /* The single horizontal snap scroller */
@@ -160,6 +176,7 @@
     margin: 0;
     padding-inline: 0;
     list-style: none;
+    height: 100%;
     overflow-x: auto;
     overflow-y: hidden;
     scroll-snap-type: x mandatory;
@@ -176,10 +193,15 @@
     display: none;
   }
 
-  /* One full-width card per view — always centered on load and after each swipe */
+  /* One full-width card per view — always centered on load and after each swipe.
+     The item is a full-height flex row so the (shrinkable) card centers in it. */
   .snap-item {
     flex: 0 0 100%;
     scroll-snap-align: center;
     scroll-snap-stop: always;
+    display: flex;
+    align-items: center;
+    height: 100%;
+    min-height: 0;
   }
 }

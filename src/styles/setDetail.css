@@ -113,7 +113,10 @@
    ============================================================================== */
 
 @media (max-width: 768px) {
+  /* Mobile panel holds only the add-word form + Manage: it sizes to its
+     content so the carousel above can flex inside the fixed viewport */
   .set-detail {
+    flex: 0 0 auto;
     margin-top: var(--space-4);
     padding: var(--space-4);
   }
@@ -138,18 +141,20 @@
  .set-detail .add-word-field label {
     flex: 1 1 0px;
 }
-  /* Learn / Manage: equal width, side by side, centered */
+  /* a bit higher fields (~52px total) */
+  .set-detail .add-word-field input {
+    padding-top: var(--space-4);
+    padding-bottom: var(--space-4);
+  }
+
+  /* Manage: single full-width button underneath the form */
   .set-detail .set-option-button-container {
     flex-direction: row;
-    flex-wrap: nowrap;
-    justify-content: space-between;
-    align-items: stretch;     /* both buttons take the taller one's height */
     gap: var(--space-3);
   }
   .set-detail .set-option-button-container > * {
-    flex: 0 0 44%;
-    min-width: 0;             /* without this the longer "Manage Set" label
-                                 keeps its content width and the two differ */
+    flex: 1 1 100%;
+    min-width: 0;
   }
   .set-detail .set-option-button-container button {
     padding: var(--space-3) var(--space-4);

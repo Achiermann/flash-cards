@@ -1,9 +1,12 @@
 "use client";
 
 import { useState } from 'react';
+import { useRouter } from 'next/navigation';
 import { useSetsStore } from '../stores/useSetsStore';
 import { Trash2 } from 'lucide-react';
 import { useEditOptionsStore } from '../stores/useEditOptionsStore';
+import { useIsMobile } from '@/components/isMobile';
+import toast from 'react-hot-toast';
 import '@/styles/setItem.css';
 
 export default function SetItem({ data, id, onSelect, isSelected }) {
@@ -11,6 +14,8 @@ export default function SetItem({ data, id, onSelect, isSelected }) {
   const { setConfirmDeleteMessage } = useSetsStore();
   const [editSetName, setEditSetName] = useState(`${data.name}`);
 
+  const router = useRouter();
+  const isMobile = useIsMobile();
   const editSet = useSetsStore((state) => state.editSet);
   const setShowEditOptions = useEditOptionsStore((state) => state.setShowEditOptions);
   const showEditOptions = useEditOptionsStore((state) => state.showEditOptions);
@@ -28,8 +33,15 @@ export default function SetItem({ data, id, onSelect, isSelected }) {
 
   const wordCount = data.words.length;
 
+  // Mobile: the selected (centered) card acts like the Learn button did
+  const handleMobileCardClick = () => {
+    if (!isMobile || showEditOptions || !isSelected) return;
+    if (wordCount > 0) router.push(`/learnView/${data.slug}`);
+    else toast.error(`This set contains no words yet!`);
+  };
+
   return (
-    <div className={`set-item${isSelected ? ' selected' : ''}`}>
+    <div className={`set-item${isSelected ? ' selected' : ''}`} onClick={handleMobileCardClick}>
 {/*//.2                 EDIT: DELETE                    */}
       {showEditOptions &&
         <button className="button-delete-set" onClick={(e) => { e.preventDefault(); e.stopPropagation(); setConfirmDeleteMessage("confirm-delete", data.id); }}>

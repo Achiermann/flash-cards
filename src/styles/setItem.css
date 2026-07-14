@@ -176,19 +176,21 @@ div.set-item.selected {
      the fixed-width card gets pinned to the left of the full-width carousel. */
   div.set-item {
     width: 75%;
-    /* square card — height tracks the (narrowed) width */
+    /* square card — height tracks the (narrowed) width, but caps to the
+       carousel row so the fixed (no-scroll) viewport always fits everything */
     aspect-ratio: 1 / 1;
     height: auto;
     min-height: 0;
+    max-height: 100%;
     /* auto inline margins center the narrowed card inside the full-width
        snap-item, so the one-card-per-swipe carousel is unchanged */
-    margin: var(--space-4) auto;
+    margin: 0 auto;
     padding: var(--space-4);
   }
 
-  /* Word count lives in the set-detail panel only on mobile, not on the card */
-  .set-item .set-item-words-count {
-    display: none;
+  /* The selected (centered) card is tappable — it opens the learn view */
+  div.set-item.selected {
+    cursor: pointer;
   }
 
   .set-option-button-container {
