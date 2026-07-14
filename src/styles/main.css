@@ -43,6 +43,14 @@
   --color-learn-text: #a8478f;   /* dusty-pink text                        */
   --color-learn-hover: #f8d3e6;  /* slightly deeper pink on hover          */
 
+  /* ---- Learn view actions: same pastel schema, green + blue ------------ */
+  --color-learned: #d1fae5;       /* pastel green fill (topic scale c5)    */
+  --color-learned-text: #4a9162;  /* muted green text                      */
+  --color-learned-hover: #b8f1d3; /* slightly deeper green on hover        */
+  --color-repeat: #dbeafe;        /* pastel blue fill (topic scale c3)     */
+  --color-repeat-text: #4b6cb0;   /* dusty blue text                       */
+  --color-repeat-hover: #c3dcfc;  /* slightly deeper blue on hover         */
+
   /* ---- Spacing scale ---------------------------------------------------- */
   --space-1: 0.25rem;   /*  4px */
   --space-2: 0.5rem;    /*  8px */

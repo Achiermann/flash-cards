@@ -73,15 +73,27 @@
   height: 100%;
 }
 
+/* Fixed halves: the front owns the top half, the back the bottom half, the
+   separator sits dead center — revealing the answer moves nothing */
 .flashcard-front,
 .flashcard-back {
+  flex: 1 1 0;
+  min-height: 0;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
   width: 100%;
   padding: var(--space-5);
   text-align: center;
-  transition: transform 0.3s ease;
+}
+
+.flashcard-back {
+  gap: var(--space-4);
 }
 
 .flashcard-separator {
+  flex: 0 0 auto;
   height: 1px;
   width: 300px;
   background-color: var(--color-border-soft);
@@ -104,13 +116,22 @@
   margin-bottom: var(--space-7);
 }
 
-/* Learned — pale-pink pill palette, matching the word-count pill */
+/* Learned — pastel green (topic scale c5) */
 .button-learned {
-  background-color: var(--color-learn);
-  color: var(--color-learn-text);
+  background-color: var(--color-learned);
+  color: var(--color-learned-text);
 }
 .button-learned:hover {
-  background-color: var(--color-learn-hover);
+  background-color: var(--color-learned-hover);
+}
+
+/* Repeat — pastel blue (topic scale c3) */
+.button-repeat {
+  background-color: var(--color-repeat);
+  color: var(--color-repeat-text);
+}
+.button-repeat:hover {
+  background-color: var(--color-repeat-hover);
 }
 
 .set-finished-display {
@@ -198,6 +219,8 @@
   .options-container button {
     flex: 1 1 0;
     min-width: 0;
+    /* twice the default ~35px button height */
+    min-height: 70px;
   }
 
   .finished-options-container {

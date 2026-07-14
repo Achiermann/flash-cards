@@ -197,8 +197,10 @@ export default function LearnView() {
               <ul className="flashcard-word-wrapper">
                 <li className="flashcard-front"><p>{front}</p></li>
                 <div className="flashcard-separator" />
-                <li className="flashcard-back"><p>{showAnswer ? back : ''}</p></li>
-              {showAnswer && <button className="conjugator-button" onClick={() => setShowConjugator(true)}> Conjugate </button>}
+                <li className="flashcard-back">
+                  <p>{showAnswer ? back : ''}</p>
+                  {showAnswer && <button className="conjugator-button" onClick={() => setShowConjugator(true)}> Conjugate </button>}
+                </li>
               </ul>
 
 
