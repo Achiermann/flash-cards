@@ -276,9 +276,16 @@ input:checked + .slider::before {
    ============================================================================== */
 
 @media (max-width: 768px) {
+  /* The one designated scroller on the manage/archive pages — the app
+     viewport itself stays fixed */
   .manage-set-content {
     width: 100%;
     align-items: center;
+    flex: 1 1 auto;
+    min-height: 0;
+    overflow-y: auto;
+    -webkit-overflow-scrolling: touch;
+    overscroll-behavior: contain;
   }
 
   .manage-all-sets-set-container {
