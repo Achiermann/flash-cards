@@ -157,11 +157,27 @@
    ============================================================================== */
 
 @media (max-width: 768px) {
+  /* Fixed viewport — the learn view never scrolls */
+  .learn-view-container {
+    height: 100%;
+    min-height: 0;
+    overflow: hidden;
+  }
+
+  .progress-and-flashcard {
+    /* no auto margin here: the options-container's auto margins below
+       center it between the flashcard and the bottom of the viewport */
+    margin-bottom: 0;
+    min-height: 0;
+  }
+
   .flashcard {
     width: calc(100vw - 70px);
     height: 350px;
     max-width: 400px;
     margin: var(--space-6) var(--space-2) var(--space-3) var(--space-2);
+    /* the card follows the finger — keep the browser out of the gesture */
+    touch-action: none;
   }
 
   .progress-bar-wrapper {
@@ -169,11 +185,19 @@
     width: calc(100% - 20px);
   }
 
+  /* Learned / Repeat split the full width, small edge margins, centered
+     vertically between the flashcard and the bottom of the viewport */
   .options-container {
-    padding: 0 var(--space-2);
+    width: 100%;
+    padding: 0 var(--space-4);
     flex-wrap: nowrap;
-    gap: var(--space-2);
-    margin: var(--space-6) 0 var(--space-7) 0;
+    gap: var(--space-3);
+    margin: auto 0;
+  }
+
+  .options-container button {
+    flex: 1 1 0;
+    min-width: 0;
   }
 
   .finished-options-container {

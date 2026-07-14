@@ -3,11 +3,12 @@
 import { useParams } from 'next/navigation';
 import { useLearnSetStore } from '@/app/stores/useLearnSetStore';
 import { useSetsStore } from '@/app/stores/useSetsStore';
-import { useEffect, useState } from 'react';
+import { useEffect, useState, useRef } from 'react';
 import Link from 'next/link';
 import LinearProgress from '@mui/material/LinearProgress';
 import { Archive } from 'lucide-react';
 import toast from 'react-hot-toast';
+import { useIsMobile } from '@/components/isMobile';
 import '@/styles/learnView.css';
 import Conjugator from '@/components/Conjugator';
 
@@ -16,6 +17,14 @@ export default function LearnView() {
   const [showAnswer, setShowAnswer] = useState(false);
   const [showConjugator, setShowConjugator] = useState(false);
   const { set: slug } = useParams();
+  const isMobile = useIsMobile();
+
+  // Swipe state lives in refs and drives the card transform directly —
+  // no re-render per touchmove while the card follows the finger
+  const cardRef = useRef(null);
+  const dragRef = useRef({ startX: 0, startY: 0, active: false, horizontal: false, dx: 0 });
+  const suppressClickRef = useRef(false);
+  const animatingRef = useRef(false);
 
   const {
     matchedSet,
@@ -67,7 +76,72 @@ export default function LearnView() {
 
     toast.success('Word archived!');
   };
-  
+
+  // Tap flips the card — unless the touch was a swipe
+  const handleCardClick = () => {
+    if (suppressClickRef.current) {
+      suppressClickRef.current = false;
+      return;
+    }
+    setShowAnswer(!showAnswer);
+  };
+
+  // Swipe (mobile): the card follows the finger; releasing past the
+  // threshold slides it out — left = next card, right = previous card
+  const handleTouchStart = (e) => {
+    if (!isMobile || setFinished || animatingRef.current) return;
+    const touch = e.touches[0];
+    dragRef.current = { startX: touch.clientX, startY: touch.clientY, active: true, horizontal: false, dx: 0 };
+    suppressClickRef.current = false;
+    if (cardRef.current) cardRef.current.style.transition = '';
+  };
+
+  const handleTouchMove = (e) => {
+    const drag = dragRef.current;
+    if (!drag.active) return;
+    const touch = e.touches[0];
+    const dx = touch.clientX - drag.startX;
+    const dy = touch.clientY - drag.startY;
+    if (!drag.horizontal) {
+      if (Math.abs(dx) < 10 && Math.abs(dy) < 10) return;
+      if (Math.abs(dx) <= Math.abs(dy)) {
+        drag.active = false;
+        return;
+      }
+      drag.horizontal = true;
+    }
+    drag.dx = dx;
+    if (cardRef.current) cardRef.current.style.transform = `translateX(${dx}px)`;
+  };
+
+  const handleTouchEnd = () => {
+    const drag = dragRef.current;
+    if (!drag.active) return;
+    drag.active = false;
+    if (!drag.horizontal || !cardRef.current) return;
+    suppressClickRef.current = true;
+    const card = cardRef.current;
+    const threshold = 60;
+    if (Math.abs(drag.dx) > threshold) {
+      const goNext = drag.dx < 0;
+      const offscreen = card.offsetWidth + 60;
+      animatingRef.current = true;
+      card.style.transition = 'transform 0.2s ease';
+      card.style.transform = `translateX(${goNext ? -offscreen : offscreen}px)`;
+      setTimeout(() => {
+        const rem = matchedSet.words.filter(w => !w.learned).length;
+        if (goNext) increment(rem);
+        else decrement(rem);
+        card.style.transition = '';
+        card.style.transform = '';
+        animatingRef.current = false;
+      }, 200);
+    } else {
+      card.style.transition = 'transform 0.2s ease';
+      card.style.transform = '';
+    }
+  };
+
   {/*//.1      VARIABLES            */}
 
   // Start / reset the session when slug changes — refresh from the server first
@@ -106,7 +180,15 @@ export default function LearnView() {
           <LinearProgress variant="determinate" value={setFinished ? 100 : progress} />
         </div>
 
-        <div className="flashcard" onClick={() => setShowAnswer(!showAnswer)}>
+        <div
+          className="flashcard"
+          ref={cardRef}
+          onClick={handleCardClick}
+          onTouchStart={handleTouchStart}
+          onTouchMove={handleTouchMove}
+          onTouchEnd={handleTouchEnd}
+          onTouchCancel={handleTouchEnd}
+        >
           {!setFinished && (
             <>
               <div className='wordlist-item-archive' onClick={handleToggleArchive(wordId)}>
@@ -133,7 +215,7 @@ export default function LearnView() {
         </div>
       </div>
               <div className="options-container">
-                <button className="button-prev"    onClick={(e) => { e.stopPropagation(); decrement(remaining); }}>Prev</button>
+                {!isMobile && <button className="button-prev" onClick={(e) => { e.stopPropagation(); decrement(remaining); }}>Prev</button>}
                 <button className="button-learned" onClick={(e) => { e.stopPropagation(); learned(); }}>Learned</button>
                 <button className="button-repeat"  onClick={(e) => { e.stopPropagation(); increment(remaining); }}>Repeat</button>
               </div>
