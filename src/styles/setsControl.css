@@ -147,34 +147,44 @@
 
 @media (max-width: 768px) {
   /* Fixed viewport: the page never scrolls — the carousel row flexes and
-     the card inside it shrinks until title, buttons, dots and detail fit */
+     the card inside it shrinks until title, buttons, dots and detail fit.
+     Overflow stays visible so the full-bleed carousel below isn't clipped
+     at the panel edge. */
   .sets-control {
     padding: var(--space-3);
     height: 100%;
     min-height: 0;
-    overflow: hidden;
   }
 
   .sets-control h2 {
     margin: var(--space-4) var(--space-2);
   }
 
-  /* Plain full-width wrapper — the .snap-list below is the only scroller */
+  /* Plain wrapper — the .snap-list below is the only scroller. Full-bleed:
+     the wrapper spans the real viewport width so swiped cards clip at the
+     screen edge, not at the padded panel edge. */
   .sets-grid {
     overflow-x: visible;
     scroll-snap-type: none;
     flex: 1 1 auto;
     min-height: 0;
+    width: 100vw;
+    max-width: none; /* the base rule's 100% cap would defeat the bleed */
+    /* symmetric so sets-control's centered alignment keeps it at x=0 */
+    margin-inline: calc(50% - 50vw);
   }
 
-  /* The single horizontal snap scroller */
+  /* The single horizontal snap scroller. The inline padding restores the
+     old panel inset (panel margin + panel padding + sets-control padding),
+     so the centered card keeps its exact size and position while neighbors
+     slide visibly through the padding out to the true screen edge. */
   .sets-grid > ul,
   .sets-grid .snap-list {
     display: flex;
     flex-wrap: nowrap;
     gap: var(--space-4);
     margin: 0;
-    padding-inline: 0;
+    padding-inline: calc(var(--space-5) + var(--space-4) + var(--space-3));
     list-style: none;
     height: 100%;
     overflow-x: auto;

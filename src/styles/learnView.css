@@ -181,11 +181,11 @@
    ============================================================================== */
 
 @media (max-width: 768px) {
-  /* Fixed viewport — the learn view never scrolls */
+  /* Fixed viewport — the learn view never scrolls (overflow stays visible
+     so the dragged flashcard slides out to the real screen edge) */
   .learn-view-container {
     height: 100%;
     min-height: 0;
-    overflow: hidden;
   }
 
   .progress-and-flashcard {

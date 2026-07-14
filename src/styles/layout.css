@@ -99,8 +99,11 @@
     border-radius: 0;
     box-shadow: none;
     padding: var(--space-4);
-    /* the panel itself is fixed; only designated inner containers scroll */
-    overflow: hidden;
+    /* the panel itself never scrolls (flex bounds its children; designated
+       inner containers scroll) — but overflow stays visible so swiping
+       flashcards/cards flow out to the real screen edge, where the
+       client-wrapper (100dvh, overflow hidden) does the clipping */
+    overflow: visible;
   }
 
   .burger-grid {
