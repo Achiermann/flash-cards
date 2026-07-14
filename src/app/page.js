@@ -18,8 +18,10 @@ export default function SetsControl() {
   const [isReady, setIsReady] = useState(false);
   const [selectedSetId, setSelectedSetId] = useState(null);
   const language = useSetLanguage((state) => state.language);
-  const getFilteredSets = useSetsStore((state) => state.getFilteredSets);
-  const sets = getFilteredSets();
+  // subscribe to the sets slice itself — calling getFilteredSets() here reads
+  // the store without subscribing, so fetchSets() results never re-rendered
+  const allSets = useSetsStore((state) => state.sets);
+  const sets = allSets.filter((s) => s.language === language);
   const fetchSets = useSetsStore(s => s.fetchSets);
   const addSet = useSetsStore((state) => state.addSet);
   const setShowEditOptions = useEditOptionsStore((state) => state.setShowEditOptions);

@@ -136,8 +136,4 @@ cancelDelete: () => {
     } catch (err) { console.error("[useSetsStore] fetchSets error:", err); }
   },
 
-  getFilteredSets: () => {
-    const currentLanguage = useSetLanguage.getState().language;
-    return get().sets.filter((s) => s.language === currentLanguage);
-  },
 }), { name: "Sets" })));

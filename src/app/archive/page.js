@@ -2,12 +2,15 @@
 
 import { useEffect } from "react";
 import { useSetsStore } from "@/app/stores/useSetsStore";
+import { useSetLanguage } from "@/app/stores/useSetLanguage";
 import Wordlist from "@/components/wordlist";
 
 export default function ArchiveView() {
 
-const getFilteredSets = useSetsStore((state) => state.getFilteredSets);
-const sets = getFilteredSets();
+const language = useSetLanguage((state) => state.language);
+// subscribe to the sets slice itself — see src/app/page.js
+const allSets = useSetsStore((state) => state.sets);
+const sets = allSets.filter((s) => s.language === language);
 const fetchSets = useSetsStore((state) => state.fetchSets);
 
 // refresh from the server so archive toggles sync against current DB ids

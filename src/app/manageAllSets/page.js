@@ -1,14 +1,17 @@
 "use client";
 
 import { useSetsStore } from "@/app/stores/useSetsStore";
+import { useSetLanguage } from "@/app/stores/useSetLanguage";
 import { useState, useEffect } from "react";
 import AddWordForm from "@/components/addWordForm";
 import Wordlist from "@/components/wordlist";
 
 export default function ManageAllSetsView() {
 
-const getFilteredSets = useSetsStore((state) => state.getFilteredSets);
-const sets = getFilteredSets();
+const language = useSetLanguage((state) => state.language);
+// subscribe to the sets slice itself — see src/app/page.js
+const allSets = useSetsStore((state) => state.sets);
+const sets = allSets.filter((s) => s.language === language);
 const fetchSets = useSetsStore((state) => state.fetchSets);
 
 const [selectedSet, setSelectedSet] = useState(null);
