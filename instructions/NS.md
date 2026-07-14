@@ -2,8 +2,6 @@ ONLY follow the following instructions if explicitly told:
 
 <!-- .1 Task -->
 
-When a language in 
-
 <!-- .2 Disclaimer -->
 
 Don`t make any other changes then the ones explicitly mentioned here or in any of the mentioned instruction-files.
