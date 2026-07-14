@@ -3,7 +3,7 @@ export const runtime = 'nodejs';
 import { NextResponse } from 'next/server';
 import bcrypt from 'bcrypt';
 import { supabaseServer } from '@/lib/supabaseServerClient';
-import { signToken } from '@/lib/auth';
+import { signToken, SESSION_MAX_AGE } from '@/lib/auth';
 
 export async function POST(req) {
   try {
@@ -35,7 +35,7 @@ export async function POST(req) {
       secure: process.env.NODE_ENV === 'production',
       sameSite: 'lax',
       path: '/',
-      maxAge: 60 * 60 * 24 * 7,
+      maxAge: SESSION_MAX_AGE,
     });
     return res;
   } catch (err) {
