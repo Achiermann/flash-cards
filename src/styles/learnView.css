@@ -158,6 +158,9 @@
 /* ---- Progress bar (MUI) ------------------------------------------------ */
 
 .progress-bar-wrapper {
+  /* nudge the progress-bar + flashcard block toward the vertical center;
+     the matching space is taken away below the flashcard */
+  margin-top: var(--space-5);
   padding-top: var(--space-7);
   width: 100%;
 }
@@ -196,7 +199,8 @@
     width: calc(100vw - 70px);
     height: 350px;
     max-width: 400px;
-    margin: var(--space-6) var(--space-2) var(--space-3) var(--space-2);
+    /* bottom margin removed — its space moved above the progress bar */
+    margin: var(--space-6) var(--space-2) 0 var(--space-2);
     /* the card follows the finger — keep the browser out of the gesture */
     touch-action: none;
   }
