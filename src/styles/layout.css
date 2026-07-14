@@ -39,11 +39,6 @@
   z-index: 30000;
 }
 
-.go-to-main-button {
-  align-self: flex-start;
-  margin-right: auto;
-}
-
 /* ---- Confirm dialog (delete) -------------------------------------------- */
 
 .message-field {
@@ -95,12 +90,17 @@
   .client-wrapper {
     padding: 0;
     gap: 0;
+    /* fixed app viewport — the layout never scrolls; dvh tracks the
+       collapsing mobile browser chrome so the bottom edge stays visible */
+    height: 100dvh;
   }
 
   .main-content-container {
     border-radius: 0;
     box-shadow: none;
     padding: var(--space-4);
+    /* the panel itself is fixed; only designated inner containers scroll */
+    overflow: hidden;
   }
 
   .burger-grid {
@@ -114,10 +114,6 @@
     border: none;
     color: #000;
     cursor: pointer;
-  }
-
-  .go-to-main-button {
-    margin: var(--space-4) 0 var(--space-2) 0;
   }
 
   .message-field {

@@ -2,7 +2,6 @@
 'use client';
 
 import { usePathname } from 'next/navigation';
-import Link from 'next/link';
 import Sidebar from '../components/sidebar';
 import {useState, useEffect} from 'react';
 import LoginPage from './login/page';
@@ -15,9 +14,7 @@ import '@/styles/layout.css';
 export default function ClientWrapper({ children }) {
 
 const pathname = usePathname();
-const isHome = pathname === '/';
 const [isLoggedIn, setIsLoggedIn] = useState(true);
-const [isMobile, setIsMobile] = useState(false);
 const [sidebarOpen, setSidebarOpen] = useState(false);
 
 // Close the mobile drawer whenever the route changes (nav link tapped)
@@ -34,17 +31,6 @@ useEffect(() => {
         setIsLoggedIn(false);
   }})
     .catch(() => setIsLoggedIn(false));
-}, []);
-
-useEffect(() => {
-  const handleResize = () => {
-    setIsMobile(window.innerWidth <= 768);
-  };
-
-  handleResize();
-  window.addEventListener('resize', handleResize);
-
-  return () => window.removeEventListener('resize', handleResize);
 }, []);
 
   return (
@@ -69,7 +55,6 @@ useEffect(() => {
       onClose={() => setSidebarOpen(false)}
     />
       <div className="main-content-container">
-    {pathname !== '/' && isMobile && (<Link href="/"><button className="go-to-main-button">Go to main</button></Link>)}
       {children}
     </div>
     </StyledEngineProvider>
